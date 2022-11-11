@@ -6,7 +6,7 @@
 int main()
 {
 	int x,y;
-	// team muhammed amr marawan youssef
+	// team muhammed amr ichigo youssef
 	//Create Input and Output objects to test
 	Output *pOut = new Output();
 	Input *pIn = pOut->CreateInput();
