@@ -1,6 +1,4 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  TestCode.cpp
   Output.cpp
 C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\GUI\Output.cpp(204,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
   PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\Debug\PT Project.exe

@@ -261,13 +261,12 @@ void Output::DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected)const
 	}
 	else
 		style = FRAME;
-	int Side = 100;
-	int Px[4];
-	int Py[4];
-	Px[0] = P1.x + Side / 2, Px[1] = P1.x + Side / 2, Px[2] = P1.x - Side / 2, Px[3] = P1.x - Side / 2;
-	Py[0] = P1.y - Side / 2, Py[1] = P1.y + Side / 2, Py[2] = P1.y + Side / 2, Py[3] = P1.y - Side / 2;
-	pWind->DrawPolygon(Px, Py, 4, style);
-	if (P1.y - Side / 2 < UI.ToolBarHeight)
+	int Side = 200;
+	Point P2, P3;
+	P2.x = P1.x - Side / 2, P2.y = P1.y - Side / 2;
+	P3.x = P1.x + Side / 2, P3.y = P1.y + Side / 2;
+	pWind->DrawRectangle(P2.x, P2.y, P3.x, P3.y, style);
+	if (P2.y < UI.ToolBarHeight)
 	{
 		pWind->SetPen(WHITE, 1);
 		pWind->SetBrush(WHITE);
