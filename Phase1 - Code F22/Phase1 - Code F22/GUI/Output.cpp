@@ -205,6 +205,7 @@ void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 	pWind->DrawCircle(P1.x, P1.y, Radius, style);
 	if (P1.y - Radius < UI.ToolBarHeight) 
 	{
+		pWind->SetPen(WHITE, 1);
 		pWind->SetBrush(WHITE);
 		pWind->DrawRectangle(0,0, UI.width, UI.ToolBarHeight);
 		CreateDrawToolBar();
