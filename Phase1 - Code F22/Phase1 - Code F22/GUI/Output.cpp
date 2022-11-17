@@ -161,7 +161,55 @@ void Output::DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) co
 	pWind->DrawRectangle(P1.x, P1.y, P2.x, P2.y, style);
 	
 }
+void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool selected)const
+{
 
+	color DrawingClr;
+	if (selected)
+		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
+	else
+		DrawingClr = TrigGfxInfo.DrawClr;
+
+	pWind->SetPen(DrawingClr, 1);
+	drawstyle style;
+	if (TrigGfxInfo.isFilled)
+	{
+		style = FILLED;
+		pWind->SetBrush(TrigGfxInfo.FillClr);
+	}
+	else
+		style = FRAME;
+
+
+	pWind->DrawTriangle(P1.x, P1.y, P2.x, P2.y, P3.x, P3.y, style);
+}
+void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
+{
+	color DrawingClr;
+	if (selected)
+		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
+	else
+		DrawingClr = CirGfxInfo.DrawClr;
+
+	pWind->SetPen(DrawingClr, 1);
+	drawstyle style;
+	if (CirGfxInfo.isFilled)
+	{
+		style = FILLED;
+		pWind->SetBrush(CirGfxInfo.FillClr);
+	}
+	else
+		style = FRAME;
+	int Radius = 0;
+	Radius = sqrt(pow((P1.x - P2.x), 2) + pow((P1.y - P2.y), 2));
+	pWind->DrawCircle(P1.x, P1.y, Radius, style);
+	if (P1.y - Radius < UI.ToolBarHeight) 
+	{
+		pWind->SetBrush(WHITE);
+		pWind->DrawRectangle(0,0, UI.width, UI.ToolBarHeight);
+		CreateDrawToolBar();
+	}
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 Output::~Output()
