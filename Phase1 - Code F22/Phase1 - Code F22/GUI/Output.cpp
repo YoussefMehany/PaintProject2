@@ -211,6 +211,70 @@ void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 		CreateDrawToolBar();
 	}
 }
+void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
+{
+	color DrawingClr;
+	if (selected)
+		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
+	else
+		DrawingClr = HexGfxInfo.DrawClr;
+
+	pWind->SetPen(DrawingClr, 1);
+	drawstyle style;
+	if (HexGfxInfo.isFilled)
+	{
+		style = FILLED;
+		pWind->SetBrush(HexGfxInfo.FillClr);
+	}
+	else
+		style = FRAME;
+	int Side = 100;
+	int Px[6];
+	int Py[6];
+	Px[0] = P1.x + Side, Px[1] = P1.x + Side, Px[2] = P1.x, Px[3] = P1.x - Side;
+	Px[4] = P1.x - Side, Px[5] = P1.x;
+	Py[0] = P1.y - Side / 2, Py[1] = P1.y + Side / 2, Py[2] = P1.y + Side, Py[3] = P1.y + Side / 2;
+	Py[4] = P1.y - Side / 2, Py[5] = P1.y - Side;
+	pWind->DrawPolygon(Px, Py, 6, style);
+	if (P1.y - Side < UI.ToolBarHeight)
+	{
+		pWind->SetPen(WHITE, 1);
+		pWind->SetBrush(WHITE);
+		pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+		CreateDrawToolBar();
+	}
+}
+void Output::DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected)const
+{
+	color DrawingClr;
+	if (selected)
+		DrawingClr = UI.HighlightColor; //Figure should be drawn highlighted
+	else
+		DrawingClr = SquareGfxInfo.DrawClr;
+
+	pWind->SetPen(DrawingClr, 1);
+	drawstyle style;
+	if (SquareGfxInfo.isFilled)
+	{
+		style = FILLED;
+		pWind->SetBrush(SquareGfxInfo.FillClr);
+	}
+	else
+		style = FRAME;
+	int Side = 100;
+	int Px[4];
+	int Py[4];
+	Px[0] = P1.x + Side / 2, Px[1] = P1.x + Side / 2, Px[2] = P1.x - Side / 2, Px[3] = P1.x - Side / 2;
+	Py[0] = P1.y - Side / 2, Py[1] = P1.y + Side / 2, Py[2] = P1.y + Side / 2, Py[3] = P1.y - Side / 2;
+	pWind->DrawPolygon(Px, Py, 4, style);
+	if (P1.y - Side / 2 < UI.ToolBarHeight)
+	{
+		pWind->SetPen(WHITE, 1);
+		pWind->SetBrush(WHITE);
+		pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+		CreateDrawToolBar();
+	}
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 Output::~Output()
