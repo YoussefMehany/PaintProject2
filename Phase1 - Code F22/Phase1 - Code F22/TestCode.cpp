@@ -12,6 +12,7 @@ int main()
 	Output* pOut = new Output();
 	Input* pIn = pOut->CreateInput();
 
+
 	//Starting the test
 	pOut->PrintMessage("This demo is to test input and output classes, Click anywhere to start the test");
 	pIn->GetPointClicked(x, y);	//Wait for any click

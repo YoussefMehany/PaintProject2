@@ -17,6 +17,8 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 {
 	//Note: Items are **(ordered)** here as they appear in menu
 	//If you want to change the menu items order, change the order here
+	SELECT,
+
 	ITM_RECT,		//Recangle item in menu
 	
 	ITM_CIRC,
@@ -26,6 +28,42 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	ITM_SQUARE,
 	
 	ITM_HEX,
+
+	//PIANT,
+
+	CLR_GREEN,
+
+	CLR_RED,
+
+	CLR_BLUE,
+
+	CLR_ORANGE,
+
+	CLR_YELLOW,
+
+	CLR_BLACK,
+
+	MOVE,
+
+    REDO,
+
+	UNDO,
+
+	DELETe,
+
+	START,
+
+	STOP,
+
+	PLAY,
+
+    LOAD,
+
+	SAVE,
+
+	CLEAR,
+
+	SWITCH,
 
 	ITM_EXIT,		//Exit item
 	
