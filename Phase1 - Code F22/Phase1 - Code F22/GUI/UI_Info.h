@@ -10,6 +10,8 @@
 enum GUI_MODE	//Graphical user interface mode
 {
 	MODE_DRAW,	//Drawing mode (startup mode)
+	MODE_FIGURE,
+	MODE_COLOR,
 	MODE_PLAY	//Playing mode
 };
 
@@ -19,29 +21,11 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 	//If you want to change the menu items order, change the order here
 	SELECT,
 
-	ITM_RECT,		//Recangle item in menu
-	
-	ITM_CIRC,
+	FIGURES,
 
-	ITM_TRIANGLE,
+	PAINT,
 
-	ITM_SQUARE,
-	
-	ITM_HEX,
-
-	//PIANT,
-
-	CLR_GREEN,
-
-	CLR_RED,
-
-	CLR_BLUE,
-
-	CLR_ORANGE,
-
-	CLR_YELLOW,
-
-	CLR_BLACK,
+	BORDER,
 
 	MOVE,
 
@@ -63,23 +47,61 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 
 	CLEAR,
 
-	SWITCH,
+	SWITCH_PLAY,
 
 	ITM_EXIT,		//Exit item
 	
 	DRAW_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
 	
 };
-
-enum PlayMenuItem //The items of the Play menu (you should add more items)
+enum Figures
 {
-	//Note: Items are **(ordered)** here as they appear in menu
-	//If you want to change the menu items order, change the order here
-	
-	//TODO: Add more items names here
+	FIGURE,
 
-	PLAY_ITM_COUNT		//no. of menu items ==> This should be the last line in this enum
-	
+	ITM_RECT,		//Recangle item in menu
+
+	ITM_CIRC,
+
+	ITM_TRIANGLE,
+
+	ITM_SQUARE,
+
+	ITM_HEX,
+
+	FIG_BACK,
+
+	DRAW_FGR_COUNT
+
+};
+enum Colors
+{
+	COLORS,
+
+	CLR_GREEN,
+
+	CLR_RED,
+
+	CLR_BLUE,
+
+	CLR_ORANGE,
+
+	CLR_YELLOW,
+
+	CLR_BLACK,
+
+	CLR_BACK,
+
+	DRAW_CLR_COUNT
+
+};
+
+enum PlayMenuItem
+{
+	PLAYTYPE,
+	PLAYCLR,
+	PLAYTYPECLR,
+	SWITCH_DRAW,
+	PLAY_ITM_COUNT
 };
 
 

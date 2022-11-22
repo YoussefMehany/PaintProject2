@@ -43,18 +43,27 @@ ActionType Input::GetUserAction() const
 		//[1] If user clicks on the Toolbar
 		if ( y >= 0 && y < UI.ToolBarHeight)
 		{	
-			//Check whick Menu item was clicked
-			//==> This assumes that menu items are lined up horizontally <==
 			int ClickedItemOrder = (x / UI.MenuItemWidth);
-			//Divide x coord of the point clicked by the menu item width (int division)
-			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
-
 			switch (ClickedItemOrder)
 			{
-			case ITM_RECT: return DRAW_RECT;
+			case FIGURES: return DRAW_FIGURE;
+			case SELECT: return SELECT_FIGURE;
+			case PAINT: return DRAW_COLOR;
+			case BORDER: return DRAW_COLOR;
+			case MOVE: return MOVE_FIGURE;
+			case UNDO: return UNDO_ACTION;
+			case REDO: return REDO_ACTION;
+			case DELETe: return DELETE_FIGURE;
+			case START: return START_REC;
+			case STOP: return STOP_REC;
+			case PLAY: return PLAY_REC;
+			case LOAD: return LOAD_PROGRESS;
+			case SAVE: return SAVE_PROGRESS;
+			case CLEAR: return CLEAR_ALL;
+			case SWITCH_PLAY: return TO_PLAY;
 			case ITM_EXIT: return EXIT;	
 			
-			default: return EMPTY;	//A click on empty place in desgin toolbar
+			default: return EMPTY;
 			}
 		}
 
@@ -67,12 +76,101 @@ ActionType Input::GetUserAction() const
 		//[3] User clicks on the status bar
 		return STATUS;
 	}
-	else	//GUI is in PLAY mode
+	else if (UI.InterfaceMode == MODE_FIGURE) {
+		if (y >= 0 && y < UI.ToolBarHeight)
+		{
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+
+			switch (ClickedItemOrder)
+			{
+			case ITM_RECT: return DRAW_RECT;
+
+			case ITM_CIRC: return DRAW_CIRC;
+
+			case ITM_TRIANGLE: return DRAW_TRIANGLE;
+
+			case ITM_SQUARE: return DRAW_SQUARE;
+
+			case ITM_HEX: return DRAW_HEX;
+
+			case FIG_BACK: return CLOSEFIG;
+
+			default: return EMPTY;
+			}
+		}
+
+		//[2] User clicks on the drawing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			return DRAWING_AREA;
+		}
+
+		//[3] User clicks on the status bar
+		return STATUS;
+	}
+	else if (UI.InterfaceMode == MODE_COLOR)
 	{
-		///TODO:
-		//perform checks similar to Draw mode checks above
-		//and return the correspoding action
-		return TO_PLAY;	//just for now. This should be updated
+		if (y >= 0 && y < UI.ToolBarHeight)
+		{
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+
+			switch (ClickedItemOrder)
+			{
+			case CLR_GREEN: return GREENCLR;
+
+			case CLR_RED: return REDCLR;
+
+			case CLR_BLUE: return BLUECLR;
+
+			case CLR_ORANGE: return ORANGECLR;
+
+			case CLR_YELLOW: return YELLOWCLR;
+
+			case CLR_BLACK: return BLACKCLR;
+
+			case CLR_BACK: return CLOSECLR;
+
+			default: return EMPTY;
+			}
+		}
+
+		//[2] User clicks on the drawing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			return DRAWING_AREA;
+		}
+
+		//[3] User clicks on the status bar
+		return STATUS;
+	}
+	else
+	{
+		if (y >= 0 && y < UI.ToolBarHeight)
+		{
+			int ClickedItemOrder = (x / UI.MenuItemWidth);
+
+			switch (ClickedItemOrder)
+			{
+			case PLAYTYPE: return PICK_TYPE;
+
+			case PLAYCLR: return PICK_CLR;
+
+			case PLAYTYPECLR: return PICK_TYPECLR;
+
+			case SWITCH_DRAW: return TO_DRAW;
+
+			default: return EMPTY;
+			}
+		}
+
+		//[2] User clicks on the drawing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			return DRAWING_AREA;
+		}
+
+		//[3] User clicks on the status bar
+		return STATUS;
 	}	
 
 }

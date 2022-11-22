@@ -14,7 +14,7 @@ Output::Output()
 	
 	UI.StatusBarHeight = 50;
 	UI.ToolBarHeight = 50;
-	UI.MenuItemWidth = 51;
+	UI.MenuItemWidth = 70;
 	
 	UI.DrawColor = BLUE;	//Drawing color
 	UI.FillColor = GREEN;	//Filling color
@@ -71,28 +71,17 @@ void Output::ClearStatusBar() const
 //////////////////////////////////////////////////////////////////////////////////////////
 void Output::CreateDrawToolBar() const
 {
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+
 	UI.InterfaceMode = MODE_DRAW;
 
-	//You can draw the tool bar icons in any way you want.
-	//Below is one possible way
-	
-	//First prepare List of images for each menu item
-	//To control the order of these images in the menu, 
-	//reoder them in UI_Info.h ==> enum DrawMenuItem
 	string MenuItemImages[DRAW_ITM_COUNT];
 	MenuItemImages[SELECT] = "images\\MenuItems\\SELECT.jpg";
-	MenuItemImages[ITM_RECT] = "images\\MenuItems\\Menu_Rect.jpg";
-	MenuItemImages[ITM_CIRC] = "images\\MenuItems\\Menu_Circ.jpg";
-	MenuItemImages[ITM_TRIANGLE] = "images\\MenuItems\\Menu_Triangle.jpg";
-	MenuItemImages[ITM_SQUARE] = "images\\MenuItems\\Menu_Square.jpg";
-	MenuItemImages[ITM_HEX] = "images\\MenuItems\\Menu_Hex.jpg";
-	//MenuItemImages[PIANT] = "images\\MenuItems\\PIANT2.jpg";
-	MenuItemImages[CLR_GREEN] = "images\\MenuItems\\GREEN.jpg";
-	MenuItemImages[CLR_RED] = "images\\MenuItems\\RED.jpg";
-	MenuItemImages[CLR_BLUE] = "images\\MenuItems\\BLUE.jpg";
-	MenuItemImages[CLR_ORANGE] = "images\\MenuItems\\ORANGE.jpg";
-	MenuItemImages[CLR_YELLOW] = "images\\MenuItems\\YELLOW.jpg";
-	MenuItemImages[CLR_BLACK] = "images\\MenuItems\\BLACK.jpg";
+	MenuItemImages[FIGURES] = "images\\MenuItems\\FIGURES.jpg";
+	MenuItemImages[PAINT] = "images\\MenuItems\\PAINT2.jpg";
+	MenuItemImages[BORDER] = "images\\MenuItems\\BORDER.jpg";
 	MenuItemImages[MOVE] = "images\\MenuItems\\MOVE.jpg";
 	MenuItemImages[UNDO] = "images\\MenuItems\\UNDO.jpg";
 	MenuItemImages[REDO] = "images\\MenuItems\\REDO.jpg";
@@ -103,7 +92,7 @@ void Output::CreateDrawToolBar() const
 	MenuItemImages[LOAD] = "images\\MenuItems\\LOAD.jpg";
 	MenuItemImages[SAVE] = "images\\MenuItems\\SAVE.jpg";
 	MenuItemImages[CLEAR] = "images\\MenuItems\\CLEAR2.jpg";
-	MenuItemImages[SWITCH] = "images\\MenuItems\\SWITCH.jpg";
+	MenuItemImages[SWITCH_PLAY] = "images\\MenuItems\\SWITCH.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\EXIT.jpg";
 
 
@@ -119,11 +108,86 @@ void Output::CreateDrawToolBar() const
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////
+void Output::Figure_menu() const
+{
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+	UI.InterfaceMode = MODE_FIGURE;
+	string MenuItemImages[DRAW_FGR_COUNT];
+	MenuItemImages[FIGURE] = "images\\MenuItems\\FIGURES.jpg";
+	MenuItemImages[ITM_RECT] = "images\\MenuItems\\Menu_Rect.jpg";
+	MenuItemImages[ITM_CIRC] = "images\\MenuItems\\Menu_Circ.jpg";
+	MenuItemImages[ITM_TRIANGLE] = "images\\MenuItems\\Menu_Triangle.jpg";
+	MenuItemImages[ITM_SQUARE] = "images\\MenuItems\\Menu_Square.jpg";
+	MenuItemImages[ITM_HEX] = "images\\MenuItems\\Menu_Hex.jpg";
+	MenuItemImages[FIG_BACK] = "images\\MenuItems\\BACK.jpg";
 
+
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < DRAW_FGR_COUNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+
+	
+}
+void Output::Color_menu() const
+{
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+	UI.InterfaceMode = MODE_COLOR;
+	string MenuItemImages[DRAW_CLR_COUNT];
+	MenuItemImages[COLORS] = "images\\MenuItems\\PAINT2.jpg";
+	MenuItemImages[CLR_GREEN] = "images\\MenuItems\\GREEN.jpg";
+	MenuItemImages[CLR_RED] = "images\\MenuItems\\RED.jpg";
+	MenuItemImages[CLR_BLUE] = "images\\MenuItems\\BLUE.jpg";
+	MenuItemImages[CLR_ORANGE] = "images\\MenuItems\\ORANGE.jpg";
+	MenuItemImages[CLR_YELLOW] = "images\\MenuItems\\YELLOW.jpg";
+	MenuItemImages[CLR_BLACK] = "images\\MenuItems\\BLACK.jpg";
+	MenuItemImages[CLR_BACK] = "images\\MenuItems\\BACK.jpg";
+
+
+	//Draw menu item one image at a time
+	for (int i = 0; i < DRAW_CLR_COUNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+
+
+}
 void Output::CreatePlayToolBar() const
 {
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+
 	UI.InterfaceMode = MODE_PLAY;
-	///TODO: write code to create Play mode menu
+
+	string MenuItemImages[PLAY_ITM_COUNT];
+	MenuItemImages[PLAYTYPE] = "images\\MenuItems\\PLAYTYPE.jpg";
+	MenuItemImages[PLAYCLR] = "images\\MenuItems\\PLAYCLR.jpg";
+	MenuItemImages[PLAYTYPECLR] = "images\\MenuItems\\PLAYTYPECLR.jpg";
+	MenuItemImages[SWITCH_DRAW] = "images\\MenuItems\\SWITCHPLAY.jpg";
+
+	for (int i = 0; i < PLAY_ITM_COUNT; i++)
+		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+
+
+	//Draw a line under the toolbar
+	pWind->SetPen(RED, 3);
+	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -181,6 +245,10 @@ void Output::DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) co
 
 	
 	pWind->DrawRectangle(P1.x, P1.y, P2.x, P2.y, style);
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+	CreateDrawToolBar();
 	
 }
 void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool selected)const
@@ -204,6 +272,10 @@ void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool se
 
 
 	pWind->DrawTriangle(P1.x, P1.y, P2.x, P2.y, P3.x, P3.y, style);
+	pWind->SetPen(WHITE, 1);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
+	CreateDrawToolBar();
 }
 void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 {
@@ -253,8 +325,8 @@ void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
 	int Side = 100;
 	int Px[6];
 	int Py[6];
-	Px[0] = P1.x + Side, Px[1] = P1.x + Side, Px[2] = P1.x, Px[3] = P1.x - Side;
-	Px[4] = P1.x - Side, Px[5] = P1.x;
+	Px[0] = P1.x + Side * sqrt(3) / 2, Px[1] = P1.x + Side * sqrt(3) / 2, Px[2] = P1.x, Px[3] = P1.x - Side * sqrt(3) / 2;
+	Px[4] = P1.x - Side * sqrt(3) / 2, Px[5] = P1.x;
 	Py[0] = P1.y - Side / 2, Py[1] = P1.y + Side / 2, Py[2] = P1.y + Side, Py[3] = P1.y + Side / 2;
 	Py[4] = P1.y - Side / 2, Py[5] = P1.y - Side;
 	pWind->DrawPolygon(Px, Py, 6, style);
@@ -290,8 +362,8 @@ void Output::DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected)const
 	pWind->DrawRectangle(P2.x, P2.y, P3.x, P3.y, style);
 	if (P2.y < UI.ToolBarHeight)
 	{
-		pWind->SetPen(SNOW, 1);
-		pWind->SetBrush(SNOW);
+		pWind->SetPen(WHITE, 1);
+		pWind->SetBrush(WHITE);
 		pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
 		CreateDrawToolBar();
 	}

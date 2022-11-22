@@ -287,7 +287,6 @@ int main()
 	pOut->PrintMessage("TEST4: Testing Input ability to detect User Action, click anywhere");
 
 	ActionType ActType;
-
 	///TODO:  
 	//You must add a case for each action (both Draw mode and Play mode actions)
 	//Add cases for the missing actions below
@@ -305,12 +304,129 @@ int main()
 			pOut->PrintMessage("Action: a click on the Status Bar, Click anywhere");
 			break;
 
+		case DRAW_COLOR:
+			pOut->PrintMessage("Action: a click on colors menu, Click anywhere");
+			pOut->Color_menu();
+			break;
+
+		case DRAW_CIRC:
+			pOut->PrintMessage("Action: Draw a Circle , Click anywhere");
+			break;
+
+		case DRAW_TRIANGLE:
+			pOut->PrintMessage("Action: Draw a Triangle , Click anywhere");
+			break;
+
+		case DRAW_SQUARE:
+			pOut->PrintMessage("Action: Draw a Square , Click anywhere");
+			break;
+
+		case DRAW_HEX:
+			pOut->PrintMessage("Action: Draw a Hexagon , Click anywhere");
+			break;
+
+		case GREENCLR:
+			pOut->PrintMessage("Action: Green color , Click anywhere");
+			break;
+
+		case REDCLR:
+			pOut->PrintMessage("Action: Red color , Click anywhere");
+			break;
+
+		case BLUECLR:
+			pOut->PrintMessage("Action: Blue color , Click anywhere");
+			break;
+
+		case ORANGECLR:
+			pOut->PrintMessage("Action: Orange color , Click anywhere");
+			break;
+
+		case YELLOWCLR:
+			pOut->PrintMessage("Action: Yellow color , Click anywhere");
+			break;
+
+		case BLACKCLR:
+			pOut->PrintMessage("Action: Black color , Click anywhere");
+			break;
+
+		case SELECT_FIGURE:
+			pOut->PrintMessage("Action: Select a figure , Click anywhere");
+			break;
+
+		case MOVE_FIGURE:
+			pOut->PrintMessage("Action: Move a figure , Click anywhere");
+			break;
+
+		case UNDO_ACTION:
+			pOut->PrintMessage("Action: Undo your last action , Click anywhere");
+			break;
+
+		case REDO_ACTION:
+			pOut->PrintMessage("Action: Redo your last action , Click anywhere");
+			break;
+
+		case DELETE_FIGURE:
+			pOut->PrintMessage("Action: Delete any figure , Click anywhere");
+			break;
+
+		case START_REC:
+			pOut->PrintMessage("Action: Start recording , Click anywhere");
+			break;
+
+		case STOP_REC:
+			pOut->PrintMessage("Action: Stop recording , Click anywhere");
+			break;
+
+		case PLAY_REC:
+			pOut->PrintMessage("Action: Play recording , Click anywhere");
+			break;
+
+		case LOAD_PROGRESS:
+			pOut->PrintMessage("Action: Load a file , Click anywhere");
+			break;
+
+
+		case SAVE_PROGRESS:
+			pOut->PrintMessage("Action: Save file , Click anywhere");
+			break;
+
+		case CLEAR_ALL:
+			pOut->PrintMessage("Action: Clear all , Click anywhere");
+			break;
+
+		case CLOSEFIG:
+			pOut->PrintMessage("Action: a click on back button, Click anywhere");
+			pOut->CreateDrawToolBar();
+			break;
+
+		case CLOSECLR:
+			pOut->PrintMessage("Action: a click on back button, Click anywhere");
+			pOut->CreateDrawToolBar();
+			break;
+
+		case DRAW_FIGURE:
+			pOut->PrintMessage("Action: a click on the figures menu, Click anywhere");
+			pOut->Figure_menu();
+			break;
+
 		case DRAWING_AREA:
 			pOut->PrintMessage("Action: a click on the Drawing Area, Click anywhere");
 			break;
 
 		case EMPTY:
 			pOut->PrintMessage("Action: a click on empty area in the Design Tool Bar, Click anywhere");
+			break;
+
+		case PICK_TYPE:
+			pOut->PrintMessage("Action: Pick a figure, Click anywhere");
+			break;
+
+		case PICK_CLR:
+			pOut->PrintMessage("Action: Pick a figure with this color, Click anywhere");
+			break;
+
+		case PICK_TYPECLR:
+			pOut->PrintMessage("Action: Pick this figure with this color, Click anywhere");
 			break;
 
 		case TO_DRAW:
@@ -322,10 +438,6 @@ int main()
 			pOut->PrintMessage("Action: Switch to Play Mode, creating Design tool bar");
 			pOut->CreatePlayToolBar();
 			break;
-
-
-			///TODO: Add more cases for the other action types
-
 
 		case EXIT:
 			break;
