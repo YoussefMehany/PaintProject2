@@ -276,7 +276,9 @@ int main()
 	// 1- Read a string from the user on the status bar
 	// 2- After reading the string clear the status bar
 	// 3- print on the status bar "You Entered" then print the string
-
+	string msg = pIn->GetSrting(pOut);
+	pOut->PrintMessage("You Entered " + msg);
+	pIn->GetPointClicked(x, y);
 	pIn->GetPointClicked(x, y);	//Wait for any click
 	pOut->ClearDrawArea();
 
@@ -284,7 +286,7 @@ int main()
 	// TEST 4: 
 	//			Input Class : Check for the user action
 	///////////////////////////////////////////////////////////////////////////////////
-	pOut->PrintMessage("TEST4: Testing Input ability to detect User Action, click anywhere");
+	pOut->PrintMessage("TEST4");
 
 	ActionType ActType;
 	///TODO:  
