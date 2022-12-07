@@ -14,7 +14,7 @@ Output::Output()
 	
 	UI.StatusBarHeight = 50;
 	UI.ToolBarHeight = 50;
-	UI.MenuItemWidth = 70;
+	UI.MenuItemWidth = 50;
 	
 	UI.DrawColor = BLUE;	//Drawing color
 	UI.FillColor = GREEN;	//Filling color
@@ -80,7 +80,7 @@ void Output::CreateDrawToolBar() const
 	string MenuItemImages[DRAW_ITM_COUNT];
 	MenuItemImages[SELECT] = "images\\MenuItems\\SELECT.jpg";
 	MenuItemImages[FIGURES] = "images\\MenuItems\\FIGURES.jpg";
-	MenuItemImages[PAINT] = "images\\MenuItems\\PAINT2.jpg";
+	MenuItemImages[PAINT] = "images\\MenuItems\\PAINT.jpg";
 	MenuItemImages[BORDER] = "images\\MenuItems\\BORDER.jpg";
 	MenuItemImages[MOVE] = "images\\MenuItems\\MOVE.jpg";
 	MenuItemImages[UNDO] = "images\\MenuItems\\UNDO.jpg";
@@ -91,7 +91,7 @@ void Output::CreateDrawToolBar() const
 	MenuItemImages[PLAY] = "images\\MenuItems\\PLAY.jpg";
 	MenuItemImages[LOAD] = "images\\MenuItems\\LOAD.jpg";
 	MenuItemImages[SAVE] = "images\\MenuItems\\SAVE.jpg";
-	MenuItemImages[CLEAR] = "images\\MenuItems\\CLEAR2.jpg";
+	MenuItemImages[CLEAR] = "images\\MenuItems\\CLEAR.jpg";
 	MenuItemImages[SWITCH_PLAY] = "images\\MenuItems\\SWITCH.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\EXIT.jpg";
 
@@ -121,7 +121,6 @@ void Output::Figure_menu() const
 	MenuItemImages[ITM_TRIANGLE] = "images\\MenuItems\\Menu_Triangle.jpg";
 	MenuItemImages[ITM_SQUARE] = "images\\MenuItems\\Menu_Square.jpg";
 	MenuItemImages[ITM_HEX] = "images\\MenuItems\\Menu_Hex.jpg";
-	MenuItemImages[FIG_BACK] = "images\\MenuItems\\BACK.jpg";
 
 
 
@@ -144,14 +143,13 @@ void Output::Color_menu() const
 	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
 	UI.InterfaceMode = MODE_COLOR;
 	string MenuItemImages[DRAW_CLR_COUNT];
-	MenuItemImages[COLORS] = "images\\MenuItems\\PAINT2.jpg";
+	MenuItemImages[COLORS] = "images\\MenuItems\\PAINT.jpg";
 	MenuItemImages[CLR_GREEN] = "images\\MenuItems\\GREEN.jpg";
 	MenuItemImages[CLR_RED] = "images\\MenuItems\\RED.jpg";
 	MenuItemImages[CLR_BLUE] = "images\\MenuItems\\BLUE.jpg";
 	MenuItemImages[CLR_ORANGE] = "images\\MenuItems\\ORANGE.jpg";
 	MenuItemImages[CLR_YELLOW] = "images\\MenuItems\\YELLOW.jpg";
 	MenuItemImages[CLR_BLACK] = "images\\MenuItems\\BLACK.jpg";
-	MenuItemImages[CLR_BACK] = "images\\MenuItems\\BACK.jpg";
 
 
 	//Draw menu item one image at a time

@@ -68,8 +68,6 @@ enum Figures
 
 	ITM_HEX,
 
-	FIG_BACK,
-
 	DRAW_FGR_COUNT
 
 };
@@ -88,8 +86,6 @@ enum Colors
 	CLR_YELLOW,
 
 	CLR_BLACK,
-
-	CLR_BACK,
 
 	DRAW_CLR_COUNT
 
