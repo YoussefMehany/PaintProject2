@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Phase1 - Code F22",
+    "\\Phase1 - Code F22\\Phase1 - Code F22",
+    "\\Phase1 - Code F22\\Phase1 - Code F22\\GUI"
   ],
-  "SelectedNode": "\\PT-Project.sln",
+  "SelectedNode": "\\Phase1 - Code F22\\Phase1 - Code F22\\GUI\\Output.cpp",
   "PreviewInSolutionExplorer": false
 }
