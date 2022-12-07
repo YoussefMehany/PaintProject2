@@ -143,7 +143,10 @@ void Output::Color_menu() const
 	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
 	UI.InterfaceMode = MODE_COLOR;
 	string MenuItemImages[DRAW_CLR_COUNT];
-	MenuItemImages[COLORS] = "images\\MenuItems\\PAINT.jpg";
+	if(UI.Choose== PAINT)
+		MenuItemImages[COLORS] = "images\\MenuItems\\PAINT.jpg";
+	else  
+		MenuItemImages[COLORS] = "images\\MenuItems\\BORDER.jpg";
 	MenuItemImages[CLR_GREEN] = "images\\MenuItems\\GREEN.jpg";
 	MenuItemImages[CLR_RED] = "images\\MenuItems\\RED.jpg";
 	MenuItemImages[CLR_BLUE] = "images\\MenuItems\\BLUE.jpg";

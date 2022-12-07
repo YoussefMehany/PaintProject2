@@ -30,6 +30,7 @@ string Input::GetSrting(Output *pO) const
 		if (pO)
 			pO->PrintMessage(Label);
 	}
+	
 }
 
 //This function reads the position where the user clicks to determine the desired action
@@ -48,8 +49,8 @@ ActionType Input::GetUserAction() const
 			{
 			case FIGURES: return DRAW_FIGURE;
 			case SELECT: return SELECT_FIGURE;
-			case PAINT: return DRAW_COLOR;
-			case BORDER: return DRAW_COLOR;
+			case PAINT: UI.Choose = PAINT; return DRAW_COLOR;
+			case BORDER: UI.Choose = BORDER; return DRAW_COLOR;
 			case MOVE: return MOVE_FIGURE;
 			case UNDO: return UNDO_ACTION;
 			case REDO: return REDO_ACTION;
