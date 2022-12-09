@@ -289,7 +289,7 @@ int main()
 	// TEST 4: 
 	//			Input Class : Check for the user action
 	///////////////////////////////////////////////////////////////////////////////////
-	pOut->PrintMessage("TEST4");
+	pOut->PrintMessage("TEST4: Testing Input ability to detect User Action, click anywhere");
 
 	ActionType ActType;
 	///TODO:  
