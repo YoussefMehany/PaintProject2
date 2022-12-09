@@ -310,7 +310,10 @@ int main()
 			break;
 
 		case DRAW_COLOR:
-			pOut->PrintMessage("Action: a click on colors menu, Click anywhere");
+			if(UI.Choose == PAINT)
+				pOut->PrintMessage("Action: choose a filling color, Click anywhere");
+			else
+				pOut->PrintMessage("Action: choose a drawing color, Click anywhere");
 			pOut->Color_menu();
 			break;
 
@@ -371,7 +374,7 @@ int main()
 			break;
 
 		case DELETE_FIGURE:
-			pOut->PrintMessage("Action: Delete any figure , Click anywhere");
+			pOut->PrintMessage("Action: Delete the selected figure , Click anywhere");
 			break;
 
 		case START_REC:
