@@ -4,7 +4,7 @@
 #include "Actions\AddHexAction.h"
 #include "Actions\AddSquareAction.h"
 #include "Actions\AddTriangleAction.h"
-
+#include "AddUndoAction.h"
 
 
 //Constructor
@@ -72,7 +72,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pOut->PrintMessage("Action: a click on back button, Click anywhere");
 			pOut->CreateDrawToolBar();
 			break;
-
+		case UNDO_ACTION:
+			pAct = new AddUndoAction(this);
+			break;
 		case STATUS:	//a click on the status bar ==> no action
 			return;
 	}
@@ -107,6 +109,8 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 
 	return NULL;
 }
+//////////////////////////////////////////////////////////////////////////////////////
+
 //==================================================================================//
 //							Interface Management Functions							//
 //==================================================================================//
