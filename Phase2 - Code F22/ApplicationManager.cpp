@@ -1,5 +1,10 @@
 #include "ApplicationManager.h"
 #include "Actions\AddRectAction.h"
+#include "Actions\AddCircAction.h"
+#include "Actions\AddHexAction.h"
+#include "Actions\AddSquareAction.h"
+#include "Actions\AddTriangleAction.h"
+
 
 
 //Constructor
@@ -33,15 +38,41 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	//According to Action Type, create the corresponding action object
 	switch (ActType)
 	{
+		case DRAW_FIGURE: //expanding the figures menu
+			pOut->PrintMessage("Action: a click on the figures menu, Click anywhere");
+			pOut->Figure_menu();
+			break;
+
 		case DRAW_RECT:
 			pAct = new AddRectAction(this);
+			break;
+
+		case DRAW_CIRC:
+			pAct = new AddCircAction(this);
+			break;
+
+		case DRAW_HEX:
+			pAct = new AddHexAction(this);
+			break;
+
+		case DRAW_TRIANGLE:
+			pAct = new AddTriangleAction(this);
+			break;
+
+		case DRAW_SQUARE:
+			pAct = new AddSquareAction(this);
 			break;
 
 		case EXIT:
 			///create ExitAction here
 			
 			break;
-		
+
+		case CLOSEFIG:
+			pOut->PrintMessage("Action: a click on back button, Click anywhere");
+			pOut->CreateDrawToolBar();
+			break;
+
 		case STATUS:	//a click on the status bar ==> no action
 			return;
 	}

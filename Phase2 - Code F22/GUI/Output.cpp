@@ -251,8 +251,7 @@ void Output::DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) co
 	pWind->SetPen(WHITE, 1);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
-	CreateDrawToolBar();
-	
+	Figure_menu();
 }
 void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool selected)const
 {
@@ -278,7 +277,7 @@ void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool se
 	pWind->SetPen(WHITE, 1);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
-	CreateDrawToolBar();
+	Figure_menu();
 }
 void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 {
@@ -305,7 +304,7 @@ void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 		pWind->SetPen(WHITE, 1);
 		pWind->SetBrush(WHITE);
 		pWind->DrawRectangle(0,0, UI.width, UI.ToolBarHeight);
-		CreateDrawToolBar();
+		Figure_menu();
 	}
 }
 void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
@@ -338,7 +337,7 @@ void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
 		pWind->SetPen(WHITE, 1);
 		pWind->SetBrush(WHITE);
 		pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
-		CreateDrawToolBar();
+		Figure_menu();
 	}
 }
 void Output::DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected)const
@@ -368,7 +367,7 @@ void Output::DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected)const
 		pWind->SetPen(WHITE, 1);
 		pWind->SetBrush(WHITE);
 		pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
-		CreateDrawToolBar();
+		Figure_menu();
 	}
 }
 
