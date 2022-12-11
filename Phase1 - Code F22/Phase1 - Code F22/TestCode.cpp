@@ -6,8 +6,6 @@
 int main()
 {
 	int x, y;
-	// team muhammed amr marwan youssef 2232004
-	// saba7 elde7k ya regalad
 	//Create Input and Output objects to test
 	Output* pOut = new Output();
 	Input* pIn = pOut->CreateInput();

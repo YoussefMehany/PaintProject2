@@ -131,7 +131,7 @@ void Output::Figure_menu() const
 
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 1);
+	pWind->SetPen(DARKBLUE, 3);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 	
@@ -162,7 +162,7 @@ void Output::Color_menu() const
 
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 1);
+	pWind->SetPen(DARKBLUE, 3);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 
@@ -187,7 +187,7 @@ void Output::CreatePlayToolBar() const
 
 
 	//Draw a line under the toolbar
-	pWind->SetPen(RED, 1);
+	pWind->SetPen(DARKBLUE, 3);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 }
 //////////////////////////////////////////////////////////////////////////////////////////

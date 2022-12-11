@@ -1,3 +1,11 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   TestCode.cpp
-  PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\Debug\PT Project.exe
+  Output.cpp
+C:\Users\marwan\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\GUI\Output.cpp(301,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\marwan\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\GUI\Output.cpp(331,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\marwan\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\GUI\Output.cpp(331,50): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\marwan\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\GUI\Output.cpp(331,99): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\marwan\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\GUI\Output.cpp(332,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+cl : command line  warning D9028: minimal rebuild failure, reverting to normal build
+  PT-Project.vcxproj -> C:\Users\marwan\Desktop\PaintProject2\Phase1 - Code F22\Phase1 - Code F22\Debug\PT Project.exe
