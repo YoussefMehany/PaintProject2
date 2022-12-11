@@ -1,0 +1,19 @@
+﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Output.cpp
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(301,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(331,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(331,50): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(331,99): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(332,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
+  Input.cpp
+  CRectangle.cpp
+  CFigure.cpp
+  windowinput.cpp
+  colors.cpp
+  CMUgraphics.cpp
+  ApplicationManager.cpp
+  AddRectAction.cpp
+  PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe
