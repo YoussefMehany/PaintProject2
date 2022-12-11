@@ -17,6 +17,7 @@ public:
 	Input* CreateInput() const; //creates a pointer to the Input object	
 	void ClearStatusBar() const;	//Clears the status bar
 	void ClearDrawArea() const;	//Clears the drawing area
+	void UpdateToolBar() const; //Updates the toolbar with the right Mood
 	void Figure_menu() const;
 	void Color_menu() const;
 	// -- Figures Drawing functions
