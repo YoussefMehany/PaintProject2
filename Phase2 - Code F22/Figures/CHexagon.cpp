@@ -11,3 +11,6 @@ void CHexagon::Draw(Output* pOut) const
 	//Call Output::DrawRect to draw a rectangle on the screen	
 	pOut->DrawHex(Center, FigGfxInfo, Selected);
 }
+void CHexagon::MoveTo(Point P) {
+	Center = P;
+}

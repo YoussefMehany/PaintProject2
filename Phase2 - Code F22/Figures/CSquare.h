@@ -10,6 +10,7 @@ private:
 public:
 	CSquare(Point, GfxInfo FigureGfxInfo);
 	virtual void Draw(Output* pOut) const;
+	virtual void MoveTo(Point P);
 };
 
 #endif

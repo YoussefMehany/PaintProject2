@@ -5,6 +5,7 @@
 #include "Actions\AddSquareAction.h"
 #include "Actions\AddTriangleAction.h"
 #include "AddUndoAction.h"
+#include "AddMoveAction.h"
 
 
 //Constructor
@@ -13,7 +14,7 @@ ApplicationManager::ApplicationManager()
 	//Create Input and output
 	pOut = new Output;
 	pIn = pOut->CreateInput();
-	
+	SelectedFig = NULL;
 	FigCount = 0;
 		
 	//Create an array of figure pointers and set them to NULL		
@@ -75,6 +76,14 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		case UNDO_ACTION:
 			pAct = new AddUndoAction(this);
 			break;
+		case MOVE_FIGURE:
+			/*
+			if (SelectedFig == NULL){
+				pOut->PrintMessage("Please Select a Figure First");
+				break;
+			}*/
+			pAct = new AddMoveAction(this);
+			break;
 		case STATUS:	//a click on the status bar ==> no action
 			return;
 	}
@@ -109,6 +118,11 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 
 	return NULL;
 }
+void ApplicationManager::MoveFigure(Point P1)
+{
+	//shoud be SelectedFig->MoveTo(P1); after doing the select one action
+	FigList[FigCount-1]->MoveTo(P1);
+}
 //////////////////////////////////////////////////////////////////////////////////////
 
 //==================================================================================//
@@ -118,6 +132,7 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface() const
 {	
+	pOut->ClearDrawArea();
 	for(int i=0; i<FigCount; i++)
 		FigList[i]->Draw(pOut);		//Call Draw function (virtual member fn)
 }

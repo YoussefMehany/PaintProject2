@@ -11,3 +11,7 @@ void CSquare::Draw(Output* pOut) const
 	//Call Output::DrawRect to draw a rectangle on the screen	
 	pOut->DrawSquare(Center, FigGfxInfo, Selected);
 }
+void CSquare::MoveTo(Point P)
+{
+	Center = P;
+}
