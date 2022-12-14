@@ -172,13 +172,13 @@
     <ClCompile Include="Actions\AddSquareAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="AddUndoAction.cpp">
+    <ClCompile Include="Actions\AddMoveAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="AddMoveAction.cpp">
+    <ClCompile Include="Actions\AddSelectAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="AddSelectAction.cpp">
+    <ClCompile Include="Actions\AddUndoAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -292,13 +292,13 @@
     <ClInclude Include="Actions\AddTriangleAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="AddUndoAction.h">
+    <ClInclude Include="Actions\AddMoveAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="AddMoveAction.h">
+    <ClInclude Include="Actions\AddSelectAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="AddSelectAction.h">
+    <ClInclude Include="Actions\AddUndoAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>

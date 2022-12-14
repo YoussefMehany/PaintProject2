@@ -4,9 +4,9 @@
 #include "Actions\AddHexAction.h"
 #include "Actions\AddSquareAction.h"
 #include "Actions\AddTriangleAction.h"
-#include "AddUndoAction.h"
-#include "AddMoveAction.h"
-#include "AddSelectAction.h"
+#include "Actions\AddUndoAction.h"
+#include "Actions\AddMoveAction.h"
+#include "Actions\AddSelectAction.h"
 
 
 //Constructor
