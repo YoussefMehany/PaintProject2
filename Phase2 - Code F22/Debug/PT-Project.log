@@ -1,8 +1,8 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Output.cpp
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(308,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(332,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(332,50): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(332,99): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(333,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  PT-Project.vcxproj -> C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe
+  CHexagon.cpp
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(23,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(23,79): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(24,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(24,79): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+AddCircAction.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

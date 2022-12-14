@@ -329,10 +329,10 @@ void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
 	int Side = 100;
 	int Px[6];
 	int Py[6];
-	Px[0] = P1.x + Side * sqrt(3) / 2, Px[1] = P1.x + Side * sqrt(3) / 2, Px[2] = P1.x, Px[3] = P1.x - Side * sqrt(3) / 2;
-	Px[4] = P1.x - Side * sqrt(3) / 2, Px[5] = P1.x;
-	Py[0] = P1.y - Side / 2, Py[1] = P1.y + Side / 2, Py[2] = P1.y + Side, Py[3] = P1.y + Side / 2;
-	Py[4] = P1.y - Side / 2, Py[5] = P1.y - Side;
+	Px[0] = P1.x - Side * sqrt(3) / 2, Px[1] = P1.x, Px[2] = P1.x + Side * sqrt(3) / 2,
+	Px[3] = P1.x + Side * sqrt(3) / 2, Px[4] = P1.x, Px[5] = P1.x - Side * sqrt(3) / 2;
+	Py[0] = P1.y - Side / 2, Py[1] = P1.y - Side, Py[2] = P1.y - Side / 2,
+	Py[3] = P1.y + Side / 2, Py[4] = P1.y + Side, Py[5] = P1.y + Side / 2;
 	pWind->DrawPolygon(Px, Py, 6, style);
 	UpdateToolBar();
 	

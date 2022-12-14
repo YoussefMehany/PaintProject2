@@ -6,6 +6,7 @@
 #include "Actions\AddTriangleAction.h"
 #include "AddUndoAction.h"
 #include "AddMoveAction.h"
+#include "AddSelectAction.h"
 
 
 //Constructor
@@ -77,13 +78,18 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pAct = new AddUndoAction(this);
 			break;
 		case MOVE_FIGURE:
-			/*
+			
 			if (SelectedFig == NULL){
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
-			}*/
+			}
 			pAct = new AddMoveAction(this);
 			break;
+
+		case SELECT_FIGURE:
+			pAct = new AddSelectAction(this);
+			break;
+
 		case STATUS:	//a click on the status bar ==> no action
 			return;
 	}
@@ -120,8 +126,26 @@ CFigure *ApplicationManager::GetFigure(int x, int y) const
 }
 void ApplicationManager::MoveFigure(Point P1)
 {
-	//shoud be SelectedFig->MoveTo(P1); after doing the select one action
-	FigList[FigCount-1]->MoveTo(P1);
+	SelectedFig->MoveTo(P1);
+}
+
+void ApplicationManager::SelectFigure(Point P1)
+{
+	for (int i = 0; i < FigCount; i++) {
+		if (FigList[i]->IsPointInside(P1)) {
+			if (FigList[i]->IsSelected()) {
+				FigList[i]->SetSelected(false);
+				SelectedFig = NULL;
+			}
+			else {
+				if (SelectedFig) {
+					SelectedFig->SetSelected(false);
+				}
+				FigList[i]->SetSelected(true);
+				SelectedFig = FigList[i];
+			}
+		}
+	}
 }
 //////////////////////////////////////////////////////////////////////////////////////
 

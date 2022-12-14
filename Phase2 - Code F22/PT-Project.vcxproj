@@ -133,6 +133,7 @@
     <ClCompile Include="Actions\AddSquareAction.cpp" />
     <ClCompile Include="Actions\AddTriangleAction.cpp" />
     <ClCompile Include="AddMoveAction.cpp" />
+    <ClCompile Include="AddSelectAction.cpp" />
     <ClCompile Include="AddUndoAction.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Actions\AddSquareAction.h" />
     <ClInclude Include="Actions\AddTriangleAction.h" />
     <ClInclude Include="AddMoveAction.h" />
+    <ClInclude Include="AddSelectAction.h" />
     <ClInclude Include="AddUndoAction.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />

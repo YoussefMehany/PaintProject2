@@ -22,3 +22,13 @@ void CRectangle::MoveTo(Point P)
 	Corner2.x = P.x + .5 * length;
 	Corner2.y = P.y + .5 * width;
 }
+bool CRectangle::IsPointInside(Point P) {
+	int minimumx = (Corner1.x <= Corner2.x ? Corner1.x : Corner2.x);
+	int maximumx = (minimumx == Corner1.x ? Corner2.x : Corner1.x);
+	int minimumy = (Corner1.y <= Corner2.y ? Corner1.y : Corner2.y);
+	int maximumy = (minimumy == Corner1.y ? Corner2.y : Corner1.y);
+	if (P.x >= minimumx && P.x <= maximumx && P.y >= minimumy && P.y <= maximumy) {
+		return true;
+	}
+	return false;
+}

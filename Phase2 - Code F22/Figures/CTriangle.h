@@ -13,6 +13,7 @@ public:
 	CTriangle(Point, Point, Point, GfxInfo FigureGfxInfo);
 	virtual void Draw(Output* pOut) const;
 	virtual void MoveTo(Point P);
+	virtual bool IsPointInside(Point P);
 };
 
 #endif

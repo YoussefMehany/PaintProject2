@@ -7,15 +7,15 @@
 class AddTriangleAction : public Action
 {
 private:
-	Point P1, P2, P3; //Rectangle Corners
+	Point P1, P2, P3; //Triangle Corners
 	GfxInfo TriangleGfxInfo;
 public:
 	AddTriangleAction(ApplicationManager* pApp);
 
-	//Reads rectangle parameters
+	//Reads Triangle parameters
 	virtual void ReadActionParameters();
 
-	//Add rectangle to the ApplicationManager
+	//Add Triangle to the ApplicationManager
 	virtual void Execute();
 
 };

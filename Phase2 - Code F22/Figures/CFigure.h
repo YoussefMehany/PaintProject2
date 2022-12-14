@@ -3,6 +3,7 @@
 
 #include "..\defs.h"
 #include "..\GUI\Output.h"
+#include <cmath>
 
 //Base class for all figures
 class CFigure
@@ -26,6 +27,7 @@ public:
 	void ChngFillClr(color Fclr);	//changes the figure's filling color
 	 
 	virtual void MoveTo(Point P)=0;
+	virtual bool IsPointInside(Point P)=0;
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
 
