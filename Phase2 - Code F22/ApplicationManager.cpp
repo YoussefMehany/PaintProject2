@@ -9,7 +9,7 @@
 #include "Actions\AddSelectAction.h"
 #include "Actions\AddChangeColorAction.h"
 #include "Actions\AddDeleteAction.h"
-
+#include "Actions\AddSaveAction.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -158,7 +158,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			}
 			pAct = new AddDeleteAction(this);
 			break;
-		
+		case SAVE_PROGRESS:
+			pAct = new AddSaveAction(this);
+			break;
 		case EXIT:
 			///create ExitAction here
 
@@ -244,7 +246,26 @@ void ApplicationManager::ChangeColor(color clr)
 	if (UI.Choose == BORDER) SelectedFig->ChngDrawClr(clr);
 	else SelectedFig->ChngFillClr(clr);
 }
+int ApplicationManager::getFigCount()const {
+	return FigCount;
+}
 
+//==================================================================================//
+//							Save/Load Functions										//
+//==================================================================================//
+
+void ApplicationManager::SaveAll(ofstream& OutFile)
+{
+	for (int i = 0; i < FigCount; i++)
+	{
+		FigList[i]->Save(OutFile);
+	}
+}
+void ApplicationManager::AssignIDS() {
+	for (int i = 0; i < FigCount; i++) {
+		FigList[i]->SetID(i + 1);
+	}
+}
 //////////////////////////////////////////////////////////////////////////////////////
 
 //==================================================================================//

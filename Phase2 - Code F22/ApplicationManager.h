@@ -37,7 +37,10 @@ public:
 	void MoveFigure(Point P1);
 	void SelectFigure(Point P1);
 	void ChangeColor(color clr);
+	int getFigCount()const;
 	void DeleteFigure();
+	void AssignIDS();
+	void SaveAll(ofstream& OutFile);
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

@@ -19,6 +19,7 @@ void CTriangle::MoveTo(Point P)
 	//getting the new corners
 	for (int i = 0; i < 3; i++) {
 		Corners[i].x += P.x - Center1.x;
+		Corners[i].y += P.y - Center1.y;
 	}
 }
 bool CTriangle::IsPointInside(Point P) {
@@ -41,4 +42,21 @@ bool CTriangle::IsPointInside(Point P) {
 	}
 	if (abs(angle - 6.283) < 0.1) return true;
 	return false;
+}
+void CTriangle::Save(ofstream& OutFile)
+{
+	string DrawClr = getColorName(FigGfxInfo.DrawClr);
+	OutFile << triangle << '\t' << ID << '\t' ;
+	for (int i = 0; i < 3; i++) {
+		OutFile << Corners[i].x << '\t' << Corners[i].y << '\t';
+	}
+	OutFile << DrawClr << '\t';
+	if (FigGfxInfo.isFilled == true)
+	{
+		string FillClr = getColorName(FigGfxInfo.FillClr);
+		OutFile << FillClr << endl;
+	}
+	else {
+		OutFile << "NO_FILL" << endl;
+	}
 }

@@ -24,3 +24,16 @@ bool CCircle::IsPointInside(Point P) {
 	if (distance <= radius) return true;
 	return false;
 }
+void CCircle::Save(ofstream& OutFile)
+{
+	string DrawClr = getColorName(FigGfxInfo.DrawClr);
+	OutFile << circle << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' <<radius<<'\t'<< DrawClr << '\t';
+	if (FigGfxInfo.isFilled == true)
+	{
+		string FillClr = getColorName(FigGfxInfo.FillClr);
+		OutFile << FillClr << endl;
+	}
+	else {
+		OutFile << "NO_FILL" << endl;
+	}
+}

@@ -13,6 +13,7 @@ public:
 	virtual void Draw(Output* pOut) const;
 	virtual void MoveTo(Point P);
 	virtual bool IsPointInside(Point P);
+	virtual void Save(ofstream& OutFile);
 };
 
 #endif

@@ -133,6 +133,7 @@
     <ClCompile Include="Actions\AddDeleteAction.cpp" />
     <ClCompile Include="Actions\AddHexAction.cpp" />
     <ClCompile Include="Actions\AddMoveAction.cpp" />
+    <ClCompile Include="Actions\AddSaveAction.cpp" />
     <ClCompile Include="Actions\AddSelectAction.cpp" />
     <ClCompile Include="Actions\AddSquareAction.cpp" />
     <ClCompile Include="Actions\AddTriangleAction.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Actions\AddDeleteAction.h" />
     <ClInclude Include="Actions\AddHexAction.h" />
     <ClInclude Include="Actions\AddMoveAction.h" />
+    <ClInclude Include="Actions\AddSaveAction.h" />
     <ClInclude Include="Actions\AddSelectAction.h" />
     <ClInclude Include="Actions\AddSquareAction.h" />
     <ClInclude Include="Actions\AddTriangleAction.h" />

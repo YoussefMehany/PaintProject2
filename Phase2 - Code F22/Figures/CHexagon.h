@@ -14,6 +14,8 @@ public:
 	virtual void Draw(Output* pOut) const;
 	virtual void MoveTo(Point P);
 	virtual bool IsPointInside(Point P);
+	void CalcCorners(Point* Corners);
+	virtual void Save(ofstream& OutFile);
 };
 
 #endif
