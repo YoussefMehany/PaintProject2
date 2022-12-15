@@ -35,16 +35,15 @@ bool CRectangle::IsPointInside(Point P) {
 void CRectangle::Save(ofstream& OutFile)
 {
 	//<< '\t' 
-	string DrawClr = getColorName(FigGfxInfo.DrawClr);
-	OutFile << rectangle << '\t' << ID << '\t' << Corner1.x << '\t' << Corner1.y << '\t' << Corner2.x << '\t' << Corner2.y<<'\t' << DrawClr << '\t';
-	
-	
+	string DrawClr = getColor(FigGfxInfo.DrawClr);
+	string FillClr;
+
 	if (FigGfxInfo.isFilled == true)
 	{
-		string FillClr = getColorName(FigGfxInfo.FillClr);
-		OutFile << FillClr << endl;
+		FillClr = getColor(FigGfxInfo.FillClr);
 	}
 	else {
-		OutFile << "NO_FILL" << endl;
+		FillClr = "NO_FILL";
 	}
+	OutFile << rectangle << '\t' << ID << '\t' << Corner1.x << '\t' << Corner1.y << '\t' << Corner2.x << '\t' << Corner2.y << '\t' << DrawClr << '\t' << FillClr << '\n';
 }

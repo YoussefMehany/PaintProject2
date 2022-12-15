@@ -26,17 +26,14 @@ bool CSquare::IsPointInside(Point P) {
 }
 void CSquare::Save(ofstream& OutFile)
 {
-	//<< '\t' 
-	string DrawClr = getColorName(FigGfxInfo.DrawClr);
-	OutFile << square << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' << Side << '\t' << DrawClr << '\t';
-
-
+	string DrawClr = getColor(FigGfxInfo.DrawClr);
+	string FillClr;
 	if (FigGfxInfo.isFilled == true)
 	{
-		string FillClr = getColorName(FigGfxInfo.FillClr);
-		OutFile << FillClr << endl;
+		FillClr = getColor(FigGfxInfo.FillClr);
 	}
 	else {
-		OutFile << "NO_FILL" << endl;
+		FillClr = "NO_FILL";
 	}
+	OutFile << square << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' << Side << '\t' << DrawClr << '\t' << FillClr << '\n';
 }

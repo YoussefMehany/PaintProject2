@@ -13,62 +13,55 @@ void AddSaveAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	pOut->PrintMessage("Enter name without spaces ");
+	pOut->PrintMessage("Enter the file name ");
 
 
 	fileName = pIn->GetSrting(pOut) + ".txt";
 	OutFile.open(fileName);
-	if (OutFile.is_open())
-	{
-		pOut->PrintMessage("Your file has been Saved");
-	}
-	else {
-		pOut->PrintMessage("Save failed");
-	}
 }
 
 void AddSaveAction::Execute()
 {
 	ReadActionParameters();
-	if (OutFile.is_open())
-	{
-		int FiguresCount = pManager->getFigCount();
-		string DrawClr = getColorName(UI.DrawColor);
-		OutFile << DrawClr;
-		string FillClr = getColorName(UI.FillColor);
-		OutFile << '\t' << FillClr << '\n' << FiguresCount << '\n' ;
-		pManager->AssignIDS();
-		pManager->SaveAll(OutFile);
-		OutFile.close();
-	}
+
+	int FiguresCount = pManager->getFigCount();
+	string DrawClr = getColor(UI.DrawColor);
+	string FillClr;
+	if (UI.IsFilled) FillClr = getColor(UI.FillColor);
+	else FillClr = "NO_FILL";
+	OutFile << DrawClr << '\t' << FillClr << '\n' << FiguresCount << '\n';
+	pManager->SaveFile(OutFile);
+	OutFile.close();
 }
-//utility fn to return a string of the color 
-string AddSaveAction::getColorName(color a)const
+
+string AddSaveAction::getColor(color clr)
 {
-
-	if (a == RED)
-	{
-		return "RED";
-	}
-
-	if (a == BLACK)
-	{
-		return "BLACK";
-	}
-
-	if (a == BLUE)
+	if (clr == BLUE)
 	{
 		return "BLUE";
 	}
-
-	if (a == GREEN)
+	if (clr == GREEN)
 	{
 		return "GREEN";
 	}
-
-	if (a == WHITE)
+	if (clr == WHITE) 
 	{
 		return "WHITE";
 	}
-	return "NO";
+	if (clr == RED)
+	{
+		return "RED";
+	}
+	if (clr == BLACK)
+	{
+		return "BLACK";
+	}
+	if (clr == ORANGE)
+	{
+		return "ORANGE";
+	}
+	if (clr == YELLOW)
+	{
+		return "YELLOW";
+	}
 }

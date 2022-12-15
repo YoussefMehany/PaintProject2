@@ -1,4 +1,8 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  ApplicationManager.cpp
-AddChangeColorAction.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  PT-Project.vcxproj -> C:\Users\Dell\Desktop\Project\Phase2 - Code F22\Debug\PT Project.exe
+  Output.cpp
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(306,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(329,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(329,64): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(330,15): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\GUI\Output.cpp(330,64): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

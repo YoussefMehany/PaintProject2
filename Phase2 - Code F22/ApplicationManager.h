@@ -15,7 +15,7 @@ private:
 	int FigCount; //Actual number of figures
 	bool CheckUpdate;
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
-
+	ActionType LastAction;
 	CFigure* SelectedFig; //Pointer to the selected figure
 
 	//Pointers to Input and Output classes
@@ -32,6 +32,7 @@ public:
 	void ExecuteAction(ActionType) ; //Creates an action and executes it
 	
 	// -- Figures Management Functions
+	void PrintLastMsg();
 	void AddFigure(CFigure* pFig);          //Adds a new figure to the FigList
 	CFigure *GetFigure(Point P1) const; //Search for a figure given a point inside the figure
 	void MoveFigure(Point P1);
@@ -39,12 +40,11 @@ public:
 	void ChangeColor(color clr);
 	int getFigCount()const;
 	void DeleteFigure();
-	void AssignIDS();
-	void SaveAll(ofstream& OutFile);
+	void SaveFile(ofstream& OutFile);
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output
-	void UpdateInterface() const;	//Redraws all the drawing window	
+	void UpdateInterface();	//Redraws all the drawing window	
 };
 
 #endif

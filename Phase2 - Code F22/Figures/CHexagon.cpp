@@ -4,10 +4,7 @@ CHexagon::CHexagon(Point P1, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	Center = P1;
 	Side = 100;
-	Corners[0].x = Center.x - Side * sqrt(3) / 2, Corners[1].x = Center.x, Corners[2].x = Center.x + Side * sqrt(3) / 2,
-		Corners[3].x = Center.x + Side * sqrt(3) / 2, Corners[4].x = Center.x, Corners[5].x = Center.x - Side * sqrt(3) / 2;
-	Corners[0].y = Center.y - Side / 2, Corners[1].y = Center.y - Side, Corners[2].y = Center.y - Side / 2,
-		Corners[3].y = Center.y + Side / 2, Corners[4].y = Center.y + Side, Corners[5].y = Center.y + Side / 2;
+	CalcCorners(Corners);
 }
 
 
@@ -52,18 +49,18 @@ bool CHexagon::IsPointInside(Point P) {
 void CHexagon::Save(ofstream& OutFile)
 {
 	
-	string DrawClr = getColorName(FigGfxInfo.DrawClr);
+	string DrawClr = getColor(FigGfxInfo.DrawClr);
+	string FillClr;
 	OutFile << hexagon << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t'; 
 	for (int i = 0; i < 6; i++) {
 		OutFile << Corners[i].x << '\t' << Corners[i].y << '\t';
 	}
-	OutFile << DrawClr << '\t';
 	if (FigGfxInfo.isFilled == true)
 	{
-		string FillClr = getColorName(FigGfxInfo.FillClr);
-		OutFile << FillClr << endl;
+		FillClr = getColor(FigGfxInfo.FillClr);
 	}
 	else {
-		OutFile << "NO_FILL" << endl;
+		FillClr = "NO_FILL";
 	}
+	OutFile << DrawClr << '\t' << FillClr << '\n';
 }

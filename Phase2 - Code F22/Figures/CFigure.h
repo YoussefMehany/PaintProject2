@@ -30,7 +30,7 @@ public:
 	///It should be overridden by each inherited figure
 
 	///Decide the parameters that you should pass to each function	
-	string getColorName(color)const;
+	string getColor(color);
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file
 	//virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file

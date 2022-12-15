@@ -15,7 +15,7 @@ Output::Output()
 	UI.StatusBarHeight = 50;
 	UI.ToolBarHeight = 50;
 	UI.MenuItemWidth = 50;
-	
+	UI.IsFilled = false;
 	UI.DrawColor = BLUE;	//Drawing color
 	UI.FillColor = GREEN;	//Filling color
 	UI.MsgColor = WHITE;		//Messages color
@@ -248,7 +248,7 @@ void Output::DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) co
 	else			
 		DrawingClr = RectGfxInfo.DrawClr;
 	
-	pWind->SetPen(DrawingClr,1);
+	pWind->SetPen(DrawingClr, UI.PenWidth);
 	drawstyle style;
 	if (RectGfxInfo.isFilled)	
 	{
@@ -271,7 +271,7 @@ void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool se
 	else
 		DrawingClr = TrigGfxInfo.DrawClr;
 
-	pWind->SetPen(DrawingClr, 1);
+	pWind->SetPen(DrawingClr, UI.PenWidth);
 	drawstyle style;
 	if (TrigGfxInfo.isFilled)
 	{
@@ -293,7 +293,7 @@ void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 	else
 		DrawingClr = CirGfxInfo.DrawClr;
 
-	pWind->SetPen(DrawingClr, 1);
+	pWind->SetPen(DrawingClr, UI.PenWidth);
 	drawstyle style;
 	if (CirGfxInfo.isFilled)
 	{
@@ -315,7 +315,7 @@ void Output::DrawHex(Point P1, int Side, GfxInfo HexGfxInfo, bool selected)const
 	else
 		DrawingClr = HexGfxInfo.DrawClr;
 
-	pWind->SetPen(DrawingClr, 1);
+	pWind->SetPen(DrawingClr, UI.PenWidth);
 	drawstyle style;
 	if (HexGfxInfo.isFilled)
 	{
@@ -342,7 +342,7 @@ void Output::DrawSquare(Point P1, int Side, GfxInfo SquareGfxInfo, bool selected
 	else
 		DrawingClr = SquareGfxInfo.DrawClr;
 
-	pWind->SetPen(DrawingClr, 1);
+	pWind->SetPen(DrawingClr, UI.PenWidth);
 	drawstyle style;
 	if (SquareGfxInfo.isFilled)
 	{

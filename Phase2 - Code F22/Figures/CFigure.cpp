@@ -23,31 +23,40 @@ void CFigure::ChngFillClr(color Fclr)
 	FigGfxInfo.FillClr = Fclr; 
 }
 
-string CFigure::getColorName(color name)const
+string CFigure::getColor(color clr)
 {
-
-	if (name == RED)
-	{
-		return "RED";
-	}
-
-	if (name == BLACK)
-	{
-		return "BLACK";
-	}
-
-	if (name == BLUE)
+	if (clr == BLUE)
 	{
 		return "BLUE";
 	}
 
-	if (name == GREEN)
+	if (clr == GREEN)
 	{
 		return "GREEN";
 	}
 
-	if (name == WHITE)
+	if (clr == WHITE)
 	{
 		return "WHITE";
+	}
+
+	if (clr == RED)
+	{
+		return "RED";
+	}
+
+	if (clr == BLACK)
+	{
+		return "BLACK";
+	}
+
+	if (clr == ORANGE)
+	{
+		return "ORANGE";
+	}
+
+	if (clr == YELLOW)
+	{
+		return "YELLOW";
 	}
 }

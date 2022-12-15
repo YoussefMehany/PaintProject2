@@ -44,12 +44,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	switch (ActType)
 	{
 		case DRAW_FIGURE: //expanding the figures menu
-			pOut->PrintMessage("Action: a click on the figures menu, Click anywhere");
 			pOut->Figure_menu();
 			break;
 
 		case DRAW_COLOR: //expanding the figures menu
-			pOut->PrintMessage("Action: a click on the figures menu, Click anywhere");
 			pOut->Color_menu();
 			break;
 
@@ -74,7 +72,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case CLOSEFIG:
-			pOut->PrintMessage("Action: a click on back button, Click anywhere");
 			pOut->CreateDrawToolBar();
 			break;
 
@@ -147,7 +144,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case CLOSECLR:
-			pOut->PrintMessage("Action: a click on back button, Click anywhere");
 			pOut->CreateDrawToolBar();
 			break;
 
@@ -171,6 +167,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	if(pAct != NULL)
 	{
 		CheckUpdate = true;
+		LastAction = ActType;
 		pAct->Execute(); //Execute
 		delete pAct;	//You may need to change this line depending to your implementation
 		pAct = NULL;
@@ -183,8 +180,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	if(FigCount < MaxFigCount )
-		FigList[FigCount++] = pFig;	
+	if (FigCount < MaxFigCount) {
+		FigList[FigCount++] = pFig;
+		pFig->SetID(FigCount);
+	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
 CFigure* ApplicationManager::GetFigure(Point P1) const
@@ -243,29 +242,44 @@ void ApplicationManager::SelectFigure(Point P1)
 
 void ApplicationManager::ChangeColor(color clr)
 {
-	if (UI.Choose == BORDER) SelectedFig->ChngDrawClr(clr);
-	else SelectedFig->ChngFillClr(clr);
+	if (UI.Choose == BORDER)
+	{
+		UI.DrawColor = clr;
+		SelectedFig->ChngDrawClr(UI.DrawColor);
+	}
+	else 
+	{
+		UI.IsFilled = true;
+		UI.FillColor = clr;
+		SelectedFig->ChngFillClr(UI.FillColor);
+	}
 }
 int ApplicationManager::getFigCount()const {
 	return FigCount;
 }
 
+void ApplicationManager::PrintLastMsg()
+{
+	switch (LastAction)
+	{
+	case SAVE_PROGRESS:
+		pOut->PrintMessage("File Saved");
+		break;
+	}
+		
+}
 //==================================================================================//
 //							Save/Load Functions										//
 //==================================================================================//
 
-void ApplicationManager::SaveAll(ofstream& OutFile)
+void ApplicationManager::SaveFile(ofstream& OutFile)
 {
 	for (int i = 0; i < FigCount; i++)
 	{
 		FigList[i]->Save(OutFile);
 	}
 }
-void ApplicationManager::AssignIDS() {
-	for (int i = 0; i < FigCount; i++) {
-		FigList[i]->SetID(i + 1);
-	}
-}
+
 //////////////////////////////////////////////////////////////////////////////////////
 
 //==================================================================================//
@@ -273,13 +287,14 @@ void ApplicationManager::AssignIDS() {
 //==================================================================================//
 
 //Draw all figures on the user interface
-void ApplicationManager::UpdateInterface() const
+void ApplicationManager::UpdateInterface()
 {	
 	if (CheckUpdate) {
 		pOut->ClearDrawArea();
 		for (int i = 0; i < FigCount; i++)
 			FigList[i]->Draw(pOut); //Call Draw function (virtual member fn)
 	}
+	PrintLastMsg();
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the input
