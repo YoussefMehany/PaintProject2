@@ -2,41 +2,32 @@
 
 CTriangle::CTriangle(Point P1, Point P2, Point P3, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
-	Corner1 = P1;
-	Corner2 = P2;
-	Corner3 = P3;
+	Corners[0] = P1; Corners[1] = P2; Corners[2] = P3;
 }
 
 
 void CTriangle::Draw(Output* pOut) const
 {
 	//Call Output::DrawRect to draw a rectangle on the screen	
-	pOut->DrawTrig(Corner1, Corner2, Corner3, FigGfxInfo, Selected);
+	pOut->DrawTrig(Corners[0], Corners[1], Corners[2], FigGfxInfo, Selected);
 }
 void CTriangle::MoveTo(Point P)
 {
 	Point Center1;
-	Center1.x = (Corner1.x + Corner2.x + Corner3.x) / 3;
-	Center1.y = (Corner1.y + Corner2.y + Corner3.y) / 3;
-	//getting the new first corner
-	Corner1.x = P.x +Corner1.x - Center1.x ;
-	Corner1.y = P.y + Corner1.y - Center1.y;
-	//getting the new second corner
-	Corner2.x = P.x + Corner2.x - Center1.x;
-	Corner2.y = P.y + Corner2.y - Center1.y;
-	//getting the new third corner
-	Corner3.x = P.x + Corner3.x - Center1.x;
-	Corner3.y = P.y + Corner3.y - Center1.y;
+	Center1.x = (Corners[0].x + Corners[1].x + Corners[2].x) / 3;
+	Center1.y = (Corners[0].y + Corners[1].y + Corners[2].y) / 3;
+	//getting the new corners
+	for (int i = 0; i < 3; i++) {
+		Corners[i].x += P.x - Center1.x;
+	}
 }
 bool CTriangle::IsPointInside(Point P) {
 	double vectorsx[3];
 	double vectorsy[3];
 	double vectorsmag[3];
-	Point V[3];
-	V[0] = Corner1; V[1] = Corner2; V[2] = Corner3;
 	for (int i = 0; i < 3; i++) {
-		vectorsx[i] = V[i].x - P.x;
-		vectorsy[i] = V[i].y - P.y;
+		vectorsx[i] = Corners[i].x - P.x;
+		vectorsy[i] = Corners[i].y - P.y;
 	}
 	for (int i = 0; i < 3; i++) {
 		vectorsmag[i] = sqrt(pow(vectorsx[i], 2) + pow(vectorsy[i], 2));

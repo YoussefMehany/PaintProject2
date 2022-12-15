@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Actions\AddChangeColorAction.cpp" />
     <ClCompile Include="Actions\AddCircAction.cpp" />
+    <ClCompile Include="Actions\AddDeleteAction.cpp" />
     <ClCompile Include="Actions\AddHexAction.cpp" />
     <ClCompile Include="Actions\AddMoveAction.cpp" />
     <ClCompile Include="Actions\AddSelectAction.cpp" />
@@ -172,11 +173,11 @@
     <ClCompile Include="CMUgraphicsLib\jpeg\jquant1.c" />
     <ClCompile Include="CMUgraphicsLib\jpeg\jquant2.c" />
     <ClCompile Include="CMUgraphicsLib\jpeg\jutils.c" />
+    <ClCompile Include="Actions\AddRectAction.cpp" />
     <ClCompile Include="Figures\CCircle.cpp" />
     <ClCompile Include="Figures\CFigure.cpp" />
     <ClCompile Include="Figures\CHexagon.cpp" />
     <ClCompile Include="Figures\CRectangle.cpp" />
-    <ClCompile Include="Actions\AddRectAction.cpp" />
     <ClCompile Include="Figures\CSquare.cpp" />
     <ClCompile Include="Figures\CTriangle.cpp" />
     <ClCompile Include="GUI\Input.cpp" />
@@ -187,6 +188,7 @@
   <ItemGroup>
     <ClInclude Include="Actions\AddChangeColorAction.h" />
     <ClInclude Include="Actions\AddCircAction.h" />
+    <ClInclude Include="Actions\AddDeleteAction.h" />
     <ClInclude Include="Actions\AddHexAction.h" />
     <ClInclude Include="Actions\AddMoveAction.h" />
     <ClInclude Include="Actions\AddSelectAction.h" />
@@ -213,12 +215,12 @@
     <ClInclude Include="CMUgraphicsLib\jpeg\jpegint.h" />
     <ClInclude Include="CMUgraphicsLib\jpeg\jpeglib.h" />
     <ClInclude Include="CMUgraphicsLib\jpeg\jversion.h" />
+    <ClInclude Include="Actions\Action.h" />
+    <ClInclude Include="Actions\AddRectAction.h" />
     <ClInclude Include="Figures\CCircle.h" />
     <ClInclude Include="Figures\CFigure.h" />
     <ClInclude Include="Figures\CHexagon.h" />
     <ClInclude Include="Figures\CRectangle.h" />
-    <ClInclude Include="Actions\Action.h" />
-    <ClInclude Include="Actions\AddRectAction.h" />
     <ClInclude Include="Figures\CSquare.h" />
     <ClInclude Include="Figures\CTriangle.h" />
     <ClInclude Include="GUI\Input.h" />

@@ -4,7 +4,7 @@ CCircle::CCircle(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxIn
 {
 	Center = P1;
 	Radius = P2;
-	radius = sqrt(pow((Radius.x - Center.x), 2) + pow((Radius.y - Center.y), 2));
+	radius = (int)sqrt(pow((Radius.x - Center.x), 2) + pow((Radius.y - Center.y), 2));
 }
 
 
@@ -20,7 +20,7 @@ void CCircle::MoveTo(Point P)
 	Radius.y = P.y;
 }
 bool CCircle::IsPointInside(Point P) {
-	double distance = sqrt(pow((P.x - Center.x), 2) + pow((P.y - Center.y), 2));
+	int distance = (int)sqrt(pow((P.x - Center.x), 2) + pow((P.y - Center.y), 2));
 	if (distance <= radius) return true;
 	return false;
 }

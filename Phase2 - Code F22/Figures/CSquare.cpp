@@ -5,12 +5,10 @@ CSquare::CSquare(Point P1, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 	Center = P1;
 	Side = 200;
 }
-
-
 void CSquare::Draw(Output* pOut) const
 {
-	//Call Output::DrawRect to draw a rectangle on the screen	
-	pOut->DrawSquare(Center, FigGfxInfo, Selected);
+	//Call Output::DrawSquare to draw a Square on the screen	
+	pOut->DrawSquare(Center, Side, FigGfxInfo, Selected);
 }
 void CSquare::MoveTo(Point P)
 {

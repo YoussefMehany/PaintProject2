@@ -24,8 +24,8 @@ public:
 	void DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected=false) const;  //Draw a rectangle
 	void DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool selected = false) const; //Draw a triangle (Marwan)
 	void DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected = false) const; //Draw a circle (Marwan)
-	void DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected = false) const; //Draw a circle (Youssef)
-	void DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected = false) const; //Draw a Square (Youssef)
+	void DrawHex(Point P1, int Side, GfxInfo HexGfxInfo, bool selected = false) const; //Draw a circle (Youssef)
+	void DrawSquare(Point P1, int Side, GfxInfo SquareGfxInfo, bool selected = false) const; //Draw a Square (Youssef)
 	///Make similar functions for drawing all other figure types.
 	
 	void PrintMessage(string msg) const;	//Print a message on Status bar

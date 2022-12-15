@@ -23,8 +23,6 @@ Output::Output()
 	UI.HighlightColor = MAGENTA;	//This color should NOT be used to draw figures. use if for highlight only
 	UI.StatusBarColor = SOFTCYAN;
 	UI.PenWidth = 3;	//width of the figures frames
-
-	
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, UI.wx, UI.wy);
 	//Change the title
@@ -309,7 +307,7 @@ void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 	pWind->DrawCircle(P1.x, P1.y, Radius, style);
 	UpdateToolBar();
 }
-void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
+void Output::DrawHex(Point P1, int Side, GfxInfo HexGfxInfo, bool selected)const
 {
 	color DrawingClr;
 	if (selected)
@@ -326,7 +324,6 @@ void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
 	}
 	else
 		style = FRAME;
-	int Side = 100;
 	int Px[6];
 	int Py[6];
 	Px[0] = P1.x - Side * sqrt(3) / 2, Px[1] = P1.x, Px[2] = P1.x + Side * sqrt(3) / 2,
@@ -337,7 +334,7 @@ void Output::DrawHex(Point P1, GfxInfo HexGfxInfo, bool selected)const
 	UpdateToolBar();
 	
 }
-void Output::DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected)const
+void Output::DrawSquare(Point P1, int Side, GfxInfo SquareGfxInfo, bool selected)const
 {
 	color DrawingClr;
 	if (selected)
@@ -354,7 +351,6 @@ void Output::DrawSquare(Point P1, GfxInfo SquareGfxInfo, bool selected)const
 	}
 	else
 		style = FRAME;
-	int Side = 200;
 	Point P2, P3;
 	P2.x = P1.x - Side / 2, P2.y = P1.y - Side / 2;
 	P3.x = P1.x + Side / 2, P3.y = P1.y + Side / 2;

@@ -8,6 +8,7 @@
 #include "Actions\AddMoveAction.h"
 #include "Actions\AddSelectAction.h"
 #include "Actions\AddChangeColorAction.h"
+#include "Actions\AddDeleteAction.h"
 
 
 //Constructor
@@ -149,6 +150,14 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pOut->PrintMessage("Action: a click on back button, Click anywhere");
 			pOut->CreateDrawToolBar();
 			break;
+
+		case DELETE_FIGURE:
+			if (SelectedFig == NULL) {
+				pOut->PrintMessage("Please Select a Figure First");
+				break;
+			}
+			pAct = new AddDeleteAction(this);
+			break;
 		
 		case EXIT:
 			///create ExitAction here
@@ -160,7 +169,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	if(pAct != NULL)
 	{
 		CheckUpdate = true;
-		pAct->Execute();//Execute
+		pAct->Execute(); //Execute
 		delete pAct;	//You may need to change this line depending to your implementation
 		pAct = NULL;
 	}
@@ -176,37 +185,47 @@ void ApplicationManager::AddFigure(CFigure* pFig)
 		FigList[FigCount++] = pFig;	
 }
 ////////////////////////////////////////////////////////////////////////////////////
-CFigure *ApplicationManager::GetFigure(int x, int y) const
+CFigure* ApplicationManager::GetFigure(Point P1) const
 {
 	//If a figure is found return a pointer to it.
-	//if this point (x,y) does not belong to any figure return NULL
+	//if this point does not belong to any figure return NULL
 
 
 	//Add your code here to search for a figure given a point x,y	
 	//Remember that ApplicationManager only calls functions do NOT implement it.
-
-	return NULL;
+	CFigure* FigurePtr = NULL;
+	for (int i = 0; i < FigCount; i++) {
+		if (FigList[i]->IsPointInside(P1)) {
+			if (SelectedFig == FigList[i]) {
+				SelectedFig->SetSelected(true);
+				FigurePtr = FigList[i];
+			}
+			else {
+				if (SelectedFig) SelectedFig->SetSelected(false);
+				FigurePtr = FigList[i];
+			}
+		}
+	}
+	return FigurePtr;
 }
 void ApplicationManager::MoveFigure(Point P1)
 {
 	SelectedFig->MoveTo(P1);
 }
 
+void ApplicationManager::DeleteFigure()
+{
+	delete SelectedFig;
+	SelectedFig = FigList[--FigCount];
+	FigList[FigCount] = NULL;
+}
 void ApplicationManager::SelectFigure(Point P1)
 {
-	for (int i = 0; i < FigCount; i++) {
-		if (FigList[i]->IsPointInside(P1)) {
-			if (FigList[i]->IsSelected()) {
-				FigList[i]->SetSelected(false);
-				SelectedFig = NULL;
-			}
-			else {
-				if (SelectedFig) {
-					SelectedFig->SetSelected(false);
-				}
-				FigList[i]->SetSelected(true);
-				SelectedFig = FigList[i];
-			}
+	SelectedFig = GetFigure(P1);
+	if (SelectedFig) {
+		SelectedFig->SetSelected(!SelectedFig->IsSelected());
+		if (!SelectedFig->IsSelected()) {
+			SelectedFig = NULL;
 		}
 	}
 }

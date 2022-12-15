@@ -126,12 +126,6 @@
     <ClCompile Include="CMUgraphicsLib\jpeg\jutils.c">
       <Filter>CMUgraphicsLib\JPEG</Filter>
     </ClCompile>
-    <ClCompile Include="Figures\CFigure.cpp">
-      <Filter>Figures Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CRectangle.cpp">
-      <Filter>Figures Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Actions\AddRectAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
@@ -150,18 +144,6 @@
     </ClCompile>
     <ClCompile Include="Actions\AddCircAction.cpp">
       <Filter>Action Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CCircle.cpp">
-      <Filter>Figures Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CHexagon.cpp">
-      <Filter>Figures Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CTriangle.cpp">
-      <Filter>Figures Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Figures\CSquare.cpp">
-      <Filter>Figures Classes</Filter>
     </ClCompile>
     <ClCompile Include="Actions\AddHexAction.cpp">
       <Filter>Action Classes</Filter>
@@ -182,6 +164,27 @@
       <Filter>Action Classes</Filter>
     </ClCompile>
     <ClCompile Include="Actions\AddChangeColorAction.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CFigure.cpp">
+      <Filter>Figures Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CHexagon.cpp">
+      <Filter>Figures Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CRectangle.cpp">
+      <Filter>Figures Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CTriangle.cpp">
+      <Filter>Figures Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CCircle.cpp">
+      <Filter>Figures Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Figures\CSquare.cpp">
+      <Filter>Figures Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddDeleteAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -246,12 +249,6 @@
     <ClInclude Include="CMUgraphicsLib\jpeg\jversion.h">
       <Filter>CMUgraphicsLib\JPEG</Filter>
     </ClInclude>
-    <ClInclude Include="Figures\CFigure.h">
-      <Filter>Figures Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Figures\CRectangle.h">
-      <Filter>Figures Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Actions\Action.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
@@ -274,18 +271,6 @@
     <ClInclude Include="Actions\AddCircAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Figures\CCircle.h">
-      <Filter>Figures Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Figures\CHexagon.h">
-      <Filter>Figures Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Figures\CTriangle.h">
-      <Filter>Figures Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Figures\CSquare.h">
-      <Filter>Figures Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Actions\AddHexAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
@@ -305,6 +290,27 @@
       <Filter>Action Classes</Filter>
     </ClInclude>
     <ClInclude Include="Actions\AddChangeColorAction.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CFigure.h">
+      <Filter>Figures Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CHexagon.h">
+      <Filter>Figures Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CRectangle.h">
+      <Filter>Figures Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CTriangle.h">
+      <Filter>Figures Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CCircle.h">
+      <Filter>Figures Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Figures\CSquare.h">
+      <Filter>Figures Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddDeleteAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>
