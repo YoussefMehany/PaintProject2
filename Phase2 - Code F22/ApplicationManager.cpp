@@ -227,11 +227,14 @@ void ApplicationManager::DeleteFigure()
 }
 void ApplicationManager::SelectFigure(Point P1)
 {
-	SelectedFig = GetFigure(P1);
-	if (SelectedFig) {
-		SelectedFig->SetSelected(!SelectedFig->IsSelected());
-		if (!SelectedFig->IsSelected()) {
-			SelectedFig = NULL;
+	CFigure* FigPtr = GetFigure(P1);
+	if (FigPtr) {
+		SelectedFig = FigPtr;
+		if (SelectedFig) {
+			SelectedFig->SetSelected(!SelectedFig->IsSelected());
+			if (!SelectedFig->IsSelected()) {
+				SelectedFig = NULL;
+			}
 		}
 	}
 }
