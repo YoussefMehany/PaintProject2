@@ -215,8 +215,14 @@ void ApplicationManager::MoveFigure(Point P1)
 
 void ApplicationManager::DeleteFigure()
 {
-	delete SelectedFig;
-	SelectedFig = FigList[--FigCount];
+	for (int i = 0; i < FigCount; i++) {
+		if (FigList[i] == SelectedFig) {
+			FigList[i] = FigList[--FigCount];
+			delete SelectedFig;
+			SelectedFig = NULL;
+			break;
+		}
+	}
 	FigList[FigCount] = NULL;
 }
 void ApplicationManager::SelectFigure(Point P1)
