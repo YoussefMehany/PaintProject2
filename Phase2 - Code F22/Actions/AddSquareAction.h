@@ -8,6 +8,7 @@ class AddSquareAction : public Action
 {
 private:
 	Point P1; //Square Corners
+	Point P1_Rec;
 	GfxInfo SquareGfxInfo;
 public:
 	AddSquareAction(ApplicationManager* pApp);

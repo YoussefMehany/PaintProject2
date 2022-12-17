@@ -19,4 +19,5 @@ void DeleteAction::Execute()
 	ReadActionParameters();
 
 	pManager->DeleteFigure();
+	pManager->SetLastAction(DELETE_FIGURE);
 }

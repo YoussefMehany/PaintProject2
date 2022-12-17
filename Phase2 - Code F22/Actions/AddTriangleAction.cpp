@@ -18,17 +18,32 @@ void AddTriangleAction::ReadActionParameters()
 	pOut->PrintMessage("New Triangle: Click at first corner");
 
 	//Read 1st corner and store in point P1
-	pIn->GetPointClicked(P1.x, P1.y);
+	if (pManager->IsRecording())
+		P1 = P1_Rec;
+	else {
+		pIn->GetPointClicked(P1.x, P1.y);
+		P1_Rec = P1;
+	}
 
 	pOut->PrintMessage("New Triangle: Click at second corner");
 
 	//Read 2nd corner and store in point P2
-	pIn->GetPointClicked(P2.x, P2.y);
+	if (pManager->IsRecording())
+		P2 = P2_Rec;
+	else {
+		pIn->GetPointClicked(P2.x, P2.y);
+		P2_Rec = P2;
+	}
 
 	pOut->PrintMessage("New Triangle: Click at third corner");
 
 	//Read 3rd corner and store in point P2
-	pIn->GetPointClicked(P3.x, P3.y);
+	if (pManager->IsRecording())
+		P3 = P3_Rec;
+	else {
+		pIn->GetPointClicked(P3.x, P3.y);
+		P3_Rec = P3;
+	}
 
 	TriangleGfxInfo.isFilled = UI.IsFilled;
 	//get drawing, filling colors and pen width from the interface
@@ -49,5 +64,6 @@ void AddTriangleAction::Execute()
 	CTriangle* R = new CTriangle(P1, P2, P3, TriangleGfxInfo);
 
 	//Add the rectangle to the list of figures
+	pManager->SetLastAction(DRAW_TRIANGLE);
 	pManager->AddFigure(R);
 }

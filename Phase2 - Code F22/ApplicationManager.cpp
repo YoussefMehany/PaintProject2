@@ -11,9 +11,12 @@
 #include "Actions\DeleteAction.h"
 #include "Actions\SaveAction.h"
 #include "Actions\StartRecAction.h"
-#include "Actions\FigureMenu.h"
-#include "Actions\ColorMenu.h"
+#include "Actions\StopRecAction.h"
+#include "Actions\PlayRecAction.h"
+#include "Actions\FigureMenuAction.h"
+#include "Actions\ColorMenuAction.h"
 #include "Actions\ReturnAction.h"
+#include "Actions\ClearAllAction.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -22,11 +25,14 @@ ApplicationManager::ApplicationManager()
 	pOut = new Output;
 	pIn = pOut->CreateInput();
 	SelectedFig = NULL;
+	Recording = false;
 	FigCount = 0;
+	ActionCounter = 0;
 	RecCount = 0;
 	UndoCount = 0;
 	ListCounter = 0;
 	CheckUpdate = false;
+	LastAction = START_PROGRAM;
 	//Create an array of figure pointers and set them to NULL		
 	for(int i = 0; i < MaxFigCount; i++)
 		FigList[i] = NULL;	
@@ -54,36 +60,31 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	switch (ActType)
 	{
 		case DRAW_FIGURE: //expanding the figures menu
-			pAct = new FigureMenu(this);
+			pAct = new FigureMenuAction(this);
 			break;
 
 		case DRAW_COLOR: //expanding the figures menu
-			pAct = new ColorMenu(this);
+			pAct = new ColorMenuAction(this);
 			break;
 
 		case DRAW_RECT:
 			pAct = new AddRectAction(this);
-			UndoLast = DRAW_RECT;
 			break;
 
 		case DRAW_CIRC:
 			pAct = new AddCircAction(this);
-			UndoLast = DRAW_CIRC;
 			break;
 
 		case DRAW_HEX:
 			pAct = new AddHexAction(this);
-			UndoLast = DRAW_HEX;
 			break;
 
 		case DRAW_TRIANGLE:
 			pAct = new AddTriangleAction(this);
-			UndoLast = DRAW_TRIANGLE;
 			break;
 
 		case DRAW_SQUARE:
 			pAct = new AddSquareAction(this);
-			UndoLast = DRAW_SQUARE;
 			break;
 
 		case RETURN:
@@ -91,7 +92,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case UNDO_ACTION:
-			if (FigCount == 0) {
+			if (FigCount == 0 && ListCounter == 0) {
 				pOut->PrintMessage("No Action to undo");
 				break;
 			}
@@ -181,7 +182,25 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case START_REC:
+			if (LastAction != START_PROGRAM && LastAction != CLEAR_ALL) {
+				pOut->PrintMessage("You can only record after the program start or after clear all");
+				break;
+			}
 			pAct = new StartRecAction(this);
+			Recording = true;
+			break;
+
+		case STOP_REC:
+			pAct = new StopRecAction(this);
+			Recording = false;
+			break;
+
+		case PLAY_REC:
+			pAct = new PlayRecAction(this);
+			break;
+
+		case CLEAR_ALL:
+			pAct = new ClearAllAction(this);
 			break;
 
 		case EXIT:
@@ -190,13 +209,16 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 	}
 	
-	//Execute the created action
 	if(pAct != NULL)
 	{
 		CheckUpdate = true;
 		pAct->Execute(); //Execute
+		if (Recording && ActType < 32) // all the action types that can be recorded
+		{
+			if (RecCount < MaxRecCount)
+				Recorded[RecCount++] = pAct;
+		}
 		LastAction = ActType;
-		delete pAct;	//You may need to change this line depending to your implementation
 		pAct = NULL;
 	}
 }
@@ -240,10 +262,25 @@ void ApplicationManager::MoveFigure(Point P1)
 {
 	SelectedFig->MoveTo(P1);
 }
+
+void ApplicationManager::SetLastAction(ActionType Act)
+{
+	if (ActionCounter < 5)
+		LastActions[ActionCounter++] = Act;
+	else
+	{
+		for (int i = 0; i < ActionCounter - 1; i++)
+		{
+			LastActions[i] = LastActions[i + 1];
+		}
+		LastActions[ActionCounter - 1] = Act;
+	}
+}
 ActionType ApplicationManager::getLastAction() const
 {
-	return UndoLast;
+	return LastActions[ActionCounter - UndoCount - 1];
 }
+
 void ApplicationManager::UndoLastAction(ActionType Act)
 {
 	CFigure* save = SelectedFig;
@@ -251,7 +288,7 @@ void ApplicationManager::UndoLastAction(ActionType Act)
 	switch (Act) 
 	{
 	case ADD_FIG:
-		AddFigure(UndoFigList[4-UndoCount]);
+		AddFigure(UndoFigList[ListCounter - UndoCount - 1]);
 		break;
 	case DELETE_FIGURE:
 		SelectedFig = FigList[FigCount - 1];
@@ -273,10 +310,11 @@ void ApplicationManager::DeleteFigure()
 		if (FigList[i] == SelectedFig) {
 			FigList[i] = FigList[--FigCount];
 			
-			if (ListCounter<5)
+			if (ListCounter < MaxUndoCount)
 			    UndoFigList[ListCounter++]= SelectedFig;
 			else
 			{
+				delete UndoFigList[0];
 				for (int i = 0; i < ListCounter-1; i++) 
 				{
 					UndoFigList[i] = UndoFigList[i + 1];
@@ -289,6 +327,22 @@ void ApplicationManager::DeleteFigure()
 		}
 	}
 	FigList[FigCount] = NULL;
+}
+void ApplicationManager::ClearAll()
+{
+	for (int i = 0; i < FigCount; i++) {
+		delete FigList[i];
+		FigList[i] = NULL;
+	}
+	for (int i = 0; i < RecCount; i++) {
+		delete Recorded[i];
+		Recorded[i] = NULL;
+	}
+	for (int i = 0; i < UndoCount; i++) {
+		delete UndoFigList[i];
+		UndoFigList[i] = NULL;
+	}
+	FigCount = 0, RecCount = 0, UndoCount = 0;
 }
 void ApplicationManager::SelectFigure(Point P1)
 {
@@ -321,7 +375,14 @@ void ApplicationManager::ChangeColor(color clr)
 int ApplicationManager::getFigCount()const {
 	return FigCount;
 }
-
+bool ApplicationManager::IsRecording() const {
+	return Recording;
+}
+void ApplicationManager::PlayRec() {
+	for (int i = 0; i < RecCount; i++) {
+		Recorded[i]->Execute();
+	}
+}
 void ApplicationManager::PrintLastMsg()
 {
 	switch (LastAction)
@@ -329,6 +390,9 @@ void ApplicationManager::PrintLastMsg()
 	case SAVE_PROGRESS:
 		pOut->PrintMessage("File Saved");
 		break;
+		
+	case START_REC:
+		pOut->PrintMessage("Recording Started");
 	}
 		
 }

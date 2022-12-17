@@ -8,6 +8,7 @@ class AddCircAction : public Action
 {
 private:
 	Point P1, P2; //Center and point on the circle
+	Point P1_Rec, P2_Rec;
 	GfxInfo CircGfxInfo;
 public:
 	AddCircAction(ApplicationManager* pApp);

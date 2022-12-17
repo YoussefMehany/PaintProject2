@@ -1,21 +1,15 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  ApplicationManager.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
   main.cpp
-  UndoAction.cpp
-  StartRecAction.cpp
-  SelectAction.cpp
-  SaveAction.cpp
-  ReturnAction.cpp
-  MoveAction.cpp
-  FigureMenu.cpp
-  DeleteAction.cpp
-  ColorMenu.cpp
-  ChangeColorAction.cpp
-  AddTriangleAction.cpp
-  AddSquareAction.cpp
-  AddRectAction.cpp
-  AddHexAction.cpp
-  AddCircAction.cpp
-  PT-Project.vcxproj -> C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.h(27,8): error C2143: syntax error: missing ';' before '*'
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.h(27,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.h(27,31): error C2238: unexpected token(s) preceding ';'
+  ApplicationManager.cpp
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.h(27,8): error C2143: syntax error: missing ';' before '*'
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.h(27,8): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.h(27,31): error C2238: unexpected token(s) preceding ';'
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(40,3): error C2065: 'Recorded': undeclared identifier
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(219,5): error C2065: 'Recorded': undeclared identifier
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(338,10): error C2065: 'Recorded': undeclared identifier
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(339,3): error C2065: 'Recorded': undeclared identifier
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(383,3): error C2065: 'Recorded': undeclared identifier
+  Generating Code...

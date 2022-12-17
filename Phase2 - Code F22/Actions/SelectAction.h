@@ -4,7 +4,7 @@ class SelectAction :public Action
 {
 private:
 	Point P;
-
+	Point P_Rec;
 public:
 	SelectAction(ApplicationManager* pApp);
 	//Reads parameters required for action to execute (code depends on action type)

@@ -18,7 +18,12 @@ void AddHexAction::ReadActionParameters()
 	pOut->PrintMessage("New Hexagon: Click at the Center");
 
 	//Read the center point
-	pIn->GetPointClicked(P1.x, P1.y);
+	if (pManager->IsRecording())
+		P1 = P1_Rec;
+	else {
+		pIn->GetPointClicked(P1.x, P1.y);
+		P1_Rec = P1;
+	}
 
 	HexGfxInfo.isFilled = UI.IsFilled;
 	//get drawing, filling colors and pen width from the interface

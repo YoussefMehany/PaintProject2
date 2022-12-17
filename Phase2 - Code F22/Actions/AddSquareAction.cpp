@@ -18,7 +18,12 @@ void AddSquareAction::ReadActionParameters()
 	pOut->PrintMessage("New Square: Click at the Center");
 
 	//Read 1st corner and store in point P1
-	pIn->GetPointClicked(P1.x, P1.y);
+	if (pManager->IsRecording())
+		P1 = P1_Rec;
+	else {
+		pIn->GetPointClicked(P1.x, P1.y);
+		P1_Rec = P1;
+	}
 
 	SquareGfxInfo.isFilled = UI.IsFilled;
 	//get drawing, filling colors and pen width from the interface
@@ -39,5 +44,6 @@ void AddSquareAction::Execute()
 	CSquare* R = new CSquare(P1, SquareGfxInfo);
 
 	//Add the rectangle to the list of figures
+	pManager->SetLastAction(DRAW_SQUARE);
 	pManager->AddFigure(R);
 }

@@ -8,6 +8,7 @@ class AddRectAction: public Action
 {
 private:
 	Point P1, P2; //Rectangle Corners
+	Point P1_Rec, P2_Rec;
 	GfxInfo RectGfxInfo;
 public:
 	AddRectAction(ApplicationManager *pApp);

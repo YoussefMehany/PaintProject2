@@ -4,7 +4,7 @@ class MoveAction :public Action
 {
 private:
 	Point P;
-
+	Point P_Rec;
 public:
 	MoveAction(ApplicationManager* pApp);
 	//Reads parameters required for action to execute (code depends on action type)

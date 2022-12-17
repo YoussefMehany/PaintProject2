@@ -193,13 +193,22 @@
     <ClCompile Include="Actions\StartRecAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\FigureMenu.cpp">
+    <ClCompile Include="Actions\FigureMenuAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\ColorMenu.cpp">
+    <ClCompile Include="Actions\ColorMenuAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
     <ClCompile Include="Actions\ReturnAction.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ClearAllAction.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\StopRecAction.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\PlayRecAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -334,13 +343,22 @@
     <ClInclude Include="Actions\StartRecAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\FigureMenu.h">
+    <ClInclude Include="Actions\FigureMenuAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\ColorMenu.h">
+    <ClInclude Include="Actions\ColorMenuAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
     <ClInclude Include="Actions\ReturnAction.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ClearAllAction.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\StopRecAction.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\PlayRecAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>

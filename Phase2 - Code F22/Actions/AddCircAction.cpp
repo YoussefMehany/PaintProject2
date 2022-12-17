@@ -18,12 +18,22 @@ void AddCircAction::ReadActionParameters()
 	pOut->PrintMessage("New Circle: Click at the Center");
 
 	//Read the center point
-	pIn->GetPointClicked(P1.x, P1.y);
+	if (pManager->IsRecording())
+		P1 = P1_Rec;
+	else {
+		pIn->GetPointClicked(P1.x, P1.y);
+		P1_Rec = P1;
+	}
 
 	pOut->PrintMessage("New Circle: Click at a point on the radius");
 
 	//Read 2nd corner and store in point P2
-	pIn->GetPointClicked(P2.x, P2.y);
+	if (pManager->IsRecording())
+		P2 = P2_Rec;
+	else {
+		pIn->GetPointClicked(P2.x, P2.y);
+		P2_Rec = P2;
+	}
 
 	CircGfxInfo.isFilled = UI.IsFilled;
 	//get drawing, filling colors and pen width from the interface
@@ -44,5 +54,6 @@ void AddCircAction::Execute()
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
 
 	//Add the rectangle to the list of figures
+	pManager->SetLastAction(DRAW_CIRC);
 	pManager->AddFigure(R);
 }

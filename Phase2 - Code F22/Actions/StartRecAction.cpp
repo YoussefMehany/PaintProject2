@@ -9,6 +9,7 @@ void StartRecAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
+
 }
 
 //Execute action (code depends on action type)

@@ -8,6 +8,7 @@ class AddHexAction : public Action
 {
 private:
 	Point P1; //Hexagon Corners
+	Point P1_Rec;
 	GfxInfo HexGfxInfo;
 public:
 	AddHexAction(ApplicationManager* pApp);
