@@ -94,7 +94,7 @@ ActionType Input::GetUserAction() const
 
 			case ITM_HEX: return DRAW_HEX;
 
-			case FIGURE: return CLOSEFIG;
+			case FIGURE: return RETURN;
 
 			default: return EMPTY;
 			}
@@ -129,7 +129,7 @@ ActionType Input::GetUserAction() const
 
 			case CLR_BLACK: return BLACKCLR;
 
-			case COLORS: return CLOSECLR;
+			case COLORS: return RETURN;
 
 			default: return EMPTY;
 			}

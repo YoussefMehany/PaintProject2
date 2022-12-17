@@ -34,7 +34,6 @@ bool CRectangle::IsPointInside(Point P) {
 }
 void CRectangle::Save(ofstream& OutFile)
 {
-	//<< '\t' 
 	string DrawClr = getColor(FigGfxInfo.DrawClr);
 	string FillClr;
 

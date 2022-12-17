@@ -4,12 +4,16 @@
 #include "Actions\AddHexAction.h"
 #include "Actions\AddSquareAction.h"
 #include "Actions\AddTriangleAction.h"
-#include "Actions\AddUndoAction.h"
-#include "Actions\AddMoveAction.h"
-#include "Actions\AddSelectAction.h"
-#include "Actions\AddChangeColorAction.h"
-#include "Actions\AddDeleteAction.h"
-#include "Actions\AddSaveAction.h"
+#include "Actions\UndoAction.h"
+#include "Actions\MoveAction.h"
+#include "Actions\SelectAction.h"
+#include "Actions\ChangeColorAction.h"
+#include "Actions\DeleteAction.h"
+#include "Actions\SaveAction.h"
+#include "Actions\StartRecAction.h"
+#include "Actions\FigureMenu.h"
+#include "Actions\ColorMenu.h"
+#include "Actions\ReturnAction.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -19,10 +23,13 @@ ApplicationManager::ApplicationManager()
 	pIn = pOut->CreateInput();
 	SelectedFig = NULL;
 	FigCount = 0;
+	RecCount = 0;
 	CheckUpdate = false;
 	//Create an array of figure pointers and set them to NULL		
-	for(int i=0; i<MaxFigCount; i++)
+	for(int i = 0; i < MaxFigCount; i++)
 		FigList[i] = NULL;	
+	for (int i = 0; i < MaxRecCount; i++)
+		Recorded[i] = NULL;
 }
 
 //==================================================================================//
@@ -38,17 +45,16 @@ ActionType ApplicationManager::GetUserAction() const
 void ApplicationManager::ExecuteAction(ActionType ActType) 
 {
 	Action* pAct = NULL;
-	
 	//According to Action Type, create the corresponding action object
 	CheckUpdate = false;
 	switch (ActType)
 	{
 		case DRAW_FIGURE: //expanding the figures menu
-			pOut->Figure_menu();
+			pAct = new FigureMenu(this);
 			break;
 
 		case DRAW_COLOR: //expanding the figures menu
-			pOut->Color_menu();
+			pAct = new ColorMenu(this);
 			break;
 
 		case DRAW_RECT:
@@ -71,12 +77,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pAct = new AddSquareAction(this);
 			break;
 
-		case CLOSEFIG:
-			pOut->CreateDrawToolBar();
+		case RETURN:
+			pAct = new ReturnAction(this);
 			break;
 
 		case UNDO_ACTION:
-			pAct = new AddUndoAction(this);
+			pAct = new UndoAction(this);
 			break;
 
 		case MOVE_FIGURE:
@@ -85,11 +91,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddMoveAction(this);
+			pAct = new MoveAction(this);
 			break;
 
 		case SELECT_FIGURE:
-			pAct = new AddSelectAction(this);
+			pAct = new SelectAction(this);
 			break;
 
 		case STATUS:	//a click on the status bar ==> no action
@@ -100,7 +106,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddChangeColorAction(this, GREEN);
+			pAct = new ChangeColorAction(this, GREEN);
 			break;
 
 		case REDCLR:
@@ -108,7 +114,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddChangeColorAction(this, RED);
+			pAct = new ChangeColorAction(this, RED);
 			break;
 
 		case BLUECLR:
@@ -116,7 +122,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddChangeColorAction(this, BLUE);
+			pAct = new ChangeColorAction(this, BLUE);
 			break;
 
 		case ORANGECLR:
@@ -124,7 +130,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddChangeColorAction(this, ORANGE);
+			pAct = new ChangeColorAction(this, ORANGE);
 			break;
 
 		case YELLOWCLR:
@@ -132,7 +138,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddChangeColorAction(this, YELLOW);
+			pAct = new ChangeColorAction(this, YELLOW);
 			break;
 
 		case BLACKCLR:
@@ -140,11 +146,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddChangeColorAction(this, BLACK);
-			break;
-
-		case CLOSECLR:
-			pOut->CreateDrawToolBar();
+			pAct = new ChangeColorAction(this, BLACK);
 			break;
 
 		case DELETE_FIGURE:
@@ -152,11 +154,17 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new AddDeleteAction(this);
+			pAct = new DeleteAction(this);
 			break;
+
 		case SAVE_PROGRESS:
-			pAct = new AddSaveAction(this);
+			pAct = new SaveAction(this);
 			break;
+
+		case START_REC:
+			pAct = new StartRecAction(this);
+			break;
+
 		case EXIT:
 			///create ExitAction here
 

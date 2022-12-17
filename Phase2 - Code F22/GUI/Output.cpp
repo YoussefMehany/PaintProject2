@@ -307,7 +307,7 @@ void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 	pWind->DrawCircle(P1.x, P1.y, Radius, style);
 	UpdateToolBar();
 }
-void Output::DrawHex(Point P1, int Side, GfxInfo HexGfxInfo, bool selected)const
+void Output::DrawHex(const Point P1[], int Side, GfxInfo HexGfxInfo, bool selected)const
 {
 	color DrawingClr;
 	if (selected)
@@ -324,12 +324,9 @@ void Output::DrawHex(Point P1, int Side, GfxInfo HexGfxInfo, bool selected)const
 	}
 	else
 		style = FRAME;
-	int Px[6];
-	int Py[6];
-	Px[0] = P1.x - Side * sqrt(3) / 2, Px[1] = P1.x, Px[2] = P1.x + Side * sqrt(3) / 2,
-	Px[3] = P1.x + Side * sqrt(3) / 2, Px[4] = P1.x, Px[5] = P1.x - Side * sqrt(3) / 2;
-	Py[0] = P1.y - Side / 2, Py[1] = P1.y - Side, Py[2] = P1.y - Side / 2,
-	Py[3] = P1.y + Side / 2, Py[4] = P1.y + Side, Py[5] = P1.y + Side / 2;
+	int Px[6], Py[6];
+	for (int i = 0; i < 6; i++) Px[i] = P1[i].x;
+	for (int i = 0; i < 6; i++) Py[i] = P1[i].y;
 	pWind->DrawPolygon(Px, Py, 6, style);
 	UpdateToolBar();
 	

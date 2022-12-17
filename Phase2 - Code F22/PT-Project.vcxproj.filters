@@ -154,16 +154,16 @@
     <ClCompile Include="Actions\AddSquareAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AddMoveAction.cpp">
+    <ClCompile Include="Actions\MoveAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AddSelectAction.cpp">
+    <ClCompile Include="Actions\SelectAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AddUndoAction.cpp">
+    <ClCompile Include="Actions\UndoAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AddChangeColorAction.cpp">
+    <ClCompile Include="Actions\ChangeColorAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
     <ClCompile Include="Figures\CFigure.cpp">
@@ -184,10 +184,22 @@
     <ClCompile Include="Figures\CSquare.cpp">
       <Filter>Figures Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AddDeleteAction.cpp">
+    <ClCompile Include="Actions\DeleteAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\AddSaveAction.cpp">
+    <ClCompile Include="Actions\SaveAction.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\StartRecAction.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\FigureMenu.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ColorMenu.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\ReturnAction.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -283,16 +295,16 @@
     <ClInclude Include="Actions\AddTriangleAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AddMoveAction.h">
+    <ClInclude Include="Actions\MoveAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AddSelectAction.h">
+    <ClInclude Include="Actions\SelectAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AddUndoAction.h">
+    <ClInclude Include="Actions\UndoAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AddChangeColorAction.h">
+    <ClInclude Include="Actions\ChangeColorAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
     <ClInclude Include="Figures\CFigure.h">
@@ -313,10 +325,22 @@
     <ClInclude Include="Figures\CSquare.h">
       <Filter>Figures Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AddDeleteAction.h">
+    <ClInclude Include="Actions\DeleteAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\AddSaveAction.h">
+    <ClInclude Include="Actions\SaveAction.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\StartRecAction.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\FigureMenu.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ColorMenu.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\ReturnAction.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>

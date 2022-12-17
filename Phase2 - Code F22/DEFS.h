@@ -11,7 +11,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	DRAW_SQUARE,
 	DRAW_HEX,
 	DRAW_CIRC,
-	CLOSEFIG,
+	RETURN,
 	GREENCLR,
 	REDCLR,
 	BLUECLR,

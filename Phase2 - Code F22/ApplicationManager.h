@@ -9,15 +9,16 @@
 //Main class that manages everything in the application.
 class ApplicationManager
 {
-	enum { MaxFigCount = 200 };	//Max no of figures
+	enum { MaxRecCount = 20, MaxFigCount = 200};	//Max no for arrays
 
 private:
 	int FigCount; //Actual number of figures
+	int RecCount;
 	bool CheckUpdate;
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	ActionType LastAction;
 	CFigure* SelectedFig; //Pointer to the selected figure
-
+	ActionType* Recorded[MaxRecCount];
 	//Pointers to Input and Output classes
 	Input *pIn;
 	Output *pOut;
