@@ -9,14 +9,18 @@
 //Main class that manages everything in the application.
 class ApplicationManager
 {
-	enum { MaxRecCount = 20, MaxFigCount = 200};	//Max no for arrays
+	enum { MaxRecCount = 20, MaxFigCount = 200, MaxUndoCount=5,};	//Max no for arrays
 
 private:
 	int FigCount; //Actual number of figures
 	int RecCount;
+	int UndoCount;
+	int ListCounter;
 	bool CheckUpdate;
+    CFigure* UndoFigList[MaxUndoCount];
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	ActionType LastAction;
+	ActionType UndoLast;
 	CFigure* SelectedFig; //Pointer to the selected figure
 	ActionType* Recorded[MaxRecCount];
 	//Pointers to Input and Output classes
@@ -42,6 +46,8 @@ public:
 	int getFigCount()const;
 	void DeleteFigure();
 	void SaveFile(ofstream& OutFile);
+	void UndoLastAction(ActionType Act);
+	ActionType getLastAction()const;
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

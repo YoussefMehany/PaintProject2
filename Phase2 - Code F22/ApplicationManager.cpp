@@ -24,12 +24,16 @@ ApplicationManager::ApplicationManager()
 	SelectedFig = NULL;
 	FigCount = 0;
 	RecCount = 0;
+	UndoCount = 0;
+	ListCounter = 0;
 	CheckUpdate = false;
 	//Create an array of figure pointers and set them to NULL		
 	for(int i = 0; i < MaxFigCount; i++)
 		FigList[i] = NULL;	
 	for (int i = 0; i < MaxRecCount; i++)
 		Recorded[i] = NULL;
+	for (int i = 0; i < MaxUndoCount; i++)
+		UndoFigList[i] = NULL;
 }
 
 //==================================================================================//
@@ -59,22 +63,27 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		case DRAW_RECT:
 			pAct = new AddRectAction(this);
+			UndoLast = DRAW_RECT;
 			break;
 
 		case DRAW_CIRC:
 			pAct = new AddCircAction(this);
+			UndoLast = DRAW_CIRC;
 			break;
 
 		case DRAW_HEX:
 			pAct = new AddHexAction(this);
+			UndoLast = DRAW_HEX;
 			break;
 
 		case DRAW_TRIANGLE:
 			pAct = new AddTriangleAction(this);
+			UndoLast = DRAW_TRIANGLE;
 			break;
 
 		case DRAW_SQUARE:
 			pAct = new AddSquareAction(this);
+			UndoLast = DRAW_SQUARE;
 			break;
 
 		case RETURN:
@@ -82,6 +91,15 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case UNDO_ACTION:
+			if (FigCount == 0) {
+				pOut->PrintMessage("No Action to undo");
+				break;
+			}
+			if (UndoCount == 5)
+			{
+				pOut->PrintMessage("Undo Limit Exceeded");
+				break;
+			}
 			pAct = new UndoAction(this);
 			break;
 
@@ -122,6 +140,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
+			
 			pAct = new ChangeColorAction(this, BLUE);
 			break;
 
@@ -175,8 +194,8 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	if(pAct != NULL)
 	{
 		CheckUpdate = true;
-		LastAction = ActType;
 		pAct->Execute(); //Execute
+		LastAction = ActType;
 		delete pAct;	//You may need to change this line depending to your implementation
 		pAct = NULL;
 	}
@@ -221,13 +240,50 @@ void ApplicationManager::MoveFigure(Point P1)
 {
 	SelectedFig->MoveTo(P1);
 }
+ActionType ApplicationManager::getLastAction() const
+{
+	return UndoLast;
+}
+void ApplicationManager::UndoLastAction(ActionType Act)
+{
+	CFigure* save = SelectedFig;
+	
+	switch (Act) 
+	{
+	case ADD_FIG:
+		AddFigure(UndoFigList[4-UndoCount]);
+		break;
+	case DELETE_FIGURE:
+		SelectedFig = FigList[FigCount - 1];
+		DeleteFigure();
+		SelectedFig = save;
+		break;
+	case CHANGE_CLR:
 
+		break;
+	case BACK_TO:
+
+		break;
+	}
+	UndoCount++;
+}
 void ApplicationManager::DeleteFigure()
 {
 	for (int i = 0; i < FigCount; i++) {
 		if (FigList[i] == SelectedFig) {
 			FigList[i] = FigList[--FigCount];
-			delete SelectedFig;
+			
+			if (ListCounter<5)
+			    UndoFigList[ListCounter++]= SelectedFig;
+			else
+			{
+				for (int i = 0; i < ListCounter-1; i++) 
+				{
+					UndoFigList[i] = UndoFigList[i + 1];
+				}
+				UndoFigList[ListCounter-1] = SelectedFig;
+			}
+			//delete SelectedFig;
 			SelectedFig = NULL;
 			break;
 		}

@@ -3,10 +3,8 @@
 
 class UndoAction : public Action
 {
-	enum{ MaxUndoCount = 5 };	//Max no of undo operation
 private:
-	ActionType reverse_last_action;
-	int undo_action_count;
+	ActionType Reverse_Last_Action;
 public:
 
 	UndoAction(ApplicationManager* pApp);
