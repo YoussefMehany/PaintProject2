@@ -49,8 +49,8 @@ ActionType Input::GetUserAction() const
 			{
 			case FIGURES: return DRAW_FIGURE;
 			case SELECT: return SELECT_FIGURE;
-			case PAINT: UI.Choose = PAINT; return DRAW_COLOR;
-			case BORDER: UI.Choose = BORDER; return DRAW_COLOR;
+			case PAINT:  return FILL_COLOR;
+			case BORDER:  return BORDER_COLOR;
 			case MOVE: return MOVE_FIGURE;
 			case UNDO: return UNDO_ACTION;
 			case REDO: return REDO_ACTION;

@@ -27,7 +27,8 @@ enum ActionType //The actions supported (you can add more if needed)
 	CLEAR_ALL,
 	MODE_CONVERTER,
 	CLOSECLR,
-	DRAW_COLOR,		//display colors menu
+	FILL_COLOR,
+	BORDER_COLOR,
 	DRAW_FIGURE,	//display figures menu
 	PICK_TYPE,
 	PICK_CLR,

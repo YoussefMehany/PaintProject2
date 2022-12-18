@@ -1,3 +1,4 @@
+#include <windows.h> 
 #include "ApplicationManager.h"
 #include "Actions\AddRectAction.h"
 #include "Actions\AddCircAction.h"
@@ -26,6 +27,7 @@ ApplicationManager::ApplicationManager()
 	pIn = pOut->CreateInput();
 	SelectedFig = NULL;
 	Recording = false;
+	PlayingRec = false;
 	FigCount = 0;
 	ActionCounter = 0;
 	RecCount = 0;
@@ -63,8 +65,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pAct = new FigureMenuAction(this);
 			break;
 
-		case DRAW_COLOR: //expanding the figures menu
-			pAct = new ColorMenuAction(this);
+		case FILL_COLOR: //expanding the fill colors menu
+			pAct = new ColorMenuAction(this, PAINT);
+			break;
+
+		case BORDER_COLOR: //expanding the border colors menu
+			pAct = new ColorMenuAction(this, BORDER);
 			break;
 
 		case DRAW_RECT:
@@ -197,6 +203,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		case PLAY_REC:
 			pAct = new PlayRecAction(this);
+			PlayingRec = true;
 			break;
 
 		case CLEAR_ALL:
@@ -219,7 +226,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				Recorded[RecCount++] = pAct;
 		}
 		LastAction = ActType;
-		pAct = NULL;
 	}
 }
 //==================================================================================//
@@ -330,19 +336,22 @@ void ApplicationManager::DeleteFigure()
 }
 void ApplicationManager::ClearAll()
 {
+	UI.IsFilled = false;
+	UI.DrawColor = BLUE;	//Drawing color
+	UI.FillColor = GREEN;	//Filling color
 	for (int i = 0; i < FigCount; i++) {
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
-	for (int i = 0; i < RecCount; i++) {
-		delete Recorded[i];
-		Recorded[i] = NULL;
-	}
+	//for (int i = 0; i < RecCount; i++) {
+	//	delete Recorded[i];
+	//	Recorded[i] = NULL;
+	//}
 	for (int i = 0; i < UndoCount; i++) {
 		delete UndoFigList[i];
 		UndoFigList[i] = NULL;
 	}
-	FigCount = 0, RecCount = 0, UndoCount = 0;
+	FigCount = 0, UndoCount = 0;
 }
 void ApplicationManager::SelectFigure(Point P1)
 {
@@ -378,9 +387,16 @@ int ApplicationManager::getFigCount()const {
 bool ApplicationManager::IsRecording() const {
 	return Recording;
 }
+bool ApplicationManager::IsPlayingRec() const {
+	return PlayingRec;
+}
 void ApplicationManager::PlayRec() {
+	ClearAll();
 	for (int i = 0; i < RecCount; i++) {
 		Recorded[i]->Execute();
+		Sleep(1000);
+		UpdateInterface();
+		Sleep(1000);
 	}
 }
 void ApplicationManager::PrintLastMsg()
@@ -390,11 +406,15 @@ void ApplicationManager::PrintLastMsg()
 	case SAVE_PROGRESS:
 		pOut->PrintMessage("File Saved");
 		break;
-		
+
 	case START_REC:
 		pOut->PrintMessage("Recording Started");
+		break;
+
+	case STOP_REC:
+		pOut->PrintMessage("Recording Stopped");
+		break;
 	}
-		
 }
 //==================================================================================//
 //							Save/Load Functions										//

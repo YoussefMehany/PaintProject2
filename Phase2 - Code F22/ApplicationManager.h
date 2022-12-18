@@ -2,6 +2,7 @@
 #define APPLICATION_MANAGER_H
 
 #include "DEFS.h"
+#include "Actions/Action.h"
 #include "Figures\CFigure.h"
 #include "GUI\input.h"
 #include "GUI\output.h"
@@ -18,6 +19,7 @@ private:
 	int ListCounter;
 	bool CheckUpdate;
 	bool Recording;
+	bool PlayingRec;
 	int ActionCounter;
 	ActionType LastActions[MaxUndoCount];
     CFigure* UndoFigList[MaxUndoCount];
@@ -46,6 +48,7 @@ public:
 	void SelectFigure(Point P1);
 	void ChangeColor(color clr);
 	bool IsRecording() const;
+	bool IsPlayingRec() const;
 	void PlayRec();
 	int getFigCount()const;
 	void DeleteFigure();

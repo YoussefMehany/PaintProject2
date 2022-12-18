@@ -18,7 +18,7 @@ void AddHexAction::ReadActionParameters()
 	pOut->PrintMessage("New Hexagon: Click at the Center");
 
 	//Read the center point
-	if (pManager->IsRecording())
+	if (pManager->IsPlayingRec())
 		P1 = P1_Rec;
 	else {
 		pIn->GetPointClicked(P1.x, P1.y);

@@ -18,7 +18,7 @@ void AddSquareAction::ReadActionParameters()
 	pOut->PrintMessage("New Square: Click at the Center");
 
 	//Read 1st corner and store in point P1
-	if (pManager->IsRecording())
+	if (pManager->IsPlayingRec())
 		P1 = P1_Rec;
 	else {
 		pIn->GetPointClicked(P1.x, P1.y);

@@ -11,7 +11,7 @@ void MoveAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 	pOut->PrintMessage("New Position : Click at the new position");
-	if (pManager->IsRecording())
+	if (pManager->IsPlayingRec())
 		P = P_Rec;
 	else {
 		pIn->GetPointClicked(P.x, P.y);

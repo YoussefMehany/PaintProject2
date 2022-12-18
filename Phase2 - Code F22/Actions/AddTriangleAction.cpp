@@ -18,7 +18,7 @@ void AddTriangleAction::ReadActionParameters()
 	pOut->PrintMessage("New Triangle: Click at first corner");
 
 	//Read 1st corner and store in point P1
-	if (pManager->IsRecording())
+	if (pManager->IsPlayingRec())
 		P1 = P1_Rec;
 	else {
 		pIn->GetPointClicked(P1.x, P1.y);
@@ -28,7 +28,7 @@ void AddTriangleAction::ReadActionParameters()
 	pOut->PrintMessage("New Triangle: Click at second corner");
 
 	//Read 2nd corner and store in point P2
-	if (pManager->IsRecording())
+	if (pManager->IsPlayingRec())
 		P2 = P2_Rec;
 	else {
 		pIn->GetPointClicked(P2.x, P2.y);
@@ -38,7 +38,7 @@ void AddTriangleAction::ReadActionParameters()
 	pOut->PrintMessage("New Triangle: Click at third corner");
 
 	//Read 3rd corner and store in point P2
-	if (pManager->IsRecording())
+	if (pManager->IsPlayingRec())
 		P3 = P3_Rec;
 	else {
 		pIn->GetPointClicked(P3.x, P3.y);

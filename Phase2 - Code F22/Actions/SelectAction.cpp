@@ -11,7 +11,7 @@ void SelectAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 	pOut->PrintMessage("New Position : Click on any figure");
-	if (pManager->IsRecording())
+	if (pManager->IsPlayingRec())
 		P = P_Rec;
 	else {
 		pIn->GetPointClicked(P.x, P.y);

@@ -2,9 +2,9 @@
 #include "../ApplicationManager.h"
 class ColorMenuAction :public Action
 {
-
+	DrawMenuItem ChooseMenuItem;
 public:
-	ColorMenuAction(ApplicationManager* pApp);
+	ColorMenuAction(ApplicationManager* pApp, DrawMenuItem choose);
 	//Reads parameters required for action to execute (code depends on action type)
 	virtual void ReadActionParameters();
 
