@@ -10,7 +10,7 @@
 //Main class that manages everything in the application.
 class ApplicationManager
 {
-	enum { MaxRecCount = 20, MaxFigCount = 200, MaxUndoCount=5};	//Max no for arrays
+	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 5};	//Max no for arrays
 
 private:
 	int FigCount; //Actual number of figures
@@ -49,6 +49,7 @@ public:
 	void ChangeColor(color clr);
 	bool IsRecording() const;
 	bool IsPlayingRec() const;
+	void SetRec(bool IsRec);
 	void PlayRec();
 	int getFigCount()const;
 	void DeleteFigure();

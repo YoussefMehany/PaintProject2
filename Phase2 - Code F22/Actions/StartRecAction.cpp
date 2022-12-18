@@ -7,8 +7,6 @@ StartRecAction::StartRecAction(ApplicationManager* pApp) :Action(pApp)
 //Reads parameters required for action to execute (code depends on action type)
 void StartRecAction::ReadActionParameters()
 {
-	Output* pOut = pManager->GetOutput();
-	Input* pIn = pManager->GetInput();
 
 }
 
@@ -16,5 +14,5 @@ void StartRecAction::ReadActionParameters()
 void StartRecAction::Execute()
 {
 	ReadActionParameters();
-
+	pManager->SetRec(true);
 }

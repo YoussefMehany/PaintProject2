@@ -8,7 +8,6 @@ FigureMenuAction::FigureMenuAction(ApplicationManager* pApp) :Action(pApp)
 void FigureMenuAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
-	Input* pIn = pManager->GetInput();
 	pOut->Figure_menu();
 }
 

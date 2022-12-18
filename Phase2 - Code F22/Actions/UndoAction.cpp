@@ -7,7 +7,7 @@ UndoAction::UndoAction(ApplicationManager* pApp):Action(pApp)
 //Reads parameters required for action to execute (code depends on action type)
  void UndoAction::ReadActionParameters()
  {
-	ActionType Action =pManager->getLastAction();
+	ActionType Action = pManager->getLastAction();
 	switch (Action) 
 	{
 	case DRAW_CIRC : 

@@ -8,7 +8,6 @@ ColorMenuAction::ColorMenuAction(ApplicationManager* pApp, DrawMenuItem choose) 
 void ColorMenuAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
-	Input* pIn = pManager->GetInput();
 	UI.Choose = ChooseMenuItem;
 	pOut->Color_menu();
 }

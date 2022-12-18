@@ -8,7 +8,6 @@ ReturnAction::ReturnAction(ApplicationManager* pApp) :Action(pApp)
 void ReturnAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
-	Input* pIn = pManager->GetInput();
 	pOut->CreateDrawToolBar();
 }
 

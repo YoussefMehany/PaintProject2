@@ -8,7 +8,6 @@ ChangeColorAction::ChangeColorAction(ApplicationManager* pApp, color clr) :Actio
 void ChangeColorAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
-	Input* pIn = pManager->GetInput();
 
 	pOut->ClearStatusBar();
 }

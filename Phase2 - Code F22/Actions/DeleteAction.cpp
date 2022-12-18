@@ -8,8 +8,6 @@ DeleteAction::DeleteAction(ApplicationManager* pApp) :Action(pApp)
 void DeleteAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
-	Input* pIn = pManager->GetInput();
-
 	pOut->ClearStatusBar();
 }
 

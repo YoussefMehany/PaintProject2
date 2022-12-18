@@ -193,17 +193,22 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				break;
 			}
 			pAct = new StartRecAction(this);
-			Recording = true;
 			break;
 
 		case STOP_REC:
+			if (!Recording) {
+				pOut->PrintMessage("Record some actions first");
+				break;
+			}
 			pAct = new StopRecAction(this);
-			Recording = false;
 			break;
 
 		case PLAY_REC:
+			if (Recording) {
+				pOut->PrintMessage("Stop the recording first");
+				break;
+			}
 			pAct = new PlayRecAction(this);
-			PlayingRec = true;
 			break;
 
 		case CLEAR_ALL:
@@ -220,7 +225,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	{
 		CheckUpdate = true;
 		pAct->Execute(); //Execute
-		if (Recording && ActType < 32) // all the action types that can be recorded
+		if (Recording && ActType < 33) // all the action types that can be recorded
 		{
 			if (RecCount < MaxRecCount)
 				Recorded[RecCount++] = pAct;
@@ -343,10 +348,13 @@ void ApplicationManager::ClearAll()
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
-	//for (int i = 0; i < RecCount; i++) {
-	//	delete Recorded[i];
-	//	Recorded[i] = NULL;
-	//}
+	if (!PlayingRec) {
+		for (int i = 0; i < RecCount; i++) {
+			delete Recorded[i];
+			Recorded[i] = NULL;
+		}
+		RecCount = 0;
+	}
 	for (int i = 0; i < UndoCount; i++) {
 		delete UndoFigList[i];
 		UndoFigList[i] = NULL;
@@ -390,14 +398,21 @@ bool ApplicationManager::IsRecording() const {
 bool ApplicationManager::IsPlayingRec() const {
 	return PlayingRec;
 }
+
+void ApplicationManager::SetRec(bool IsRec)
+{
+	Recording = IsRec;
+}
+
 void ApplicationManager::PlayRec() {
+	PlayingRec = true;
 	ClearAll();
 	for (int i = 0; i < RecCount; i++) {
+		Sleep(1000);
 		Recorded[i]->Execute();
-		Sleep(1000);
 		UpdateInterface();
-		Sleep(1000);
 	}
+	PlayingRec = false;
 }
 void ApplicationManager::PrintLastMsg()
 {
@@ -414,6 +429,7 @@ void ApplicationManager::PrintLastMsg()
 	case STOP_REC:
 		pOut->PrintMessage("Recording Stopped");
 		break;
+
 	}
 }
 //==================================================================================//
