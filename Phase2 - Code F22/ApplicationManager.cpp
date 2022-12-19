@@ -18,6 +18,7 @@
 #include "Actions\ColorMenuAction.h"
 #include "Actions\ReturnAction.h"
 #include "Actions\ClearAllAction.h"
+#include "Actions/RedoAction.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -28,12 +29,16 @@ ApplicationManager::ApplicationManager()
 	SelectedFig = NULL;
 	Recording = false;
 	PlayingRec = false;
+	Undo = false;
+	Redo = false;
 	FigCount = 0;
-	ActionCounter = 0;
+	
 	RecCount = 0;
 	UndoCount = 0;
-	ListCounter = 0;
-	FigTurn = 0;
+	RedoCount = 0;
+	ListCounter_Undo = 0;
+	ListCounter_Redo = 0;
+
 	CheckUpdate = false;
 	LastAction = START_PROGRAM;
 	//Create an array of figure pointers and set them to NULL		
@@ -42,9 +47,10 @@ ApplicationManager::ApplicationManager()
 	for (int i = 0; i < MaxRecCount; i++)
 		Recorded[i] = NULL;
 	for (int i = 0; i < MaxUndoCount; i++)
-		UndoFigList[i] = NULL;
-	for (int i = 0; i < MaxUndoCount; i++)
-		SelectedFigs[i] = NULL;
+		SaveUndoActions[i]= NULL;
+	for (int i = 0; i < MaxRedoCount; i++)
+		SaveRedoActions[i] = NULL;
+
 }
 
 //==================================================================================//
@@ -101,7 +107,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case UNDO_ACTION:
-			if (FigCount == 0 &&ListCounter==0) {
+			if (FigCount == 0 &&ListCounter_Undo==0) {
 				
 				pOut->PrintMessage("No Action to undo");
 				break;
@@ -113,10 +119,19 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				
 				break;
 			}
-			pOut->PrintMessage("Undoed   "+to_string(ListCounter));
+			SetUndo(true);
+			pOut->PrintMessage("Undoed   "+to_string(ListCounter_Undo - UndoCount - 1));
+			Sleep(1000);
 			pAct = new UndoAction(this);
 			break;
-
+		case REDO_ACTION:
+			if (LastAction != UNDO_ACTION) 
+			{ 
+				pOut->PrintMessage("No Undo to Redo"); 
+				break; 
+			}
+			pAct = new RedoAction(this);
+			break;
 		case MOVE_FIGURE:
 			
 			if (SelectedFig == NULL){
@@ -138,7 +153,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, GREEN, GREENCLR);
+			pAct = new ChangeColorAction(this, GREEN);
 			break;
 
 		case REDCLR:
@@ -146,7 +161,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, RED, REDCLR);
+			pAct = new ChangeColorAction(this, RED);
 			break;
 
 		case BLUECLR:
@@ -155,7 +170,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				break;
 			}
 			
-			pAct = new ChangeColorAction(this, BLUE, BLUECLR);
+			pAct = new ChangeColorAction(this, BLUE);
 			break;
 
 		case ORANGECLR:
@@ -163,7 +178,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, ORANGE, ORANGECLR);
+			pAct = new ChangeColorAction(this, ORANGE);
 			break;
 
 		case YELLOWCLR:
@@ -171,7 +186,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, YELLOW, YELLOWCLR);
+			pAct = new ChangeColorAction(this, YELLOW);
 			break;
 
 		case BLACKCLR:
@@ -179,7 +194,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, BLACK, BLACKCLR);
+			pAct = new ChangeColorAction(this, BLACK);
 			break;
 
 		case DELETE_FIGURE:
@@ -233,12 +248,18 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		LastAction = ActType;
 		CheckUpdate = true;
 		pAct->Execute(); //Execute
-		if (Recording && ActType < 33) // all the action types that can be recorded
+		if (Recording && ActType < 30) // all the action types that can be recorded
 		{
 			if (RecCount < MaxRecCount)
 				Recorded[RecCount++] = pAct;
 		}
-	
+		if (ActType >= 1 && ActType <= 14)
+		{
+			SaveUndoActions[ListCounter_Undo -UndoCount] = pAct;
+			ListCounter_Undo++;
+			RedoCount = 0;
+		}
+		SetUndo(false);
 	}
 }
 //==================================================================================//
@@ -248,11 +269,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	if (LastAction == UNDO_ACTION)
-	{
-		FigList[FigCount++] = pFig;
-	}
-	else if (FigCount < MaxFigCount) {
+	 if (FigCount < MaxFigCount) {
 		FigList[FigCount++] = pFig;
 		pFig->SetID(FigCount);
 	}
@@ -260,12 +277,6 @@ void ApplicationManager::AddFigure(CFigure* pFig)
 ////////////////////////////////////////////////////////////////////////////////////
 CFigure* ApplicationManager::GetFigure(Point P1) const
 {
-	//If a figure is found return a pointer to it.
-	//if this point does not belong to any figure return NULL
-
-
-	//Add your code here to search for a figure given a point x,y	
-	//Remember that ApplicationManager only calls functions do NOT implement it.
 	CFigure* FigurePtr = NULL;
 	for (int i = 0; i < FigCount; i++) {
 		if (FigList[i]->IsPointInside(P1)) {
@@ -285,57 +296,24 @@ void ApplicationManager::MoveFigure(Point P1)
 {
 	SelectedFig->MoveTo(P1);
 }
-
-void ApplicationManager::SetLastAction(ActionType Act)
+void ApplicationManager::UndoLastAction()
 {
-	UndoCount = 0;
-    if (ActionCounter < MaxUndoCount)
-		LastActions[ActionCounter++] = Act;
-	else
+	ClearAll();
+	for (int i = 0; i < ListCounter_Undo - UndoCount - 1; i++)
 	{
-		for (int i = 0; i < ActionCounter - 1; i++)
-		{
-			LastActions[i] = LastActions[i + 1];
-		}
-		LastActions[ActionCounter - 1] = Act;
+		SaveUndoActions[i]->Execute();
 	}
-}
-ActionType ApplicationManager::getLastAction() const
-{
-	return LastActions[ActionCounter - UndoCount - 1];
-}
-
-void ApplicationManager::UndoLastAction(ActionType Act)
-{
-	CFigure* save = SelectedFig;
-	string s = to_string(Act);
-	pOut->PrintMessage(s+"   ");
-	Sleep(1000);
-	switch (Act)
-	{
-	case ADD_FIG:
-		AddFigure(UndoFigList[ListCounter - UndoCount - 1]);
-		break;
-	case DELETE_FIGURE:
-		SelectedFig = GetAddress(FigCount);
-		DeleteFigure();
-		SelectedFig = save;
-		break;
-	case CHANGE_DCLR:
-		SelectedFigs[FigTurn - UndoCount - 1]->ChangeLastDClr();
-		break;
-	case CHANGE_FCLR:
-		SelectedFigs[FigTurn - 1]->ChangeLastFClr();
-		break;
-	case BACK_TO:
-		pOut->PrintMessage("BACK_TO");
-
-		break;
-	default:
-		pOut->PrintMessage("Defualt");
-
-	}
+	for (int i = ListCounter_Undo - 1; i >= ListCounter_Undo - UndoCount - 1; i--)
+		SaveRedoActions[ListCounter_Redo++] = SaveUndoActions[i];
 	UndoCount++;
+}
+void ApplicationManager::RedoLastAction()
+{
+	for (int i = 0; i < ListCounter_Redo - RedoCount ; i++)
+	{
+		SaveRedoActions[i]->Execute();
+	}
+	RedoCount++;
 }
 CFigure* ApplicationManager::GetAddress(int id)
 {
@@ -353,21 +331,7 @@ void ApplicationManager::DeleteFigure()
 		if (FigList[i] == SelectedFig) {
 			FigList[i] = FigList[--FigCount];
 			SelectedFig->SetSelected(false);
-			if (LastAction != UNDO_ACTION)
-			{
-				if (ListCounter < MaxUndoCount)
-					UndoFigList[ListCounter++] = SelectedFig;
-				else
-				{
-					delete UndoFigList[0];
-					for (int i = 0; i < ListCounter - 1; i++)
-					{
-						UndoFigList[i] = UndoFigList[i + 1];
-					}
-					UndoFigList[ListCounter - 1] = SelectedFig;
-				}
-			}
-			//delete SelectedFig;
+			delete SelectedFig;
 			SelectedFig = NULL;
 			break;
 		}
@@ -383,18 +347,31 @@ void ApplicationManager::ClearAll()
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
-	if (!PlayingRec) {
+	if (!PlayingRec&&!Undo) {
 		for (int i = 0; i < RecCount; i++) {
 			delete Recorded[i];
 			Recorded[i] = NULL;
 		}
 		RecCount = 0;
 	}
-	for (int i = 0; i < UndoCount; i++) {
-		delete UndoFigList[i];
-		UndoFigList[i] = NULL;
+	if (!Undo) 
+	{
+		for (int i = 0; i < UndoCount; i++) {
+			delete SaveUndoActions[i];
+			SaveUndoActions[i] = NULL;
+		}
+		UndoCount = 0;
 	}
-	FigCount = 0, UndoCount = 0;
+	if (!Redo)
+	{
+		for (int i = 0; i < RedoCount; i++) {
+			delete SaveRedoActions[i];
+			SaveRedoActions[i] = NULL;
+		}
+		RedoCount = 0;
+	}
+	FigCount = 0;
+	SelectedFig = NULL;
 }
 void ApplicationManager::SelectFigure(Point P1)
 {
@@ -406,7 +383,6 @@ void ApplicationManager::SelectFigure(Point P1)
 			if (!SelectedFig->IsSelected()) {
 				SelectedFig = NULL;
 			}
-			else SelectedFigs[FigTurn++] = SelectedFig;
 		}
 	}
 
@@ -435,10 +411,23 @@ bool ApplicationManager::IsRecording() const {
 bool ApplicationManager::IsPlayingRec() const {
 	return PlayingRec;
 }
-
+bool ApplicationManager::IsUndoAction() const {
+	return Undo;
+}
+bool ApplicationManager::IsRedoAction() const {
+	return Redo;
+}
 void ApplicationManager::SetRec(bool IsRec)
 {
 	Recording = IsRec;
+}
+void ApplicationManager::SetUndo(bool IsUndo)
+{
+	Undo = IsUndo;
+}
+void ApplicationManager::SetRedo(bool IsRedo)
+{
+	Redo = IsRedo;
 }
 
 void ApplicationManager::PlayRec() {

@@ -15,22 +15,33 @@ void AddHexAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	pOut->PrintMessage("New Hexagon: Click at the Center");
+
 
 	//Read the center point
-	if (pManager->IsPlayingRec())
-		P1 = P1_Rec;
-	else {
-		pIn->GetPointClicked(P1.x, P1.y);
-		P1_Rec = P1;
+	if (pManager->IsUndoAction())
+	{
+		P1 = P1_Undo;
 	}
+	else
+	{
+		pOut->PrintMessage("New Hexagon: Click at the Center");
+		if (pManager->IsPlayingRec())
+			P1 = P1_Rec;
+		else {
+			pIn->GetPointClicked(P1.x, P1.y);
+			P1_Rec = P1;
+			P1_Undo = P1;
+		}
+		pOut->ClearStatusBar();
+	}
+
 
 	HexGfxInfo.isFilled = UI.IsFilled;
 	//get drawing, filling colors and pen width from the interface
 	HexGfxInfo.DrawClr = pOut->getCrntDrawColor();
 	HexGfxInfo.FillClr = pOut->getCrntFillColor();
 
-	pOut->ClearStatusBar();
+
 
 }
 
@@ -42,7 +53,6 @@ void AddHexAction::Execute()
 
 	//Create a rectangle with the parameters read from the user
 	CHexagon* R = new CHexagon(P1, HexGfxInfo);
-	pManager->SetLastAction(DRAW_HEX);
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 }

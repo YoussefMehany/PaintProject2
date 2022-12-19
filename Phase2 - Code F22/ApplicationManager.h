@@ -10,26 +10,32 @@
 //Main class that manages everything in the application.
 class ApplicationManager
 {
-	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 500};	//Max no for arrays
+	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 200,MaxRedoCount=5};	//Max no for arrays
 
 private:
 	int FigCount; //Actual number of figures
 	int RecCount;
 	int UndoCount;
-	int ListCounter;
-	int ActionCounter;
-	int FigTurn;
+	int RedoCount;
+	int ListCounter_Undo;
+	int ListCounter_Redo;
+	
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
-	ActionType LastActions[MaxUndoCount];
-	CFigure* SelectedFigs[MaxUndoCount];
-    CFigure* UndoFigList[MaxUndoCount];
-	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
+	bool Undo;
+	bool Redo;
+
 	ActionType LastAction;
+
+	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	CFigure* SelectedFig; //Pointer to the selected figure
+
 	Action* Recorded[MaxRecCount];
+	Action* SaveUndoActions[MaxUndoCount]; //saves actions for  undo operations
+	Action* SaveRedoActions[MaxRedoCount]; //saves actions for redo operations
 	//Pointers to Input and Output classes
+
 	Input *pIn;
 	Output *pOut;
 
@@ -44,9 +50,9 @@ public:
 	
 	// -- Figures Management Functions
 	CFigure* GetAddress(int id);
+	CFigure *GetFigure(Point P1) const;//Search for a figure given a point inside the figure
 	void PrintLastMsg();
-	void AddFigure(CFigure* pFig);          //Adds a new figure to the FigList
-	CFigure *GetFigure(Point P1) const; //Search for a figure given a point inside the figure
+	void AddFigure(CFigure* pFig);   //Adds a new figure to the FigList
 	void MoveFigure(Point P1);
 	void SelectFigure(Point P1);
 	void ChangeColor(color clr);
@@ -57,10 +63,20 @@ public:
 	int getFigCount()const;
 	void DeleteFigure();
 	void SaveFile(ofstream& OutFile);
-	void UndoLastAction(ActionType Act);
 	void ClearAll();
-	void SetLastAction(ActionType Act);
-	ActionType getLastAction()const;
+
+	// -- Undo-Redo
+	bool IsUndoAction() const;
+	bool IsRedoAction() const;
+	void UndoLastAction();
+	void RedoLastAction();
+	void SetUndo(bool IsUndo);
+	void SetRedo(bool IsRedo);
+	 
+	
+	 
+	 
+	
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

@@ -4,7 +4,6 @@
 class UndoAction : public Action
 {
 private:
-	ActionType Reverse_Last_Action;
 public:
 
 	UndoAction(ApplicationManager* pApp);
@@ -13,15 +12,4 @@ public:
 
 	//Execute action (code depends on action type)
 	virtual void Execute() ;
-
-
-
-
-
-
-
-
-
-
-
 };

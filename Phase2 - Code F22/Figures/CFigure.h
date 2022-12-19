@@ -12,10 +12,6 @@ protected:
 	int ID;		//Each figure has an ID
 	bool Selected;	//true if the figure is selected.
 	GfxInfo FigGfxInfo;	//Figure graphis info
-	color LastFClrs[500];
-	color LastDClrs[500];
-	int FClrsCount;
-	int DClrsCount;
 	/// Add more parameters if needed.
 
 public:
@@ -28,8 +24,6 @@ public:
 	
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
 	void ChngFillClr(color Fclr);	//changes the figure's filling color
-	void ChangeLastDClr();
-	void ChangeLastFClr();
 	virtual void MoveTo(Point P)=0;
 	virtual bool IsPointInside(Point P)=0;
 	///The following functions should be supported by the figure class

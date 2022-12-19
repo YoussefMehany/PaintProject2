@@ -1,4 +1,4 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
   ApplicationManager.cpp
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(354): warning C4715: 'ApplicationManager::GetAddress': not all control paths return a value
+C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(327): warning C4715: 'ApplicationManager::GetAddress': not all control paths return a value
   PT-Project.vcxproj -> C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

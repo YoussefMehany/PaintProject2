@@ -4,7 +4,7 @@ class ChangeColorAction :public Action
 {
 	color colour;
 public:
-	ChangeColorAction(ApplicationManager* pApp, color clr,ActionType Act);
+	ChangeColorAction(ApplicationManager* pApp, color clr);
 	//Reads parameters required for action to execute (code depends on action type)
 	virtual void ReadActionParameters();
 

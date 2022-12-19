@@ -15,32 +15,56 @@ void AddCircAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	pOut->PrintMessage("New Circle: Click at the Center");
+	
 
-	//Read the center point
-	if (pManager->IsPlayingRec())
-		P1 = P1_Rec;
-	else {
-		pIn->GetPointClicked(P1.x, P1.y);
-		P1_Rec = P1;
+	
+
+	if (pManager->IsUndoAction())
+	{
+		P1 = P1_Undo;
+	}
+	else
+	{
+		//Read the center point
+		pOut->PrintMessage("New Circle: Click at the Center");
+		if (pManager->IsPlayingRec())
+			P1 = P1_Rec;
+		else {
+			pIn->GetPointClicked(P1.x, P1.y);
+			P1_Rec = P1;
+			P1_Undo = P1;
+		}
 	}
 
-	pOut->PrintMessage("New Circle: Click at a point on the radius");
 
-	//Read 2nd corner and store in point P2
-	if (pManager->IsPlayingRec())
-		P2 = P2_Rec;
-	else {
-		pIn->GetPointClicked(P2.x, P2.y);
-		P2_Rec = P2;
+	
+
+	
+	if (pManager->IsUndoAction())
+	{
+		P2 = P2_Undo;
 	}
+	else
+	{
+        //Read 2nd corner and store in point P2
+        pOut->PrintMessage("New Circle: Click at a point on the radius");
+		if (pManager->IsPlayingRec())
+			P2 = P2_Rec;
+		else {
+			pIn->GetPointClicked(P2.x, P2.y);
+			P2_Rec = P2;
+			P2_Undo = P2;
+		}
+		pOut->ClearStatusBar();
+	}
+
 
 	CircGfxInfo.isFilled = UI.IsFilled;
 	//get drawing, filling colors and pen width from the interface
 	CircGfxInfo.DrawClr = pOut->getCrntDrawColor();
 	CircGfxInfo.FillClr = pOut->getCrntFillColor();
 
-	pOut->ClearStatusBar();
+	
 
 }
 
@@ -54,6 +78,5 @@ void AddCircAction::Execute()
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
 
 	//Add the rectangle to the list of figures
-	pManager->SetLastAction(DRAW_CIRC);
 	pManager->AddFigure(R);
 }

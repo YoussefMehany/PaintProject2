@@ -9,6 +9,7 @@ class AddTriangleAction : public Action
 private:
 	Point P1, P2, P3; //Triangle Corners
 	Point P1_Rec, P2_Rec, P3_Rec;
+	Point P1_Undo, P2_Undo, P3_Undo;
 	GfxInfo TriangleGfxInfo;
 public:
 	AddTriangleAction(ApplicationManager* pApp);
