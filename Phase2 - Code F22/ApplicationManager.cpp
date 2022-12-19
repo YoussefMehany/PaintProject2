@@ -33,6 +33,7 @@ ApplicationManager::ApplicationManager()
 	RecCount = 0;
 	UndoCount = 0;
 	ListCounter = 0;
+	FigTurn = 0;
 	CheckUpdate = false;
 	LastAction = START_PROGRAM;
 	//Create an array of figure pointers and set them to NULL		
@@ -42,6 +43,8 @@ ApplicationManager::ApplicationManager()
 		Recorded[i] = NULL;
 	for (int i = 0; i < MaxUndoCount; i++)
 		UndoFigList[i] = NULL;
+	for (int i = 0; i < MaxUndoCount; i++)
+		SelectedFigs[i] = NULL;
 }
 
 //==================================================================================//
@@ -98,15 +101,19 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case UNDO_ACTION:
-			if (FigCount == 0 && ListCounter == 0) {
+			if (FigCount == 0 &&ListCounter==0) {
+				
 				pOut->PrintMessage("No Action to undo");
 				break;
 			}
-			if (UndoCount == 5)
+			if (UndoCount ==5&&LastAction==UNDO_ACTION)
 			{
-				pOut->PrintMessage("Undo Limit Exceeded");
+				
+				pOut->PrintMessage("Undo Limit Exceeded,Please make anothr action frist");
+				
 				break;
 			}
+			pOut->PrintMessage("Undoed   "+to_string(ListCounter));
 			pAct = new UndoAction(this);
 			break;
 
@@ -131,7 +138,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, GREEN);
+			pAct = new ChangeColorAction(this, GREEN, GREENCLR);
 			break;
 
 		case REDCLR:
@@ -139,7 +146,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, RED);
+			pAct = new ChangeColorAction(this, RED, REDCLR);
 			break;
 
 		case BLUECLR:
@@ -148,7 +155,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				break;
 			}
 			
-			pAct = new ChangeColorAction(this, BLUE);
+			pAct = new ChangeColorAction(this, BLUE, BLUECLR);
 			break;
 
 		case ORANGECLR:
@@ -156,7 +163,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, ORANGE);
+			pAct = new ChangeColorAction(this, ORANGE, ORANGECLR);
 			break;
 
 		case YELLOWCLR:
@@ -164,7 +171,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, YELLOW);
+			pAct = new ChangeColorAction(this, YELLOW, YELLOWCLR);
 			break;
 
 		case BLACKCLR:
@@ -172,7 +179,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 				pOut->PrintMessage("Please Select a Figure First");
 				break;
 			}
-			pAct = new ChangeColorAction(this, BLACK);
+			pAct = new ChangeColorAction(this, BLACK, BLACKCLR);
 			break;
 
 		case DELETE_FIGURE:
@@ -223,6 +230,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	
 	if(pAct != NULL)
 	{
+		LastAction = ActType;
 		CheckUpdate = true;
 		pAct->Execute(); //Execute
 		if (Recording && ActType < 33) // all the action types that can be recorded
@@ -230,7 +238,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			if (RecCount < MaxRecCount)
 				Recorded[RecCount++] = pAct;
 		}
-		LastAction = ActType;
+	
 	}
 }
 //==================================================================================//
@@ -240,7 +248,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	if (FigCount < MaxFigCount) {
+	if (LastAction == UNDO_ACTION)
+	{
+		FigList[FigCount++] = pFig;
+	}
+	else if (FigCount < MaxFigCount) {
 		FigList[FigCount++] = pFig;
 		pFig->SetID(FigCount);
 	}
@@ -276,7 +288,8 @@ void ApplicationManager::MoveFigure(Point P1)
 
 void ApplicationManager::SetLastAction(ActionType Act)
 {
-	if (ActionCounter < 5)
+	UndoCount = 0;
+    if (ActionCounter < MaxUndoCount)
 		LastActions[ActionCounter++] = Act;
 	else
 	{
@@ -295,42 +308,64 @@ ActionType ApplicationManager::getLastAction() const
 void ApplicationManager::UndoLastAction(ActionType Act)
 {
 	CFigure* save = SelectedFig;
-	
-	switch (Act) 
+	string s = to_string(Act);
+	pOut->PrintMessage(s+"   ");
+	Sleep(1000);
+	switch (Act)
 	{
 	case ADD_FIG:
 		AddFigure(UndoFigList[ListCounter - UndoCount - 1]);
 		break;
 	case DELETE_FIGURE:
-		SelectedFig = FigList[FigCount - 1];
+		SelectedFig = GetAddress(FigCount);
 		DeleteFigure();
 		SelectedFig = save;
 		break;
-	case CHANGE_CLR:
-
+	case CHANGE_DCLR:
+		SelectedFigs[FigTurn - UndoCount - 1]->ChangeLastDClr();
+		break;
+	case CHANGE_FCLR:
+		SelectedFigs[FigTurn - 1]->ChangeLastFClr();
 		break;
 	case BACK_TO:
+		pOut->PrintMessage("BACK_TO");
 
 		break;
+	default:
+		pOut->PrintMessage("Defualt");
+
 	}
 	UndoCount++;
+}
+CFigure* ApplicationManager::GetAddress(int id)
+{
+	for (int i = 0; i < FigCount; i++)
+	{
+		if (FigList[i]->GetID() == id)
+		{
+			return FigList[i];
+		}
+	}
 }
 void ApplicationManager::DeleteFigure()
 {
 	for (int i = 0; i < FigCount; i++) {
 		if (FigList[i] == SelectedFig) {
 			FigList[i] = FigList[--FigCount];
-			
-			if (ListCounter < MaxUndoCount)
-			    UndoFigList[ListCounter++]= SelectedFig;
-			else
+			SelectedFig->SetSelected(false);
+			if (LastAction != UNDO_ACTION)
 			{
-				delete UndoFigList[0];
-				for (int i = 0; i < ListCounter-1; i++) 
+				if (ListCounter < MaxUndoCount)
+					UndoFigList[ListCounter++] = SelectedFig;
+				else
 				{
-					UndoFigList[i] = UndoFigList[i + 1];
+					delete UndoFigList[0];
+					for (int i = 0; i < ListCounter - 1; i++)
+					{
+						UndoFigList[i] = UndoFigList[i + 1];
+					}
+					UndoFigList[ListCounter - 1] = SelectedFig;
 				}
-				UndoFigList[ListCounter-1] = SelectedFig;
 			}
 			//delete SelectedFig;
 			SelectedFig = NULL;
@@ -371,8 +406,10 @@ void ApplicationManager::SelectFigure(Point P1)
 			if (!SelectedFig->IsSelected()) {
 				SelectedFig = NULL;
 			}
+			else SelectedFigs[FigTurn++] = SelectedFig;
 		}
 	}
+
 }
 
 void ApplicationManager::ChangeColor(color clr)

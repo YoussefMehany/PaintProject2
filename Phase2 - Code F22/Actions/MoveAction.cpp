@@ -24,6 +24,6 @@ void MoveAction::ReadActionParameters()
 void MoveAction::Execute()
 {
 	ReadActionParameters();
-	
+	pManager->SetLastAction(MOVE_FIGURE);
 	pManager->MoveFigure(P);
 }

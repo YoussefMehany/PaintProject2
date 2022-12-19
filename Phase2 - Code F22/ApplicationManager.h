@@ -10,18 +10,20 @@
 //Main class that manages everything in the application.
 class ApplicationManager
 {
-	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 5};	//Max no for arrays
+	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 500};	//Max no for arrays
 
 private:
 	int FigCount; //Actual number of figures
 	int RecCount;
 	int UndoCount;
 	int ListCounter;
+	int ActionCounter;
+	int FigTurn;
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
-	int ActionCounter;
 	ActionType LastActions[MaxUndoCount];
+	CFigure* SelectedFigs[MaxUndoCount];
     CFigure* UndoFigList[MaxUndoCount];
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	ActionType LastAction;
@@ -41,6 +43,7 @@ public:
 	void ExecuteAction(ActionType) ; //Creates an action and executes it
 	
 	// -- Figures Management Functions
+	CFigure* GetAddress(int id);
 	void PrintLastMsg();
 	void AddFigure(CFigure* pFig);          //Adds a new figure to the FigList
 	CFigure *GetFigure(Point P1) const; //Search for a figure given a point inside the figure

@@ -42,7 +42,7 @@ void AddHexAction::Execute()
 
 	//Create a rectangle with the parameters read from the user
 	CHexagon* R = new CHexagon(P1, HexGfxInfo);
-
+	pManager->SetLastAction(DRAW_HEX);
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 }

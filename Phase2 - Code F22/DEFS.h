@@ -38,6 +38,8 @@ enum ActionType //The actions supported (you can add more if needed)
 	STATUS,			//A click on the status bar
 	ADD_FIG,
 	CHANGE_CLR,
+	CHANGE_DCLR,
+	CHANGE_FCLR,
 	BACK_TO,
 	START_REC,
 	STOP_REC,
