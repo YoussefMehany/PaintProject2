@@ -14,5 +14,6 @@ void UndoAction::ReadActionParameters()
 void UndoAction::Execute()
 {
 	ReadActionParameters();
-	pManager->UndoLastAction();
+	pManager->SetUndo(true);
+	pManager->Undo_RedoLastAction();
 }

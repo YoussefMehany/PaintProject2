@@ -7,6 +7,7 @@
 #include "GUI\input.h"
 #include "GUI\output.h"
 
+
 //Main class that manages everything in the application.
 class ApplicationManager
 {
@@ -16,10 +17,8 @@ private:
 	int FigCount; //Actual number of figures
 	int RecCount;
 	int UndoCount;
-	int RedoCount;
-	int ListCounter_Undo;
-	int ListCounter_Redo;
-	
+	int Undo_Redo_Limit;
+	int ListCounter_Undo_Redo;
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
@@ -32,8 +31,7 @@ private:
 	CFigure* SelectedFig; //Pointer to the selected figure
 
 	Action* Recorded[MaxRecCount];
-	Action* SaveUndoActions[MaxUndoCount]; //saves actions for  undo operations
-	Action* SaveRedoActions[MaxRedoCount]; //saves actions for redo operations
+	Action* SaveUndo_RedoActions[MaxUndoCount]; //saves actions for  undo operations
 	//Pointers to Input and Output classes
 
 	Input *pIn;
@@ -49,9 +47,7 @@ public:
 	void ExecuteAction(ActionType) ; //Creates an action and executes it
 	
 	// -- Figures Management Functions
-	CFigure* GetAddress(int id);
 	CFigure *GetFigure(Point P1) const;//Search for a figure given a point inside the figure
-	void PrintLastMsg();
 	void AddFigure(CFigure* pFig);   //Adds a new figure to the FigList
 	void MoveFigure(Point P1);
 	void SelectFigure(Point P1);
@@ -68,8 +64,7 @@ public:
 	// -- Undo-Redo
 	bool IsUndoAction() const;
 	bool IsRedoAction() const;
-	void UndoLastAction();
-	void RedoLastAction();
+	void Undo_RedoLastAction();
 	void SetUndo(bool IsUndo);
 	void SetRedo(bool IsRedo);
 	 

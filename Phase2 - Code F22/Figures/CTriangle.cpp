@@ -4,7 +4,9 @@ CTriangle::CTriangle(Point P1, Point P2, Point P3, GfxInfo FigureGfxInfo) :CFigu
 {
 	Corners[0] = P1; Corners[1] = P2; Corners[2] = P3;
 }
-
+CTriangle::CTriangle()
+{
+}
 
 void CTriangle::Draw(Output* pOut) const
 {
@@ -59,4 +61,22 @@ void CTriangle::Save(ofstream& OutFile)
 		FillClr = "NO_FILL";
 	}
 	OutFile << DrawClr << '\t' << FillClr << '\n';
+}
+void CTriangle::Load(ifstream& InFile) {
+	string Word;
+	InFile >> Word;
+	ID = stoi(Word);
+	for (int i = 0; i < 3; i++) {
+		InFile >> Word;
+		Corners[i].x = stoi(Word);
+		InFile >> Word;
+		Corners[i].y = stoi(Word);
+	}
+	InFile >> Word;
+	FigGfxInfo.DrawClr = getColorr(Word);
+	InFile >> Word;
+	if (Word != "NO_FILL") {
+		FigGfxInfo.FillClr = getColorr(Word);
+		FigGfxInfo.isFilled = true;
+	}
 }

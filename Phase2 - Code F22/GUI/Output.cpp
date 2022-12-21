@@ -212,7 +212,6 @@ void Output::UpdateToolBar() const
 	else if (UI.InterfaceMode == MODE_COLOR) {
 		Color_menu();
 	}
-	ClearStatusBar();
 }
 
 void Output::PrintMessage(string msg) const	//Prints a message on status bar

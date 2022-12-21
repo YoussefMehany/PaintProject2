@@ -10,10 +10,12 @@ private:
 	Point Corner2;
 public:
 	CRectangle(Point , Point, GfxInfo FigureGfxInfo );
+	CRectangle();
 	virtual void Draw(Output* pOut) const;
 	virtual void MoveTo(Point P);
 	virtual bool IsPointInside(Point P);
 	virtual void Save(ofstream& OutFile);
+	virtual void Load(ifstream& InFile);
 };
 
 #endif

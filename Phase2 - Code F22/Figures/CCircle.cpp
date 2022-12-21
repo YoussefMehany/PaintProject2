@@ -6,8 +6,9 @@ CCircle::CCircle(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxIn
 	Radius = P2;
 	radius = (int)sqrt(pow((Radius.x - Center.x), 2) + pow((Radius.y - Center.y), 2));
 }
-
-
+CCircle::CCircle()
+{
+}
 void CCircle::Draw(Output* pOut) const
 {
 	//Call Output::DrawCircle to draw a Circle on the screen	
@@ -35,5 +36,26 @@ void CCircle::Save(ofstream& OutFile)
 	else {
 		FillClr = "NO_FILL";
 	}
-	OutFile << circle << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' << radius << '\t' << DrawClr << '\t' << FillClr << '\n';
+	OutFile << circle << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' << Radius.x << '\t' << Radius.y << '\t' << DrawClr << '\t' << FillClr << '\n';
+}
+void CCircle::Load(ifstream& InFile) {
+	string Word;
+	InFile >> Word;
+	ID = stoi(Word);
+	InFile >> Word;
+	Center.x = stoi(Word);
+	InFile >> Word;
+	Center.y = stoi(Word);
+	InFile >> Word;
+	Radius.x = stoi(Word);
+	InFile >> Word;
+	Radius.y = stoi(Word);
+	radius = (int)sqrt(pow((Radius.x - Center.x), 2) + pow((Radius.y - Center.y), 2));
+	InFile >> Word;
+	FigGfxInfo.DrawClr = getColorr(Word);
+	InFile >> Word;
+	if (Word != "NO_FILL") {
+		FigGfxInfo.FillClr = getColorr(Word);
+		FigGfxInfo.isFilled = true;
+	}
 }

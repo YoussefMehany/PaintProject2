@@ -11,6 +11,7 @@
 #include "Actions\ChangeColorAction.h"
 #include "Actions\DeleteAction.h"
 #include "Actions\SaveAction.h"
+#include "Actions\LoadAction.h"
 #include "Actions\StartRecAction.h"
 #include "Actions\StopRecAction.h"
 #include "Actions\PlayRecAction.h"
@@ -31,13 +32,12 @@ ApplicationManager::ApplicationManager()
 	PlayingRec = false;
 	Undo = false;
 	Redo = false;
-	FigCount = 0;
 	
+	FigCount = 0;
 	RecCount = 0;
 	UndoCount = 0;
-	RedoCount = 0;
-	ListCounter_Undo = 0;
-	ListCounter_Redo = 0;
+	Undo_Redo_Limit = 0;
+	ListCounter_Undo_Redo = 0;
 
 	CheckUpdate = false;
 	LastAction = START_PROGRAM;
@@ -47,9 +47,7 @@ ApplicationManager::ApplicationManager()
 	for (int i = 0; i < MaxRecCount; i++)
 		Recorded[i] = NULL;
 	for (int i = 0; i < MaxUndoCount; i++)
-		SaveUndoActions[i]= NULL;
-	for (int i = 0; i < MaxRedoCount; i++)
-		SaveRedoActions[i] = NULL;
+		SaveUndo_RedoActions[i]= NULL;
 
 }
 
@@ -107,31 +105,30 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case UNDO_ACTION:
-			if (FigCount == 0 &&ListCounter_Undo==0) {
-				
+			if (FigCount == 0 && ListCounter_Undo_Redo - UndoCount == 0) {
+
 				pOut->PrintMessage("No Action to undo");
 				break;
 			}
-			if (UndoCount ==5&&LastAction==UNDO_ACTION)
+			if (Undo_Redo_Limit == 5 && LastAction == UNDO_ACTION)
 			{
-				
+
 				pOut->PrintMessage("Undo Limit Exceeded,Please make anothr action frist");
-				
+
 				break;
 			}
-			SetUndo(true);
-			pOut->PrintMessage("Undoed   "+to_string(ListCounter_Undo - UndoCount - 1));
-			Sleep(1000);
 			pAct = new UndoAction(this);
 			break;
+
 		case REDO_ACTION:
-			if (LastAction != UNDO_ACTION) 
-			{ 
-				pOut->PrintMessage("No Undo to Redo"); 
-				break; 
+			if (LastAction != UNDO_ACTION && LastAction != REDO_ACTION || Undo_Redo_Limit == 0)
+			{
+				pOut->PrintMessage("No Undo to Redo");
+				break;
 			}
 			pAct = new RedoAction(this);
 			break;
+
 		case MOVE_FIGURE:
 			
 			if (SelectedFig == NULL){
@@ -208,6 +205,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		case SAVE_PROGRESS:
 			pAct = new SaveAction(this);
 			break;
+		
+		case LOAD_PROGRESS:
+			pAct = new LoadAction(this);
+			break;
 
 		case START_REC:
 			if (LastAction != START_PROGRAM && LastAction != CLEAR_ALL) {
@@ -255,11 +256,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		}
 		if (ActType >= 1 && ActType <= 14)
 		{
-			SaveUndoActions[ListCounter_Undo -UndoCount] = pAct;
-			ListCounter_Undo++;
-			RedoCount = 0;
+			SaveUndo_RedoActions[ListCounter_Undo_Redo - UndoCount] = pAct;
+			ListCounter_Undo_Redo++;
+			Undo_Redo_Limit = 0;
 		}
 		SetUndo(false);
+		SetRedo(false);
 	}
 }
 //==================================================================================//
@@ -296,33 +298,38 @@ void ApplicationManager::MoveFigure(Point P1)
 {
 	SelectedFig->MoveTo(P1);
 }
-void ApplicationManager::UndoLastAction()
+void ApplicationManager::Undo_RedoLastAction()
 {
 	ClearAll();
-	for (int i = 0; i < ListCounter_Undo - UndoCount - 1; i++)
+	if (Redo)
 	{
-		SaveUndoActions[i]->Execute();
+		Undo_Redo_Limit--;
+		UndoCount--;
 	}
-	for (int i = ListCounter_Undo - 1; i >= ListCounter_Undo - UndoCount - 1; i--)
-		SaveRedoActions[ListCounter_Redo++] = SaveUndoActions[i];
-	UndoCount++;
-}
-void ApplicationManager::RedoLastAction()
-{
-	for (int i = 0; i < ListCounter_Redo - RedoCount ; i++)
+	else
 	{
-		SaveRedoActions[i]->Execute();
+		Undo_Redo_Limit++;
+		UndoCount++;
 	}
-	RedoCount++;
-}
-CFigure* ApplicationManager::GetAddress(int id)
-{
-	for (int i = 0; i < FigCount; i++)
+	int add = 0;
+	for (int i = ListCounter_Undo_Redo - UndoCount; i >= 0; i--)
 	{
-		if (FigList[i]->GetID() == id)
-		{
-			return FigList[i];
-		}
+		if (SaveUndo_RedoActions[i] != NULL)
+			if (dynamic_cast<SelectAction*>(SaveUndo_RedoActions[i]))
+			{
+				add++;
+			}
+			else
+				break;
+	}
+	if (Redo)
+		UndoCount -= add;
+	else
+		UndoCount += add;
+	for (int i = 0; i < ListCounter_Undo_Redo - UndoCount; i++)
+	{
+		if (SaveUndo_RedoActions[i] != NULL)
+			SaveUndo_RedoActions[i]->Execute();
 	}
 }
 void ApplicationManager::DeleteFigure()
@@ -341,34 +348,27 @@ void ApplicationManager::DeleteFigure()
 void ApplicationManager::ClearAll()
 {
 	UI.IsFilled = false;
-	UI.DrawColor = BLUE;	//Drawing color
-	UI.FillColor = GREEN;	//Filling color
+	UI.DrawColor = BLUE;    //Drawing color
+	UI.FillColor = GREEN;    //Filling color
 	for (int i = 0; i < FigCount; i++) {
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
-	if (!PlayingRec&&!Undo) {
+	if (!PlayingRec && !Undo && !Redo) {
 		for (int i = 0; i < RecCount; i++) {
 			delete Recorded[i];
 			Recorded[i] = NULL;
 		}
 		RecCount = 0;
 	}
-	if (!Undo) 
+	if (!Undo && !Redo)
 	{
-		for (int i = 0; i < UndoCount; i++) {
-			delete SaveUndoActions[i];
-			SaveUndoActions[i] = NULL;
+		for (int i = 0; i < ListCounter_Undo_Redo; i++) {
+			delete SaveUndo_RedoActions[i];
+			SaveUndo_RedoActions[i] = NULL;
 		}
 		UndoCount = 0;
-	}
-	if (!Redo)
-	{
-		for (int i = 0; i < RedoCount; i++) {
-			delete SaveRedoActions[i];
-			SaveRedoActions[i] = NULL;
-		}
-		RedoCount = 0;
+		ListCounter_Undo_Redo = 0;
 	}
 	FigCount = 0;
 	SelectedFig = NULL;
@@ -417,6 +417,7 @@ bool ApplicationManager::IsUndoAction() const {
 bool ApplicationManager::IsRedoAction() const {
 	return Redo;
 }
+
 void ApplicationManager::SetRec(bool IsRec)
 {
 	Recording = IsRec;
@@ -439,24 +440,6 @@ void ApplicationManager::PlayRec() {
 		UpdateInterface();
 	}
 	PlayingRec = false;
-}
-void ApplicationManager::PrintLastMsg()
-{
-	switch (LastAction)
-	{
-	case SAVE_PROGRESS:
-		pOut->PrintMessage("File Saved");
-		break;
-
-	case START_REC:
-		pOut->PrintMessage("Recording Started");
-		break;
-
-	case STOP_REC:
-		pOut->PrintMessage("Recording Stopped");
-		break;
-
-	}
 }
 //==================================================================================//
 //							Save/Load Functions										//
@@ -484,7 +467,6 @@ void ApplicationManager::UpdateInterface()
 		for (int i = 0; i < FigCount; i++)
 			FigList[i]->Draw(pOut); //Call Draw function (virtual member fn)
 	}
-	PrintLastMsg();
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the input

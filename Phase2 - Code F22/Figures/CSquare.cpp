@@ -5,6 +5,10 @@ CSquare::CSquare(Point P1, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 	Center = P1;
 	Side = 200;
 }
+CSquare::CSquare()
+{
+	Side = 200;
+}
 void CSquare::Draw(Output* pOut) const
 {
 	//Call Output::DrawSquare to draw a Square on the screen	
@@ -35,5 +39,21 @@ void CSquare::Save(ofstream& OutFile)
 	else {
 		FillClr = "NO_FILL";
 	}
-	OutFile << square << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' << Side << '\t' << DrawClr << '\t' << FillClr << '\n';
+	OutFile << square << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' << DrawClr << '\t' << FillClr << '\n';
+}
+void CSquare::Load(ifstream& InFile) {
+	string Word;
+	InFile >> Word;
+	ID = stoi(Word);
+	InFile >> Word;
+	Center.x = stoi(Word);
+	InFile >> Word;
+	Center.y = stoi(Word);
+	InFile >> Word;
+	FigGfxInfo.DrawClr = getColorr(Word);
+	InFile >> Word;
+	if (Word != "NO_FILL") {
+		FigGfxInfo.FillClr = getColorr(Word);
+		FigGfxInfo.isFilled = true;
+	}
 }

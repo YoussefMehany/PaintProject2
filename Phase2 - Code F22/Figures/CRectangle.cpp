@@ -5,7 +5,9 @@ CRectangle::CRectangle(Point P1, Point P2, GfxInfo FigureGfxInfo):CFigure(Figure
 	Corner1 = P1;
 	Corner2 = P2;
 }
-	
+CRectangle::CRectangle()
+{
+}
 
 void CRectangle::Draw(Output* pOut) const
 {
@@ -45,4 +47,24 @@ void CRectangle::Save(ofstream& OutFile)
 		FillClr = "NO_FILL";
 	}
 	OutFile << rectangle << '\t' << ID << '\t' << Corner1.x << '\t' << Corner1.y << '\t' << Corner2.x << '\t' << Corner2.y << '\t' << DrawClr << '\t' << FillClr << '\n';
+}
+void CRectangle::Load(ifstream& InFile) {
+	string Word;
+	InFile >> Word;
+	ID = stoi(Word);
+	InFile >> Word;
+	Corner1.x = stoi(Word);
+	InFile >> Word;
+	Corner1.y = stoi(Word);
+	InFile >> Word;
+	Corner2.x = stoi(Word);
+	InFile >> Word;
+	Corner2.y = stoi(Word);
+	InFile >> Word;
+	FigGfxInfo.DrawClr = getColorr(Word);
+	InFile >> Word;
+	if (Word != "NO_FILL") {
+		FigGfxInfo.FillClr = getColorr(Word);
+		FigGfxInfo.isFilled = true;
+	}
 }

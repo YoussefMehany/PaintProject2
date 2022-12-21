@@ -1,12 +1,15 @@
 #include "CHexagon.h"
-
+#include <iostream>
 CHexagon::CHexagon(Point P1, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	Center = P1;
 	Side = 100;
 	CalcCorners(Corners);
 }
-
+CHexagon::CHexagon()
+{
+	Side = 100;
+}
 
 void CHexagon::Draw(Output* pOut) const
 {
@@ -52,9 +55,7 @@ void CHexagon::Save(ofstream& OutFile)
 	string DrawClr = getColor(FigGfxInfo.DrawClr);
 	string FillClr;
 	OutFile << hexagon << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t'; 
-	for (int i = 0; i < 6; i++) {
-		OutFile << Corners[i].x << '\t' << Corners[i].y << '\t';
-	}
+
 	if (FigGfxInfo.isFilled == true)
 	{
 		FillClr = getColor(FigGfxInfo.FillClr);
@@ -63,4 +64,21 @@ void CHexagon::Save(ofstream& OutFile)
 		FillClr = "NO_FILL";
 	}
 	OutFile << DrawClr << '\t' << FillClr << '\n';
+}
+void CHexagon::Load(ifstream& InFile) {
+	string Word;
+	InFile >> Word;
+	ID = stoi(Word);
+	InFile >> Word;
+	Center.x = stoi(Word);
+	InFile >> Word;
+	Center.y = stoi(Word);
+	CalcCorners(Corners);
+	InFile >> Word;
+	FigGfxInfo.DrawClr = getColorr(Word);
+	InFile >> Word;
+	if (Word != "NO_FILL") {
+		FigGfxInfo.FillClr = getColorr(Word);
+		FigGfxInfo.isFilled = true;
+	}
 }

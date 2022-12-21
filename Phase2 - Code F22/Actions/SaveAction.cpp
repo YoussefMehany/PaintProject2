@@ -14,6 +14,7 @@ void SaveAction::ReadActionParameters()
 
 	fileName = pIn->GetSrting(pOut) + ".txt";
 	OutFile.open(fileName);
+	pOut->PrintMessage("File saved");
 }
 
 void SaveAction::Execute()

@@ -11,10 +11,12 @@ private:
 	int radius;
 public:
 	CCircle(Point, Point, GfxInfo FigureGfxInfo);
+	CCircle();
 	virtual void Draw(Output* pOut) const;
 	virtual void MoveTo(Point P);
 	virtual bool IsPointInside(Point P);
 	virtual void Save(ofstream& OutFile);
+	virtual void Load(ifstream& InFile);
 };
 
 #endif

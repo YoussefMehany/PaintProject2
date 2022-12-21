@@ -15,9 +15,6 @@ void AddCircAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	
-
-	
 
 	if (pManager->IsUndoAction())
 	{
@@ -74,9 +71,9 @@ void AddCircAction::Execute()
 	//This action needs to read some parameters first
 	ReadActionParameters();
 
-	//Create a rectangle with the parameters read from the user
+	//Create a Circle with the parameters read from the user
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
 
-	//Add the rectangle to the list of figures
+	//Add the Circle to the list of figures
 	pManager->AddFigure(R);
 }

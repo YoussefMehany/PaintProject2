@@ -5,6 +5,11 @@ CFigure::CFigure(GfxInfo FigureGfxInfo)
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
 }
+CFigure::CFigure()
+{
+	FigGfxInfo.isFilled = false;
+	Selected = false;
+}
 void CFigure::SetID(int id) {
 	ID = id;
 }
@@ -63,5 +68,36 @@ string CFigure::getColor(color clr)
 	if (clr == YELLOW)
 	{
 		return "YELLOW";
+	}
+}
+color CFigure::getColorr(string clr)
+{
+	if (clr == "BLUE")
+	{
+		return BLUE;
+	}
+	if (clr == "GREEN")
+	{
+		return GREEN;
+	}
+	if (clr == "WHITE")
+	{
+		return WHITE;
+	}
+	if (clr == "RED")
+	{
+		return RED;
+	}
+	if (clr == "BLACK")
+	{
+		return BLACK;
+	}
+	if (clr == "ORANGE")
+	{
+		return ORANGE;
+	}
+	if (clr == "YELLOW")
+	{
+		return YELLOW;
 	}
 }
