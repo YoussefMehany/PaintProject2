@@ -2,15 +2,17 @@
 #define ADD_HEX_ACTION_H
 
 #include "Action.h"
+#include "..\Figures\CHexagon.h"
 
+#include "..\ApplicationManager.h"
 //Add Hexagon Action class
 class AddHexAction : public Action
 {
 private:
 	Point P1; //Hexagon Corners
 	Point P1_Rec;
-	Point P1_Undo;
 	GfxInfo HexGfxInfo;
+	CFigure* Saved;
 public:
 	AddHexAction(ApplicationManager* pApp);
 
@@ -19,7 +21,8 @@ public:
 
 	//Add rectangle to the ApplicationManager
 	virtual void Execute();
-
+	virtual void UndoActions();
+	virtual void RedoActions();
 };
 
 #endif

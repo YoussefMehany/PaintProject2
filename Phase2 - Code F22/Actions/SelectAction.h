@@ -5,7 +5,6 @@ class SelectAction :public Action
 private:
 	Point P;
 	Point P_Rec;
-	Point P_Undo;
 public:
 	SelectAction(ApplicationManager* pApp);
 	//Reads parameters required for action to execute (code depends on action type)

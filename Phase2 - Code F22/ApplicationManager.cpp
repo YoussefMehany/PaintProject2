@@ -20,6 +20,7 @@
 #include "Actions\ReturnAction.h"
 #include "Actions\ClearAllAction.h"
 #include "Actions/RedoAction.h"
+#include <iostream>
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -32,219 +33,215 @@ ApplicationManager::ApplicationManager()
 	PlayingRec = false;
 	Undo = false;
 	Redo = false;
-	
+
 	FigCount = 0;
 	RecCount = 0;
-	UndoCount = 0;
-	Undo_Redo_Limit = 0;
+	Undo_RedoCount = 0;
 	ListCounter_Undo_Redo = 0;
 
 	CheckUpdate = false;
 	LastAction = START_PROGRAM;
 	//Create an array of figure pointers and set them to NULL		
-	for(int i = 0; i < MaxFigCount; i++)
-		FigList[i] = NULL;	
+	for (int i = 0; i < MaxFigCount; i++)
+		FigList[i] = NULL;
 	for (int i = 0; i < MaxRecCount; i++)
 		Recorded[i] = NULL;
 	for (int i = 0; i < MaxUndoCount; i++)
-		SaveUndo_RedoActions[i]= NULL;
+		SaveUndo_RedoActions[i] = NULL;
 
 }
-
 //==================================================================================//
 //								Actions Related Functions							//
 //==================================================================================//
 ActionType ApplicationManager::GetUserAction() const
 {
 	//Ask the input to get the action from the user.
-	return pIn->GetUserAction();		
+	return pIn->GetUserAction();
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Creates an action and executes it
-void ApplicationManager::ExecuteAction(ActionType ActType) 
+void ApplicationManager::ExecuteAction(ActionType ActType)
 {
 	Action* pAct = NULL;
 	//According to Action Type, create the corresponding action object
 	CheckUpdate = false;
 	switch (ActType)
 	{
-		case DRAW_FIGURE: //expanding the figures menu
-			pAct = new FigureMenuAction(this);
+	case DRAW_FIGURE: //expanding the figures menu
+		pAct = new FigureMenuAction(this);
+		break;
+
+	case FILL_COLOR: //expanding the fill colors menu
+		pAct = new ColorMenuAction(this, PAINT);
+		break;
+
+	case BORDER_COLOR: //expanding the border colors menu
+		pAct = new ColorMenuAction(this, BORDER);
+		break;
+
+	case DRAW_RECT:
+		pAct = new AddRectAction(this);
+		break;
+
+	case DRAW_CIRC:
+		pAct = new AddCircAction(this);
+		break;
+
+	case DRAW_HEX:
+		pAct = new AddHexAction(this);
+		break;
+
+	case DRAW_TRIANGLE:
+		pAct = new AddTriangleAction(this);
+		break;
+
+	case DRAW_SQUARE:
+		pAct = new AddSquareAction(this);
+		break;
+
+	case RETURN:
+		pAct = new ReturnAction(this);
+		break;
+
+	case UNDO_ACTION:
+		if (ListCounter_Undo_Redo == 0)
+		{
+			pOut->PrintMessage("No Action to undo");
 			break;
-
-		case FILL_COLOR: //expanding the fill colors menu
-			pAct = new ColorMenuAction(this, PAINT);
+		}
+		if (Undo_RedoCount == 5 && LastAction == UNDO_ACTION)
+		{
+			pOut->PrintMessage("Undo Limit Exceeded,Please make another action first");
 			break;
+		}
+		pAct = new UndoAction(this);
+		break;
 
-		case BORDER_COLOR: //expanding the border colors menu
-			pAct = new ColorMenuAction(this, BORDER);
+	case REDO_ACTION:
+		if ((LastAction != UNDO_ACTION && LastAction != REDO_ACTION) || Undo_RedoCount == 0)
+		{
+			pOut->PrintMessage("No Undo to Redo");
 			break;
+		}
+		pAct = new RedoAction(this);
+		break;
 
-		case DRAW_RECT:
-			pAct = new AddRectAction(this);
+	case MOVE_FIGURE:
+
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
+		pAct = new MoveAction(this);
+		break;
 
-		case DRAW_CIRC:
-			pAct = new AddCircAction(this);
+	case SELECT_FIGURE:
+		pAct = new SelectAction(this);
+		break;
+
+	case STATUS:	//a click on the status bar ==> no action
+		return;
+
+	case GREENCLR:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
+		pAct = new ChangeColorAction(this, GREEN);
+		break;
 
-		case DRAW_HEX:
-			pAct = new AddHexAction(this);
+	case REDCLR:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
+		pAct = new ChangeColorAction(this, RED);
+		break;
 
-		case DRAW_TRIANGLE:
-			pAct = new AddTriangleAction(this);
+	case BLUECLR:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
 
-		case DRAW_SQUARE:
-			pAct = new AddSquareAction(this);
+		pAct = new ChangeColorAction(this, BLUE);
+		break;
+
+	case ORANGECLR:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
+		pAct = new ChangeColorAction(this, ORANGE);
+		break;
 
-		case RETURN:
-			pAct = new ReturnAction(this);
+	case YELLOWCLR:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
+		pAct = new ChangeColorAction(this, YELLOW);
+		break;
 
-		case UNDO_ACTION:
-			if (FigCount == 0 && ListCounter_Undo_Redo - UndoCount == 0) {
-
-				pOut->PrintMessage("No Action to undo");
-				break;
-			}
-			if (Undo_Redo_Limit == 5 && LastAction == UNDO_ACTION)
-			{
-
-				pOut->PrintMessage("Undo Limit Exceeded,Please make anothr action frist");
-
-				break;
-			}
-			pAct = new UndoAction(this);
+	case BLACKCLR:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
+		pAct = new ChangeColorAction(this, BLACK);
+		break;
 
-		case REDO_ACTION:
-			if (LastAction != UNDO_ACTION && LastAction != REDO_ACTION || Undo_Redo_Limit == 0)
-			{
-				pOut->PrintMessage("No Undo to Redo");
-				break;
-			}
-			pAct = new RedoAction(this);
+	case DELETE_FIGURE:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
 			break;
+		}
+		pAct = new DeleteAction(this);
+		break;
 
-		case MOVE_FIGURE:
-			
-			if (SelectedFig == NULL){
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			pAct = new MoveAction(this);
+	case SAVE_PROGRESS:
+		pAct = new SaveAction(this);
+		break;
+
+	case LOAD_PROGRESS:
+		pAct = new LoadAction(this);
+		break;
+
+	case START_REC:
+		if (LastAction != START_PROGRAM && LastAction != CLEAR_ALL) {
+			pOut->PrintMessage("You can only record after the program start or after clear all");
 			break;
+		}
+		pAct = new StartRecAction(this);
+		break;
 
-		case SELECT_FIGURE:
-			pAct = new SelectAction(this);
+	case STOP_REC:
+		if (!Recording) {
+			pOut->PrintMessage("Record some actions first");
 			break;
+		}
+		pAct = new StopRecAction(this);
+		break;
 
-		case STATUS:	//a click on the status bar ==> no action
-			return;
-
-		case GREENCLR:
-			if (SelectedFig == NULL) {
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			pAct = new ChangeColorAction(this, GREEN);
+	case PLAY_REC:
+		if (Recording) {
+			pOut->PrintMessage("Stop the recording first");
 			break;
+		}
+		pAct = new PlayRecAction(this);
+		break;
 
-		case REDCLR:
-			if (SelectedFig == NULL) {
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			pAct = new ChangeColorAction(this, RED);
-			break;
+	case CLEAR_ALL:
+		pAct = new ClearAllAction(this);
+		break;
 
-		case BLUECLR:
-			if (SelectedFig == NULL) {
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			
-			pAct = new ChangeColorAction(this, BLUE);
-			break;
+	case EXIT:
+		///create ExitAction here
 
-		case ORANGECLR:
-			if (SelectedFig == NULL) {
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			pAct = new ChangeColorAction(this, ORANGE);
-			break;
-
-		case YELLOWCLR:
-			if (SelectedFig == NULL) {
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			pAct = new ChangeColorAction(this, YELLOW);
-			break;
-
-		case BLACKCLR:
-			if (SelectedFig == NULL) {
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			pAct = new ChangeColorAction(this, BLACK);
-			break;
-
-		case DELETE_FIGURE:
-			if (SelectedFig == NULL) {
-				pOut->PrintMessage("Please Select a Figure First");
-				break;
-			}
-			pAct = new DeleteAction(this);
-			break;
-
-		case SAVE_PROGRESS:
-			pAct = new SaveAction(this);
-			break;
-		
-		case LOAD_PROGRESS:
-			pAct = new LoadAction(this);
-			break;
-
-		case START_REC:
-			if (LastAction != START_PROGRAM && LastAction != CLEAR_ALL) {
-				pOut->PrintMessage("You can only record after the program start or after clear all");
-				break;
-			}
-			pAct = new StartRecAction(this);
-			break;
-
-		case STOP_REC:
-			if (!Recording) {
-				pOut->PrintMessage("Record some actions first");
-				break;
-			}
-			pAct = new StopRecAction(this);
-			break;
-
-		case PLAY_REC:
-			if (Recording) {
-				pOut->PrintMessage("Stop the recording first");
-				break;
-			}
-			pAct = new PlayRecAction(this);
-			break;
-
-		case CLEAR_ALL:
-			pAct = new ClearAllAction(this);
-			break;
-
-		case EXIT:
-			///create ExitAction here
-
-			break;
+		break;
 	}
-	
-	if(pAct != NULL)
+
+	if (pAct != NULL)
 	{
 		LastAction = ActType;
 		CheckUpdate = true;
@@ -254,14 +251,27 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			if (RecCount < MaxRecCount)
 				Recorded[RecCount++] = pAct;
 		}
-		if (ActType >= 1 && ActType <= 14)
+		if (ActType >= 1 && ActType <= 13) 
 		{
-			SaveUndo_RedoActions[ListCounter_Undo_Redo - UndoCount] = pAct;
-			ListCounter_Undo_Redo++;
-			Undo_Redo_Limit = 0;
+			if (ListCounter_Undo_Redo < 5)
+			{
+				SaveUndo_RedoActions[ListCounter_Undo_Redo++] = pAct;
+			}
+			else
+			{
+				/*if (SaveUndo_RedoActions[0] != NULL)
+				{
+					delete SaveUndo_RedoActions[0];
+					SaveUndo_RedoActions[0] = NULL;
+				}*/
+				for (int i = 0; i < ListCounter_Undo_Redo - 1; i++)
+				{
+					SaveUndo_RedoActions[i] = SaveUndo_RedoActions[i + 1];
+				}
+				SaveUndo_RedoActions[ListCounter_Undo_Redo - 1] = pAct;
+			}
+			Undo_RedoCount = 0;
 		}
-		SetUndo(false);
-		SetRedo(false);
 	}
 }
 //==================================================================================//
@@ -271,79 +281,93 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	 if (FigCount < MaxFigCount) {
+	if (FigCount < MaxFigCount) {
 		FigList[FigCount++] = pFig;
-		pFig->SetID(FigCount);
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
 CFigure* ApplicationManager::GetFigure(Point P1) const
 {
-	CFigure* FigurePtr = NULL;
-	for (int i = 0; i < FigCount; i++) {
+	for (int i = FigCount - 1; i >= 0; i--) {
 		if (FigList[i]->IsPointInside(P1)) {
-			if (SelectedFig == FigList[i]) {
-				SelectedFig->SetSelected(true);
-				FigurePtr = FigList[i];
-			}
-			else {
-				if (SelectedFig) SelectedFig->SetSelected(false);
-				FigurePtr = FigList[i];
-			}
+			return FigList[i];
 		}
 	}
-	return FigurePtr;
+	return NULL;
 }
 void ApplicationManager::MoveFigure(Point P1)
 {
 	SelectedFig->MoveTo(P1);
 }
-void ApplicationManager::Undo_RedoLastAction()
+void ApplicationManager::DeleteFigure(CFigure*F)
 {
-	ClearAll();
-	if (Redo)
+	CFigure* save = SelectedFig;
+	if (F) 
 	{
-		Undo_Redo_Limit--;
-		UndoCount--;
+		SelectedFig = F;
 	}
-	else
-	{
-		Undo_Redo_Limit++;
-		UndoCount++;
-	}
-	int add = 0;
-	for (int i = ListCounter_Undo_Redo - UndoCount; i >= 0; i--)
-	{
-		if (SaveUndo_RedoActions[i] != NULL)
-			if (dynamic_cast<SelectAction*>(SaveUndo_RedoActions[i]))
-			{
-				add++;
-			}
-			else
-				break;
-	}
-	if (Redo)
-		UndoCount -= add;
-	else
-		UndoCount += add;
-	for (int i = 0; i < ListCounter_Undo_Redo - UndoCount; i++)
-	{
-		if (SaveUndo_RedoActions[i] != NULL)
-			SaveUndo_RedoActions[i]->Execute();
-	}
-}
-void ApplicationManager::DeleteFigure()
-{
 	for (int i = 0; i < FigCount; i++) {
 		if (FigList[i] == SelectedFig) {
-			FigList[i] = FigList[--FigCount];
-			SelectedFig->SetSelected(false);
-			delete SelectedFig;
-			SelectedFig = NULL;
+			delete FigList[i];
+			for (int j = i; j < FigCount - 1; j++) {
+				FigList[j] = FigList[j + 1];
+			}
 			break;
 		}
 	}
+	SelectedFig = NULL;
+	FigList[--FigCount] = NULL;
+	if (F) 
+	{
+		SelectedFig = save;
+	}
+	
+
+}
+void ApplicationManager::UndoLastAction()
+{
+	Undo_RedoCount++;
+	SaveUndo_RedoActions[--ListCounter_Undo_Redo]->UndoActions();
+}
+void ApplicationManager::RedoLastAction()
+{
+	Undo_RedoCount--;
+	SaveUndo_RedoActions[ListCounter_Undo_Redo++]->RedoActions();
+}
+void ApplicationManager::DeleteLastFig()
+{
+	int max = 0;
+	int index = 0;
+	for (int i = 0; i < FigCount; i++)
+	{
+		if (FigList[i]->GetID() > max)
+		{
+			max = FigList[i]->GetID();
+			index = i;
+		}
+	}
+	delete FigList[index];
+	FigList[index] = FigList[--FigCount];
 	FigList[FigCount] = NULL;
+}
+void ApplicationManager::SwapFigures(CFigure*F)
+{
+	for (int i = 0; i < FigCount; i++)
+	{
+		if (FigList[i]->GetID() == F->GetID())
+		{
+			if (!SelectedFig || SelectedFig != FigList[i])
+			{
+				F->SetSelected(false);
+			}
+			else
+				SetSelectedFig(F);
+			delete FigList[i];
+			FigList[i] = F;
+			FigList[i]->ChngClr();
+			break;
+		}
+	}
 }
 void ApplicationManager::ClearAll()
 {
@@ -354,55 +378,29 @@ void ApplicationManager::ClearAll()
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
-	if (!PlayingRec && !Undo && !Redo) {
+	if (!PlayingRec) {
 		for (int i = 0; i < RecCount; i++) {
 			delete Recorded[i];
 			Recorded[i] = NULL;
 		}
 		RecCount = 0;
 	}
-	if (!Undo && !Redo)
-	{
-		for (int i = 0; i < ListCounter_Undo_Redo; i++) {
-			delete SaveUndo_RedoActions[i];
-			SaveUndo_RedoActions[i] = NULL;
-		}
-		UndoCount = 0;
-		ListCounter_Undo_Redo = 0;
+
+	for (int i = 0; i < ListCounter_Undo_Redo; i++) {
+		delete SaveUndo_RedoActions[i];
+		SaveUndo_RedoActions[i] = NULL;
 	}
+	Undo_RedoCount = 0;
+	ListCounter_Undo_Redo = 0;
 	FigCount = 0;
 	SelectedFig = NULL;
 }
-void ApplicationManager::SelectFigure(Point P1)
+CFigure* ApplicationManager::GetSelectedFig()const
 {
-	CFigure* FigPtr = GetFigure(P1);
-	if (FigPtr) {
-		SelectedFig = FigPtr;
-		if (SelectedFig) {
-			SelectedFig->SetSelected(!SelectedFig->IsSelected());
-			if (!SelectedFig->IsSelected()) {
-				SelectedFig = NULL;
-			}
-		}
-	}
-
+	return SelectedFig;
 }
-
-void ApplicationManager::ChangeColor(color clr)
+int ApplicationManager::getFigCount()const
 {
-	if (UI.Choose == BORDER)
-	{
-		UI.DrawColor = clr;
-		SelectedFig->ChngDrawClr(UI.DrawColor);
-	}
-	else 
-	{
-		UI.IsFilled = true;
-		UI.FillColor = clr;
-		SelectedFig->ChngFillClr(UI.FillColor);
-	}
-}
-int ApplicationManager::getFigCount()const {
 	return FigCount;
 }
 bool ApplicationManager::IsRecording() const {
@@ -411,26 +409,14 @@ bool ApplicationManager::IsRecording() const {
 bool ApplicationManager::IsPlayingRec() const {
 	return PlayingRec;
 }
-bool ApplicationManager::IsUndoAction() const {
-	return Undo;
-}
-bool ApplicationManager::IsRedoAction() const {
-	return Redo;
-}
-
 void ApplicationManager::SetRec(bool IsRec)
 {
 	Recording = IsRec;
 }
-void ApplicationManager::SetUndo(bool IsUndo)
+void ApplicationManager::SetSelectedFig(CFigure* F)
 {
-	Undo = IsUndo;
+	SelectedFig = F;
 }
-void ApplicationManager::SetRedo(bool IsRedo)
-{
-	Redo = IsRedo;
-}
-
 void ApplicationManager::PlayRec() {
 	PlayingRec = true;
 	ClearAll();
@@ -461,7 +447,7 @@ void ApplicationManager::SaveFile(ofstream& OutFile)
 
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface()
-{	
+{
 	if (CheckUpdate) {
 		pOut->ClearDrawArea();
 		for (int i = 0; i < FigCount; i++)
@@ -470,18 +456,22 @@ void ApplicationManager::UpdateInterface()
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the input
-Input *ApplicationManager::GetInput() const
-{	return pIn; }
+Input* ApplicationManager::GetInput() const
+{
+	return pIn;
+}
 //Return a pointer to the output
-Output *ApplicationManager::GetOutput() const
-{	return pOut; }
+Output* ApplicationManager::GetOutput() const
+{
+	return pOut;
+}
 ////////////////////////////////////////////////////////////////////////////////////
 //Destructor
 ApplicationManager::~ApplicationManager()
 {
-	for(int i=0; i<FigCount; i++)
+	for (int i = 0; i < FigCount; i++)
 		delete FigList[i];
 	delete pIn;
 	delete pOut;
-	
+
 }

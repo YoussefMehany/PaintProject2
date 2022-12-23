@@ -80,3 +80,24 @@ void CTriangle::Load(ifstream& InFile) {
 		FigGfxInfo.isFilled = true;
 	}
 }
+CFigure* CTriangle::GetNewFigure()
+{
+	CTriangle* P = new CTriangle(Corners[0] , Corners[1] , Corners[2], FigGfxInfo);
+	P->ID = ID;
+	P->SetSelected(IsSelected());
+	return P;
+}
+void CTriangle::ChngClr()
+{
+	UI.DrawColor = FigGfxInfo.DrawClr;
+	UI.IsFilled = FigGfxInfo.isFilled;
+	UI.FillColor = FigGfxInfo.FillClr;
+
+}
+void CTriangle::PrintInfo(Output* pOut) {
+	string info;
+	info = "You selected a Triangle with ID: " + to_string(ID) + ", First Corner(" + to_string(Corners[0].x) + ", " + to_string(Corners[0].y) + ")";
+	info += ", Second Corner(" + to_string(Corners[1].x) + ", " + to_string(Corners[1].y) + ")";
+	info += ", Third Corner(" + to_string(Corners[2].x) + ", " + to_string(Corners[2].y) + ")";
+	pOut->PrintMessage(info);
+}

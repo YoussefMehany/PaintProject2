@@ -5,7 +5,8 @@ class MoveAction :public Action
 private:
 	Point P;
 	Point P_Rec;
-	Point P_Undo;
+	CFigure* Saved;
+	CFigure* Saved_Redo;
 public:
 	MoveAction(ApplicationManager* pApp);
 	//Reads parameters required for action to execute (code depends on action type)
@@ -13,4 +14,6 @@ public:
 
 	//Execute action (code depends on action type)
 	virtual void Execute();
+	virtual void UndoActions();
+	virtual void RedoActions();
 };

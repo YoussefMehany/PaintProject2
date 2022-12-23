@@ -2,6 +2,9 @@
 #define ADD_SQUARE_ACTION_H
 
 #include "Action.h"
+#include "..\Figures\CSquare.h"
+
+#include "..\ApplicationManager.h"
 
 //Add Square Action class
 class AddSquareAction : public Action
@@ -9,8 +12,8 @@ class AddSquareAction : public Action
 private:
 	Point P1; //Square Corners
 	Point P1_Rec;
-	Point P1_Undo;
 	GfxInfo SquareGfxInfo;
+	CFigure* Saved;
 public:
 	AddSquareAction(ApplicationManager* pApp);
 
@@ -19,7 +22,8 @@ public:
 
 	//Add rectangle to the ApplicationManager
 	virtual void Execute();
-
+	virtual void UndoActions();
+	virtual void RedoActions();
 };
 
 #endif

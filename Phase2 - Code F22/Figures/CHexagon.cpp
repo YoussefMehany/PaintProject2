@@ -82,3 +82,23 @@ void CHexagon::Load(ifstream& InFile) {
 		FigGfxInfo.isFilled = true;
 	}
 }
+CFigure* CHexagon::GetNewFigure() 
+{
+	CHexagon* P = new CHexagon(Center, FigGfxInfo);
+	P->ID = ID;
+	P->SetSelected(IsSelected());
+	return P;
+}
+void CHexagon::ChngClr()
+{
+	UI.DrawColor = FigGfxInfo.DrawClr;
+	UI.IsFilled = FigGfxInfo.isFilled;
+	UI.FillColor = FigGfxInfo.FillClr;
+
+}
+void CHexagon::PrintInfo(Output* pOut) {
+	string info;
+	info = "You selected a Hexagon with ID: " + to_string(ID) + ", Center Coordinates(" + to_string(Center.x) + ", " + to_string(Center.y) + ")";
+	info += ", Side Length = " + to_string(Side);
+	pOut->PrintMessage(info);
+}

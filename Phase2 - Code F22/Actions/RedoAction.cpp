@@ -13,7 +13,5 @@ void RedoAction::ReadActionParameters()
 void RedoAction::Execute()
 {
 	ReadActionParameters();
-	pManager->SetUndo(true);
-	pManager->SetRedo(true);
-	pManager->Undo_RedoLastAction();
+	pManager->RedoLastAction();
 }

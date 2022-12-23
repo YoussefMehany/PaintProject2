@@ -2,6 +2,8 @@
 #include "../ApplicationManager.h"
 class DeleteAction :public Action
 {
+	CFigure* Saved;
+	CFigure* Saved_Redo;
 public:
 	DeleteAction(ApplicationManager* pApp);
 	//Reads parameters required for action to execute (code depends on action type)
@@ -9,4 +11,6 @@ public:
 
 	//Execute action (code depends on action type)
 	virtual void Execute();
+	virtual void UndoActions();
+	virtual void RedoActions();
 };

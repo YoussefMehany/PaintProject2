@@ -59,3 +59,24 @@ void CCircle::Load(ifstream& InFile) {
 		FigGfxInfo.isFilled = true;
 	}
 }
+CFigure* CCircle::GetNewFigure()
+{
+	CCircle* P = new CCircle(Center, Radius, FigGfxInfo);
+	P->ID = ID;
+	P->SetSelected(IsSelected());
+	return P;
+}
+void CCircle::ChngClr()
+{
+	UI.DrawColor = FigGfxInfo.DrawClr;
+	UI.IsFilled = FigGfxInfo.isFilled;
+	UI.FillColor = FigGfxInfo.FillClr;
+
+}
+void CCircle::PrintInfo(Output* pOut) {
+	string info;
+	info = "You selected a Circle with ID: " + to_string(ID) + ", Center Coordinates(" + to_string(Center.x) + ", " + to_string(Center.y) + ")";
+	info += ", Point on Radius Coordinates(" + to_string(Radius.x) + ", " + to_string(Radius.y) + ")";
+	info += ", Radius Length = " + to_string(radius);
+	pOut->PrintMessage(info);
+}

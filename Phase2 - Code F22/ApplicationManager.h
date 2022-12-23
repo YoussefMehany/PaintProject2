@@ -11,27 +11,26 @@
 //Main class that manages everything in the application.
 class ApplicationManager
 {
-	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 200,MaxRedoCount=5};	//Max no for arrays
+	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 5};	//Max no for arrays
 
 private:
 	int FigCount; //Actual number of figures
 	int RecCount;
-	int UndoCount;
-	int Undo_Redo_Limit;
+	int Undo_RedoCount;
 	int ListCounter_Undo_Redo;
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
 	bool Undo;
 	bool Redo;
-
 	ActionType LastAction;
 
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	CFigure* SelectedFig; //Pointer to the selected figure
+	Action* SaveUndo_RedoActions[MaxUndoCount]; //saves figures before being changed 
 
 	Action* Recorded[MaxRecCount];
-	Action* SaveUndo_RedoActions[MaxUndoCount]; //saves actions for  undo operations
+	
 	//Pointers to Input and Output classes
 
 	Input *pIn;
@@ -50,27 +49,22 @@ public:
 	CFigure *GetFigure(Point P1) const;//Search for a figure given a point inside the figure
 	void AddFigure(CFigure* pFig);   //Adds a new figure to the FigList
 	void MoveFigure(Point P1);
-	void SelectFigure(Point P1);
-	void ChangeColor(color clr);
 	bool IsRecording() const;
 	bool IsPlayingRec() const;
 	void SetRec(bool IsRec);
+	void SetSelectedFig(CFigure*);
+	CFigure* GetSelectedFig()const;
 	void PlayRec();
 	int getFigCount()const;
-	void DeleteFigure();
+	void DeleteFigure(CFigure*F=NULL);
 	void SaveFile(ofstream& OutFile);
 	void ClearAll();
 
 	// -- Undo-Redo
-	bool IsUndoAction() const;
-	bool IsRedoAction() const;
-	void Undo_RedoLastAction();
-	void SetUndo(bool IsUndo);
-	void SetRedo(bool IsRedo);
-	 
-	
-	 
-	 
+	void UndoLastAction();
+	void RedoLastAction();
+	void DeleteLastFig();
+	void SwapFigures(CFigure*);
 	
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input

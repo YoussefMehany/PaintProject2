@@ -1,10 +1,13 @@
 #include "CFigure.h"
 
+int CFigure::ID_Num = 0;
 CFigure::CFigure(GfxInfo FigureGfxInfo)
 { 
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
+	ID = ++ID_Num;
 }
+
 CFigure::CFigure()
 {
 	FigGfxInfo.isFilled = false;

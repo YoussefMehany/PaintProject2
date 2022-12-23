@@ -57,3 +57,22 @@ void CSquare::Load(ifstream& InFile) {
 		FigGfxInfo.isFilled = true;
 	}
 }
+CFigure* CSquare::GetNewFigure()
+{
+	CSquare* P = new CSquare(Center, FigGfxInfo);
+	P->ID = ID;
+	P->SetSelected(IsSelected());
+	return P;
+}
+void CSquare::ChngClr()
+{
+	UI.DrawColor = FigGfxInfo.DrawClr;
+	UI.IsFilled = FigGfxInfo.isFilled;
+	UI.FillColor = FigGfxInfo.FillClr;
+
+}
+void CSquare::PrintInfo(Output* pOut) {
+	string info;
+	info = "You selected a Square with ID: " + to_string(ID) + ", Center Coordinates(" + to_string(Center.x) + ", " + to_string(Center.y) + ")" + ", Side Length = " + to_string(Side);
+	pOut->PrintMessage(info);
+}

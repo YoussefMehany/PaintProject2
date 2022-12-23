@@ -18,6 +18,9 @@ public:
 	void CalcCorners(Point* Corners);
 	virtual void Save(ofstream& OutFile);
 	virtual void Load(ifstream& InFile);
+	virtual void ChngClr();
+	virtual CFigure* GetNewFigure();
+	virtual void PrintInfo(Output* pOut);
 };
 
 #endif

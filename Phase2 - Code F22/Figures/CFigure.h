@@ -10,6 +10,7 @@ class CFigure
 {
 protected:
 	int ID;		//Each figure has an ID
+	static int ID_Num;
 	bool Selected;	//true if the figure is selected.
 	GfxInfo FigGfxInfo;	//Figure graphis info
 	/// Add more parameters if needed.
@@ -24,9 +25,12 @@ public:
 	virtual void Draw(Output* pOut) const  = 0 ;		//Draw the figure
 	
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
-	void ChngFillClr(color Fclr);	//changes the figure's filling color
+	void ChngFillClr(color Fclr);  //changes the figure's filling color
+	virtual void ChngClr()=0;	
 	virtual void MoveTo(Point P)=0;
 	virtual bool IsPointInside(Point P)=0;
+	virtual CFigure* GetNewFigure()=0;
+	
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
 
@@ -37,6 +41,6 @@ public:
 	virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file
 	virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file
 
-	//virtual void PrintInfo(Output* pOut) = 0;	//print all figure info on the status bar
+	virtual void PrintInfo(Output* pOut) = 0;	//print all figure info on the status bar
 };
 #endif

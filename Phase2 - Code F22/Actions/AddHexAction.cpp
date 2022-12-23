@@ -1,13 +1,14 @@
 #include "AddHexAction.h"
-#include "..\Figures\CHexagon.h"
+//#include "..\Figures\CHexagon.h"
 
-#include "..\ApplicationManager.h"
+//#include "..\ApplicationManager.h"
 
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
 
 AddHexAction::AddHexAction(ApplicationManager* pApp) :Action(pApp)
-{}
+{
+}
 
 void AddHexAction::ReadActionParameters()
 {
@@ -18,22 +19,14 @@ void AddHexAction::ReadActionParameters()
 
 
 	//Read the center point
-	if (pManager->IsUndoAction())
-	{
-		P1 = P1_Undo;
+	pOut->PrintMessage("New Hexagon: Click at the Center");
+	if (pManager->IsPlayingRec())
+		P1 = P1_Rec;
+	else {
+		pIn->GetPointClicked(P1.x, P1.y);
+		P1_Rec = P1;
 	}
-	else
-	{
-		pOut->PrintMessage("New Hexagon: Click at the Center");
-		if (pManager->IsPlayingRec())
-			P1 = P1_Rec;
-		else {
-			pIn->GetPointClicked(P1.x, P1.y);
-			P1_Rec = P1;
-			P1_Undo = P1;
-		}
-		pOut->ClearStatusBar();
-	}
+	pOut->ClearStatusBar();
 
 
 	HexGfxInfo.isFilled = UI.IsFilled;
@@ -50,9 +43,19 @@ void AddHexAction::Execute()
 {
 	//This action needs to read some parameters first
 	ReadActionParameters();
-
 	//Create a rectangle with the parameters read from the user
 	CHexagon* R = new CHexagon(P1, HexGfxInfo);
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
+	id = R->GetID();
+}
+void AddHexAction::UndoActions()
+{
+	Saved = new CHexagon(P1, HexGfxInfo);
+	Saved->SetID(id);
+	pManager->DeleteLastFig();
+}
+void AddHexAction::RedoActions()
+{
+	pManager->AddFigure(Saved);
 }

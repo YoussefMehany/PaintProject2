@@ -3,6 +3,8 @@
 class ChangeColorAction :public Action
 {
 	color colour;
+	CFigure* Saved;
+	CFigure* Saved_Redo;
 public:
 	ChangeColorAction(ApplicationManager* pApp, color clr);
 	//Reads parameters required for action to execute (code depends on action type)
@@ -10,4 +12,6 @@ public:
 
 	//Execute action (code depends on action type)
 	virtual void Execute();
+	virtual void UndoActions();
+	virtual void RedoActions();
 };
