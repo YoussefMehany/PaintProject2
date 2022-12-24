@@ -65,7 +65,7 @@ public:
 	void RedoLastAction();
 	void DeleteLastFig();
 	void SwapFigures(CFigure*);
-	
+	void Add_Undo_Redo_Actions(Action*);
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

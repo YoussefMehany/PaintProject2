@@ -19,8 +19,7 @@
 #include "Actions\ColorMenuAction.h"
 #include "Actions\ReturnAction.h"
 #include "Actions\ClearAllAction.h"
-#include "Actions/RedoAction.h"
-#include <iostream>
+#include "Actions\RedoAction.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -253,24 +252,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		}
 		if (ActType >= 1 && ActType <= 13) 
 		{
-			if (ListCounter_Undo_Redo < 5)
-			{
-				SaveUndo_RedoActions[ListCounter_Undo_Redo++] = pAct;
-			}
-			else
-			{
-				/*if (SaveUndo_RedoActions[0] != NULL)
-				{
-					delete SaveUndo_RedoActions[0];
-					SaveUndo_RedoActions[0] = NULL;
-				}*/
-				for (int i = 0; i < ListCounter_Undo_Redo - 1; i++)
-				{
-					SaveUndo_RedoActions[i] = SaveUndo_RedoActions[i + 1];
-				}
-				SaveUndo_RedoActions[ListCounter_Undo_Redo - 1] = pAct;
-			}
-			Undo_RedoCount = 0;
+			Add_Undo_Redo_Actions(pAct);
 		}
 	}
 }
@@ -334,6 +316,29 @@ void ApplicationManager::RedoLastAction()
 	Undo_RedoCount--;
 	SaveUndo_RedoActions[ListCounter_Undo_Redo++]->RedoActions();
 }
+void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
+{
+	if (ListCounter_Undo_Redo < 5)
+	{
+		SaveUndo_RedoActions[ListCounter_Undo_Redo++] = pAct;
+	}
+	else
+	{
+		if (!Recording && !PlayingRec) {
+			if (SaveUndo_RedoActions[0] != NULL)
+			{
+				delete SaveUndo_RedoActions[0];
+				SaveUndo_RedoActions[0] = NULL;
+			}
+		}
+		for (int i = 0; i < ListCounter_Undo_Redo - 1; i++)
+		{
+			SaveUndo_RedoActions[i] = SaveUndo_RedoActions[i + 1];
+		}
+		SaveUndo_RedoActions[ListCounter_Undo_Redo - 1] = pAct;
+	}
+	Undo_RedoCount = 0;
+}
 void ApplicationManager::DeleteLastFig()
 {
 	int max = 0;
@@ -383,12 +388,13 @@ void ApplicationManager::ClearAll()
 			delete Recorded[i];
 			Recorded[i] = NULL;
 		}
+		for (int i = 0; i < ListCounter_Undo_Redo; i++) {
+			if (SaveUndo_RedoActions[i]) {
+				delete SaveUndo_RedoActions[i];
+				SaveUndo_RedoActions[i] = NULL;
+			}
+		}
 		RecCount = 0;
-	}
-
-	for (int i = 0; i < ListCounter_Undo_Redo; i++) {
-		delete SaveUndo_RedoActions[i];
-		SaveUndo_RedoActions[i] = NULL;
 	}
 	Undo_RedoCount = 0;
 	ListCounter_Undo_Redo = 0;
@@ -423,6 +429,7 @@ void ApplicationManager::PlayRec() {
 	for (int i = 0; i < RecCount; i++) {
 		Sleep(1000);
 		Recorded[i]->Execute();
+		Add_Undo_Redo_Actions(Recorded[i]);
 		UpdateInterface();
 	}
 	PlayingRec = false;

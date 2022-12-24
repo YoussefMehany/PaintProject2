@@ -1,5 +1,4 @@
 #include "UndoAction.h"
-#include <iostream>
 UndoAction::UndoAction(ApplicationManager* pApp) :Action(pApp)
 {
 }

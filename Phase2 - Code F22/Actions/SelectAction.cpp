@@ -31,6 +31,7 @@ void SelectAction::Execute()
         if (FigPtr->IsSelected()) {
             FigPtr->SetSelected(false);
             pManager->SetSelectedFig(NULL);
+            pOut->PrintMessage("Figure unselected");
         }
         else {
             FigPtr->SetSelected(true);
@@ -38,5 +39,8 @@ void SelectAction::Execute()
             pManager->SetSelectedFig(FigPtr);
             FigPtr->PrintInfo(pOut);
         }
+    }
+    else {
+        pOut->PrintMessage("A click on an empty area");
     }
 }
