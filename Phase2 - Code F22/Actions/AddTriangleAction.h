@@ -12,7 +12,7 @@ private:
 	Point P1, P2, P3; //Triangle Corners
 	Point P1_Rec, P2_Rec, P3_Rec;
 	GfxInfo TriangleGfxInfo;
-	CFigure* Saved;
+	CFigure* Saved_Redo;
 public:
 	AddTriangleAction(ApplicationManager* pApp);
 

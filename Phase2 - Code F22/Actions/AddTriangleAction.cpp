@@ -15,6 +15,7 @@ void AddTriangleAction::ReadActionParameters()
 	//Get a Pointer to the Input / Output Interfaces
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
+	pManager->Add_Undo_Redo_Actions(this);
 
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Triangle: Click at first corner");
@@ -65,11 +66,11 @@ void AddTriangleAction::Execute()
 }
 void AddTriangleAction::UndoActions()
 {
-	Saved = new CTriangle(P1, P2, P3, TriangleGfxInfo);
-	Saved->SetID(id);
+	Saved_Redo = new CTriangle(P1, P2, P3, TriangleGfxInfo);
+	Saved_Redo->SetID(id);
 	pManager->DeleteLastFig();
 }
 void AddTriangleAction::RedoActions()
 {
-	pManager->AddFigure(Saved);
+	pManager->AddFigure(Saved_Redo);
 }

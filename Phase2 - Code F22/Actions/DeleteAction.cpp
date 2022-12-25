@@ -2,15 +2,17 @@
 
 DeleteAction::DeleteAction(ApplicationManager* pApp) :Action(pApp)
 {
-	Saved = pManager->GetSelectedFig()->GetNewFigure();
-	Saved->SetSelected(false);
-	Saved_Redo = Saved->GetNewFigure();
+	
 }
 //Reads parameters required for action to execute (code depends on action type)
 void DeleteAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->ClearStatusBar();
+	pManager->Add_Undo_Redo_Actions(this);
+	Saved = pManager->GetSelectedFig()->GetNewFigure();
+	Saved->SetSelected(false);
+	Saved_Redo = Saved->GetNewFigure();
 }
 
 //Execute action (code depends on action type)

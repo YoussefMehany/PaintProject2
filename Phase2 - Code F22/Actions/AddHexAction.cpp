@@ -16,6 +16,7 @@ void AddHexAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
+	pManager->Add_Undo_Redo_Actions(this);
 
 
 	//Read the center point
@@ -51,11 +52,11 @@ void AddHexAction::Execute()
 }
 void AddHexAction::UndoActions()
 {
-	Saved = new CHexagon(P1, HexGfxInfo);
-	Saved->SetID(id);
+	Saved_Redo = new CHexagon(P1, HexGfxInfo);
+	Saved_Redo->SetID(id);
 	pManager->DeleteLastFig();
 }
 void AddHexAction::RedoActions()
 {
-	pManager->AddFigure(Saved);
+	pManager->AddFigure(Saved_Redo);
 }

@@ -13,7 +13,7 @@ private:
 	Point P1; //Square Corners
 	Point P1_Rec;
 	GfxInfo SquareGfxInfo;
-	CFigure* Saved;
+	CFigure* Saved_Redo;
 public:
 	AddSquareAction(ApplicationManager* pApp);
 

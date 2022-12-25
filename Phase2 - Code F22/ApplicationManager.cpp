@@ -20,7 +20,7 @@
 #include "Actions\ReturnAction.h"
 #include "Actions\ClearAllAction.h"
 #include "Actions\RedoAction.h"
-
+#include <iostream>
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -250,10 +250,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			if (RecCount < MaxRecCount)
 				Recorded[RecCount++] = pAct;
 		}
-		if (ActType >= 1 && ActType <= 13) 
-		{
-			Add_Undo_Redo_Actions(pAct);
-		}
 	}
 }
 //==================================================================================//
@@ -281,30 +277,31 @@ void ApplicationManager::MoveFigure(Point P1)
 {
 	SelectedFig->MoveTo(P1);
 }
-void ApplicationManager::DeleteFigure(CFigure*F)
+void ApplicationManager::DeleteFigure(CFigure* F)
 {
 	CFigure* save = SelectedFig;
-	if (F) 
+	if (F)
 	{
 		SelectedFig = F;
 	}
-	for (int i = 0; i < FigCount; i++) {
-		if (FigList[i] == SelectedFig) {
-			delete FigList[i];
-			for (int j = i; j < FigCount - 1; j++) {
-				FigList[j] = FigList[j + 1];
+	if (FigCount > 0)
+	{
+		for (int i = 0; i < FigCount; i++) {
+			if (FigList[i] == SelectedFig) {
+				delete FigList[i];
+				for (int j = i; j < FigCount - 1; j++) {
+					FigList[j] = FigList[j + 1];
+				}
+				break;
 			}
-			break;
 		}
+		SelectedFig = NULL;
+		FigList[--FigCount] = NULL;
 	}
-	SelectedFig = NULL;
-	FigList[--FigCount] = NULL;
-	if (F) 
+	if (F)
 	{
 		SelectedFig = save;
 	}
-	
-
 }
 void ApplicationManager::UndoLastAction()
 {
@@ -328,9 +325,9 @@ void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 			if (SaveUndo_RedoActions[0] != NULL)
 			{
 				delete SaveUndo_RedoActions[0];
-				SaveUndo_RedoActions[0] = NULL;
 			}
 		}
+		SaveUndo_RedoActions[0] = NULL;
 		for (int i = 0; i < ListCounter_Undo_Redo - 1; i++)
 		{
 			SaveUndo_RedoActions[i] = SaveUndo_RedoActions[i + 1];
@@ -341,21 +338,24 @@ void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 }
 void ApplicationManager::DeleteLastFig()
 {
-	int max = 0;
-	int index = 0;
-	for (int i = 0; i < FigCount; i++)
+	if (FigCount > 0)
 	{
-		if (FigList[i]->GetID() > max)
+		int max = 0;
+		int index = 0;
+		for (int i = 0; i < FigCount; i++)
 		{
-			max = FigList[i]->GetID();
-			index = i;
+			if (FigList[i]->GetID() > max)
+			{
+				max = FigList[i]->GetID();
+				index = i;
+			}
 		}
+		delete FigList[index];
+		FigList[index] = FigList[--FigCount];
+		FigList[FigCount] = NULL;
 	}
-	delete FigList[index];
-	FigList[index] = FigList[--FigCount];
-	FigList[FigCount] = NULL;
 }
-void ApplicationManager::SwapFigures(CFigure*F)
+void ApplicationManager::SwapFigures(CFigure* F)
 {
 	for (int i = 0; i < FigCount; i++)
 	{
@@ -385,14 +385,26 @@ void ApplicationManager::ClearAll()
 	}
 	if (!PlayingRec) {
 		for (int i = 0; i < RecCount; i++) {
-			delete Recorded[i];
-			Recorded[i] = NULL;
-		}
-		for (int i = 0; i < ListCounter_Undo_Redo; i++) {
-			if (SaveUndo_RedoActions[i]) {
+			bool check = true;
+			for (int j = 0; j < ListCounter_Undo_Redo; j++) 
+			{
+				if (SaveUndo_RedoActions[j] == Recorded[i]) 
+				{
+					delete Recorded[i];
+					Recorded[i] = NULL;
+					SaveUndo_RedoActions[i] = NULL;
+					check = false;
+					break;
+				}
+			}
+			if (check) 
+			{
 				delete SaveUndo_RedoActions[i];
+				delete Recorded[i];
+				Recorded[i] = NULL;
 				SaveUndo_RedoActions[i] = NULL;
 			}
+			check = true;
 		}
 		RecCount = 0;
 	}
@@ -428,8 +440,9 @@ void ApplicationManager::PlayRec() {
 	ClearAll();
 	for (int i = 0; i < RecCount; i++) {
 		Sleep(1000);
+
 		Recorded[i]->Execute();
-		Add_Undo_Redo_Actions(Recorded[i]);
+
 		UpdateInterface();
 	}
 	PlayingRec = false;

@@ -2,7 +2,7 @@
 
 MoveAction::MoveAction(ApplicationManager* pApp) :Action(pApp)
 {
-	Saved = pManager->GetSelectedFig()->GetNewFigure();
+	
 }
 //Reads parameters required for action to execute (code depends on action type)
 void MoveAction::ReadActionParameters()
@@ -17,7 +17,9 @@ void MoveAction::ReadActionParameters()
 			P_Rec = P;
 		}
       pOut->ClearStatusBar();
-	 
+	  pManager->Add_Undo_Redo_Actions(this);
+
+	  Saved = pManager->GetSelectedFig()->GetNewFigure();
 }
 
 //Execute action (code depends on action type)

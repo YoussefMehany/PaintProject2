@@ -15,7 +15,7 @@ void AddRectAction::ReadActionParameters()
 	//Get a Pointer to the Input / Output Interfaces
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-
+	pManager->Add_Undo_Redo_Actions(this);
 
 
 	//Read 1st corner and store in point P1
@@ -61,12 +61,12 @@ void AddRectAction::Execute()
 }
 void AddRectAction::UndoActions()
 {
-	Saved = new CRectangle(P1, P2, RectGfxInfo);
-	Saved->SetID(id);
+	Saved_Redo = new CRectangle(P1, P2, RectGfxInfo);
+	Saved_Redo->SetID(id);
 	pManager->DeleteLastFig();
 
 }
 void AddRectAction::RedoActions()
 {
-	pManager->AddFigure(Saved);
+	pManager->AddFigure(Saved_Redo);
 }

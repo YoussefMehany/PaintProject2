@@ -12,7 +12,7 @@ private:
 	Point P1; //Hexagon Corners
 	Point P1_Rec;
 	GfxInfo HexGfxInfo;
-	CFigure* Saved;
+	CFigure* Saved_Redo;
 public:
 	AddHexAction(ApplicationManager* pApp);
 

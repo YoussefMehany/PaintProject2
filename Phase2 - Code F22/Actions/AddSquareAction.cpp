@@ -16,7 +16,7 @@ void AddSquareAction::ReadActionParameters()
 	//Get a Pointer to the Input / Output Interfaces
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-
+	pManager->Add_Undo_Redo_Actions(this);
 
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Square: Click at the Center");
@@ -50,11 +50,11 @@ void AddSquareAction::Execute()
 void AddSquareAction::UndoActions()
 {
 	
-	Saved = new CSquare(P1, SquareGfxInfo);
-	Saved->SetID(id);
+	Saved_Redo = new CSquare(P1, SquareGfxInfo);
+	Saved_Redo->SetID(id);
 	pManager->DeleteLastFig();
 }
 void AddSquareAction::RedoActions()
 {
-	pManager->AddFigure(Saved);
+	pManager->AddFigure(Saved_Redo);
 }

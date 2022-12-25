@@ -3,13 +3,15 @@
 ChangeColorAction::ChangeColorAction(ApplicationManager* pApp, color clr) :Action(pApp)
 {
 	colour = clr;
-	Saved= pManager->GetSelectedFig()->GetNewFigure();
 }
 //Reads parameters required for action to execute (code depends on action type)
 void ChangeColorAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->ClearStatusBar();
+	pManager->Add_Undo_Redo_Actions(this);
+	Saved = pManager->GetSelectedFig()->GetNewFigure();
+
 }
 
 //Execute action (code depends on action type)
@@ -17,6 +19,7 @@ void ChangeColorAction::Execute()
 {
 	ReadActionParameters();
 	CFigure* selected = pManager->GetSelectedFig();
+	
 	if (UI.Choose == BORDER)
 	{
 		UI.DrawColor = colour;

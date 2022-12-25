@@ -9,6 +9,7 @@ void ReturnAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->CreateDrawToolBar();
+
 }
 
 //Execute action (code depends on action type)
