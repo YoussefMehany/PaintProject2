@@ -8,6 +8,8 @@
 
 AddRectAction::AddRectAction(ApplicationManager* pApp) :Action(pApp)
 {
+	Saved_Redo = NULL;
+	id = 0;
 }
 
 void AddRectAction::ReadActionParameters()
@@ -69,4 +71,9 @@ void AddRectAction::UndoActions()
 void AddRectAction::RedoActions()
 {
 	pManager->AddFigure(Saved_Redo);
+}
+AddRectAction::~AddRectAction()
+{
+	if (Saved_Redo)
+		delete Saved_Redo;
 }

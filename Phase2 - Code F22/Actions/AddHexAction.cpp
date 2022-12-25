@@ -8,6 +8,8 @@
 
 AddHexAction::AddHexAction(ApplicationManager* pApp) :Action(pApp)
 {
+	Saved_Redo = NULL;
+	id = 0;
 }
 
 void AddHexAction::ReadActionParameters()
@@ -59,4 +61,9 @@ void AddHexAction::UndoActions()
 void AddHexAction::RedoActions()
 {
 	pManager->AddFigure(Saved_Redo);
+}
+AddHexAction::~AddHexAction()
+{
+	if (Saved_Redo)
+		delete Saved_Redo;
 }

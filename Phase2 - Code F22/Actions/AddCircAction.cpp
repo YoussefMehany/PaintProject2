@@ -8,7 +8,8 @@
 #include <iostream>
 AddCircAction::AddCircAction(ApplicationManager* pApp) :Action(pApp)
 {
-	
+	Saved_Redo = NULL;
+	id = 0;
 }
 
 void AddCircAction::ReadActionParameters()
@@ -66,4 +67,9 @@ void AddCircAction::UndoActions()
 void AddCircAction::RedoActions()
 {
 	pManager->AddFigure(Saved_Redo);
+}
+AddCircAction::~AddCircAction()
+{
+	if (Saved_Redo)
+		delete Saved_Redo;
 }

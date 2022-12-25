@@ -37,7 +37,7 @@ ApplicationManager::ApplicationManager()
 	RecCount = 0;
 	Undo_RedoCount = 0;
 	ListCounter_Undo_Redo = 0;
-
+	ActionCount = 0;
 	CheckUpdate = false;
 	LastAction = START_PROGRAM;
 	//Create an array of figure pointers and set them to NULL		
@@ -249,6 +249,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		{
 			if (RecCount < MaxRecCount)
 				Recorded[RecCount++] = pAct;
+			else
+			{
+				pOut->PrintMessage("recording stoped");
+				Recording = false;
+			}
+
 		}
 	}
 }
@@ -321,11 +327,8 @@ void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 	}
 	else
 	{
-		if (!Recording && !PlayingRec) {
-			if (SaveUndo_RedoActions[0] != NULL)
-			{
-				delete SaveUndo_RedoActions[0];
-			}
+		if (ActionCount > RecCount + MaxUndoCount) {
+			delete SaveUndo_RedoActions[0];
 		}
 		SaveUndo_RedoActions[0] = NULL;
 		for (int i = 0; i < ListCounter_Undo_Redo - 1; i++)
@@ -334,6 +337,7 @@ void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 		}
 		SaveUndo_RedoActions[ListCounter_Undo_Redo - 1] = pAct;
 	}
+	ActionCount++;
 	Undo_RedoCount = 0;
 }
 void ApplicationManager::DeleteLastFig()
@@ -383,31 +387,26 @@ void ApplicationManager::ClearAll()
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
+	int i = 0;
+	if (ActionCount > RecCount + MaxUndoCount)
+		i = 0;
+	else
+		i = 5 - (ActionCount - RecCount);
+		for (; i < ListCounter_Undo_Redo; i++)
+		{
+			delete SaveUndo_RedoActions[i];
+			SaveUndo_RedoActions[i] = NULL;
+		}
 	if (!PlayingRec) {
-		for (int i = 0; i < RecCount; i++) {
-			bool check = true;
-			for (int j = 0; j < ListCounter_Undo_Redo; j++) 
-			{
-				if (SaveUndo_RedoActions[j] == Recorded[i]) 
-				{
-					delete Recorded[i];
-					Recorded[i] = NULL;
-					SaveUndo_RedoActions[i] = NULL;
-					check = false;
-					break;
-				}
-			}
-			if (check) 
-			{
-				delete SaveUndo_RedoActions[i];
-				delete Recorded[i];
-				Recorded[i] = NULL;
-				SaveUndo_RedoActions[i] = NULL;
-			}
-			check = true;
+		for (int i = 0; i < RecCount; i++)
+		{
+			delete Recorded[i];
+			Recorded[i] = NULL;
 		}
 		RecCount = 0;
+
 	}
+	ActionCount = 0;
 	Undo_RedoCount = 0;
 	ListCounter_Undo_Redo = 0;
 	FigCount = 0;

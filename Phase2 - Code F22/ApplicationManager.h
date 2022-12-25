@@ -11,13 +11,14 @@
 //Main class that manages everything in the application.
 class ApplicationManager
 {
-	enum { MaxRecCount = 200, MaxFigCount = 200, MaxUndoCount = 5};	//Max no for arrays
+	enum { MaxRecCount = 20, MaxFigCount = 200, MaxUndoCount = 5};	//Max no for arrays
 
 private:
 	int FigCount; //Actual number of figures
 	int RecCount;
 	int Undo_RedoCount;
 	int ListCounter_Undo_Redo;
+	int ActionCount;
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;

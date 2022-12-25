@@ -7,7 +7,8 @@
 
 AddTriangleAction::AddTriangleAction(ApplicationManager* pApp) :Action(pApp)
 {
-
+	Saved_Redo = NULL;
+	id = 0;
 }
 
 void AddTriangleAction::ReadActionParameters()
@@ -73,4 +74,9 @@ void AddTriangleAction::UndoActions()
 void AddTriangleAction::RedoActions()
 {
 	pManager->AddFigure(Saved_Redo);
+}
+AddTriangleAction::~AddTriangleAction()
+{
+	if (Saved_Redo)
+		delete Saved_Redo;
 }

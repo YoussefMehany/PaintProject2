@@ -2,7 +2,8 @@
 
 MoveAction::MoveAction(ApplicationManager* pApp) :Action(pApp)
 {
-	
+	Saved = NULL;
+	Saved_Redo = NULL;
 }
 //Reads parameters required for action to execute (code depends on action type)
 void MoveAction::ReadActionParameters()
@@ -39,4 +40,11 @@ void MoveAction::RedoActions()
 {
 	pManager->SwapFigures(Saved_Redo);
 	Saved_Redo = Saved_Redo->GetNewFigure();
+}
+MoveAction::~MoveAction()
+{
+	if (Saved_Redo)
+		delete Saved_Redo;
+	if (Saved)
+		delete Saved;
 }

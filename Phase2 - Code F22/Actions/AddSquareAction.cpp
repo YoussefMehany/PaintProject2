@@ -8,7 +8,8 @@
 
 AddSquareAction::AddSquareAction(ApplicationManager* pApp) :Action(pApp)
 {
-
+	Saved_Redo = NULL;
+	id = 0;
 }
 
 void AddSquareAction::ReadActionParameters()
@@ -57,4 +58,9 @@ void AddSquareAction::UndoActions()
 void AddSquareAction::RedoActions()
 {
 	pManager->AddFigure(Saved_Redo);
+}
+AddSquareAction::~AddSquareAction()
+{
+	if (Saved_Redo)
+		delete Saved_Redo;
 }
