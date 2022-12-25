@@ -1,5 +1,5 @@
 #include "MoveAction.h"
-
+#include <iostream>
 MoveAction::MoveAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved = NULL;
@@ -10,26 +10,43 @@ void MoveAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-		pOut->PrintMessage("New Position : Click at the new position");
-		if (pManager->IsPlayingRec())
-			P = P_Rec;
-		else {
-			pIn->GetPointClicked(P.x, P.y);
-			P_Rec = P;
-		}
-      pOut->ClearStatusBar();
-	  pManager->Add_Undo_Redo_Actions(this);
+	pOut->PrintMessage("New Position : Click at the new position");
+	if (pManager->IsPlayingRec())
+		P = P_Rec;
+	else {
+		//pIn->GetPointClicked(P.x, P.y);
+		P_Rec = P;
+	}
+	pOut->ClearStatusBar();
+	pManager->Add_Undo_Redo_Actions(this);
 
-	  Saved = pManager->GetSelectedFig()->GetNewFigure();
+	Saved = pManager->GetSelectedFig()->GetNewFigure();
 }
 
 //Execute action (code depends on action type)
 void MoveAction::Execute()
 {
 	ReadActionParameters();
-	pManager->MoveFigure(P);
-	Saved_Redo= pManager->GetSelectedFig()->GetNewFigure();
-	
+	Input* pIn = pManager->GetInput();
+	Output* pOut = pManager->GetOutput();
+	bool Check_1 = false;
+	bool Check_2 = true;
+	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP) {
+		//cout << "out" << endl;
+		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
+		{
+			//cout << "in" << endl;
+			if (pManager->GetFigure(P) != pManager->GetSelectedFig()&& Check_2 ) { Check_1 = true; break; }
+			pManager->MoveFigure(P);
+			pManager->UpdateInterface();
+			//pManager->GetSelectedFig()->Draw(pOut);
+			Check_1 = true;
+			Check_2 = false;
+		}
+		if (Check_1)  break;
+	}
+	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
+
 }
 void MoveAction::UndoActions()
 {

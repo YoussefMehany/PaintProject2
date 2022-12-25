@@ -202,7 +202,7 @@ void Output::ClearDrawArea() const
 //////////////////////////////////////////////////////////////////////////////////////////
 void Output::UpdateToolBar() const
 {
-	if (UI.InterfaceMode == MODE_DRAW) {
+	/*if (UI.InterfaceMode == MODE_DRAW) {
 		CreateDrawToolBar();
 
 	}
@@ -211,7 +211,7 @@ void Output::UpdateToolBar() const
 	}
 	else if (UI.InterfaceMode == MODE_COLOR) {
 		Color_menu();
-	}
+	}*/
 }
 
 void Output::PrintMessage(string msg) const	//Prints a message on status bar
