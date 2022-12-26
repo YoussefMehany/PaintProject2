@@ -1,3 +1,34 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Input.cpp
   MoveAction.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
+  Output.cpp
+  CTriangle.cpp
+  CSquare.cpp
+  CRectangle.cpp
+  CHexagon.cpp
+  CFigure.cpp
+  CCircle.cpp
+  ApplicationManager.cpp
+  UndoAction.cpp
+  StopRecAction.cpp
+  StartRecAction.cpp
+  SelectAction.cpp
+  SaveAction.cpp
+  ReturnAction.cpp
+  RedoAction.cpp
+  PlayRecAction.cpp
+  LoadAction.cpp
+  FigureMenuAction.cpp
+  DeleteAction.cpp
+  ColorMenuAction.cpp
+  ClearAllAction.cpp
+  ChangeColorAction.cpp
+  AddTriangleAction.cpp
+  AddSquareAction.cpp
+  AddRectAction.cpp
+  AddHexAction.cpp
+  AddCircAction.cpp
   PT-Project.vcxproj -> C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

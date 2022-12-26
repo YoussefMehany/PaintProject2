@@ -11,10 +11,6 @@ void Input::GetPointClicked(int &x, int &y) const
 {
 	pWind->WaitMouseClick(x, y);	//Wait for mouse click
 }
-void Input::GetDragPath(int& x, int& y) const
-{
-	pWind->GetMouseCoord(x, y);	//Wait for mouse click
-}
 buttonstate Input::GetMouseState(int& x, int& y) const
 {
 	return pWind->GetButtonState(LEFT_BUTTON, x, y);

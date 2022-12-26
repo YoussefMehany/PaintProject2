@@ -32,14 +32,12 @@ void MoveAction::Execute()
 	bool Check_1 = false;
 	bool Check_2 = true;
 	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP) {
-		//cout << "out" << endl;
 		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
 		{
-			//cout << "in" << endl;
+			Sleep(5);
 			if (pManager->GetFigure(P) != pManager->GetSelectedFig()&& Check_2 ) { Check_1 = true; break; }
 			pManager->MoveFigure(P);
 			pManager->UpdateInterface();
-			//pManager->GetSelectedFig()->Draw(pOut);
 			Check_1 = true;
 			Check_2 = false;
 		}
