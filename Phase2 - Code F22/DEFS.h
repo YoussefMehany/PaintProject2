@@ -31,10 +31,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	FILL_COLOR,
 	BORDER_COLOR,
 	DRAW_FIGURE,	//display figures menu
-	PICK_TYPE,
-	PICK_CLR,
 	SOUND_STATE,
-	PICK_TYPECLR,
 	EMPTY,			//A click on empty place in the toolbar
 	DRAWING_AREA,	//A click on the drawing area
 	STATUS,//A click on the status bar
@@ -45,7 +42,9 @@ enum ActionType //The actions supported (you can add more if needed)
 	PLAY_REC,
 	LOAD_PROGRESS,
 	SAVE_PROGRESS,
-	
+	PICK_TYPE,
+	PICK_CLR,
+	PICK_TYPECLR,
 			
 	EXIT,
 	///TODO: Add the other action types of the two modes

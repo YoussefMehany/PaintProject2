@@ -25,4 +25,5 @@ void SwitchToPlayAction::Execute()
 {
 	ReadActionParameters();
 	pManager->SetPlayMode(true);
+	pManager->SetRec(false);
 }

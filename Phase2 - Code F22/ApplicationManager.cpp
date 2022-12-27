@@ -283,10 +283,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		LastAction = ActType;
 		CheckUpdate = true;
 		pAct->Execute(); //Execute
-		if (Recording && ActType < 32) // all the action types that can be recorded
+		if (Recording && ActType < 29) // all the action types that can be recorded
 		{
 			if (RecCount < MaxRecCount)
+			{
 				Recorded[RecCount++] = pAct;
+				pAct->SetRecorded(true);
+			}
 			else
 			{
 				pOut->PrintMessage("Recording Stopped");
@@ -368,7 +371,7 @@ void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 	}
 	else
 	{
-		if (ActionCount > RecCount + MaxUndoCount) {
+		if (!SaveUndo_RedoActions[0]->IsRecorded()) {
 			delete SaveUndo_RedoActions[0];
 		}
 		SaveUndo_RedoActions[0] = NULL;
@@ -428,14 +431,10 @@ void ApplicationManager::ClearAll()
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
-	int i = 0;
-	if (ActionCount > RecCount + MaxUndoCount)
-		i = 0;
-	else
-		i = 5 - (ActionCount - RecCount);
-	for (; i < ListCounter_Undo_Redo; i++)
+	for (int i = 0; i < ListCounter_Undo_Redo; i++)
 	{
-		delete SaveUndo_RedoActions[i];
+		if (!SaveUndo_RedoActions[i]->IsRecorded())
+			delete SaveUndo_RedoActions[i];
 		SaveUndo_RedoActions[i] = NULL;
 	}
 	if (!PlayingRec) {
@@ -497,7 +496,7 @@ int ApplicationManager::GetClrCount()const
 {
 	return ClrCount;
 }
-void  ApplicationManager::SetClrCount(int C) 
+void  ApplicationManager::SetClrCount(int C)
 {
 	ClrCount = C;
 }
@@ -517,8 +516,8 @@ void  ApplicationManager::SetTypeClrCount(int C)
 {
 	FigTypeClr = C;
 }
-shape ApplicationManager::GetRandomFig(int random){
-	
+shape ApplicationManager::GetRandomFig(int random) {
+
 	if (!FigCount) return noshape;
 	if (random == -1) {
 		random = rand() % FigCount;
@@ -534,9 +533,9 @@ shape ApplicationManager::GetRandomFig(int random){
 	}
 	return Figtype;
 }
-string ApplicationManager::GetRandomClr(int &random)
+string ApplicationManager::GetRandomClr(int& random)
 {
-	if(FigCount == 0) return "NO COLORED FIG";
+	if (FigCount == 0) return "NO COLORED FIG";
 	random = rand() % FigCount;
 	bool Check = false;
 	for (int i = 0; i < FigCount; i++)
