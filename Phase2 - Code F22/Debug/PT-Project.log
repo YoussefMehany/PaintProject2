@@ -1,12 +1,4 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  CTriangle.cpp
   ApplicationManager.cpp
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CTriangle.h(6,17): error C2011: 'CTriangle': 'class' type redefinition
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CTriangle.h(6,7): message : see declaration of 'CTriangle'
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(518,10): error C2680: 'CTriangle *': invalid target type for dynamic_cast
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(518,10): message : 'CTriangle': class must be defined before using in a dynamic_cast
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(524,11): error C2680: 'CTriangle *': invalid target type for dynamic_cast
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(524,11): message : 'CTriangle': class must be defined before using in a dynamic_cast
-  PickTypeandColor.cpp
-  Generating Code...
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Actions\PickTypeandColor.cpp(91): warning C4715: 'PickTypeandColor::TypetoString': not all control paths return a value
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(57,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

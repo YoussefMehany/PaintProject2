@@ -18,7 +18,6 @@ void PickColors::ReadActionParameters()
 void PickColors::Execute()
 {
 	ReadActionParameters();
-	pManager->UpdateInterface();
 	if (pManager->IsSoundOn()) {
 		PlaySound(TEXT("Sound/Pick_a_color.wav"), NULL, SND_SYNC);
 	}
@@ -33,6 +32,7 @@ void PickColors::Execute()
 		pManager->SetKEY(false);
 		return;
 	}
+	pManager->UpdateInterface();
 	pOut->PrintMessage("Pick All " + color + " Figures");
 	for (int i = 0; i < figcount; i++)
 	{

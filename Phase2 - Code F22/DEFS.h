@@ -33,6 +33,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	DRAW_FIGURE,	//display figures menu
 	PICK_TYPE,
 	PICK_CLR,
+	SOUND_STATE,
 	PICK_TYPECLR,
 	EMPTY,			//A click on empty place in the toolbar
 	DRAWING_AREA,	//A click on the drawing area
@@ -42,7 +43,6 @@ enum ActionType //The actions supported (you can add more if needed)
 	START_REC,
 	STOP_REC,
 	PLAY_REC,
-	SOUND_STATE,
 	LOAD_PROGRESS,
 	SAVE_PROGRESS,
 	

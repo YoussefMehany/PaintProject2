@@ -5,9 +5,11 @@ CCircle::CCircle(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxIn
 	Center = P1;
 	Radius = P2;
 	radius = (int)sqrt(pow((Radius.x - Center.x), 2) + pow((Radius.y - Center.y), 2));
+	FigType = circle;
 }
 CCircle::CCircle()
 {
+	FigType = circle;
 }
 void CCircle::Draw(Output* pOut) const
 {

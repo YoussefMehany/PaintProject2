@@ -3,9 +3,11 @@
 CTriangle::CTriangle(Point P1, Point P2, Point P3, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	Corners[0] = P1; Corners[1] = P2; Corners[2] = P3;
+	FigType = triangle;
 }
 CTriangle::CTriangle()
 {
+	FigType = triangle;
 }
 
 void CTriangle::Draw(Output* pOut) const

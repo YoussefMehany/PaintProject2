@@ -27,6 +27,7 @@
 #include "Actions/SwitchToPlayAction.h"
 #include "Actions/PickColors.h"
 #include "Actions/PickFigures.h"
+#include "Actions/PickTypeandColor.h"
 #include "Actions/ChangeSoundState.h"
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -43,6 +44,7 @@ ApplicationManager::ApplicationManager()
 	Redo = false;
 	Sound = false;
 
+	FigTypeClr = 0;
 	ClrCount = 0;
 	FigCount = 0;
 	RecCount = 0;
@@ -52,7 +54,7 @@ ApplicationManager::ApplicationManager()
 	ActionCount = 0;
 	CheckUpdate = false;
 	LastAction = START_PROGRAM;
-	srand(NULL);
+	srand(time(NULL));
 	//Create an array of figure pointers and set them to NULL		
 	for (int i = 0; i < MaxFigCount; i++)
 		FigList[i] = NULL;
@@ -264,6 +266,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case PICK_TYPE:
 		pAct = new PickFigures(this);
 		break;
+	case PICK_TYPECLR:
+		pAct = new PickTypeandColor(this);
+		break;
 	case SOUND_STATE:
 		pAct = new ChangeSoundState(this);
 		break;
@@ -278,13 +283,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		LastAction = ActType;
 		CheckUpdate = true;
 		pAct->Execute(); //Execute
-		if (Recording && ActType < 33) // all the action types that can be recorded
+		if (Recording && ActType < 32) // all the action types that can be recorded
 		{
 			if (RecCount < MaxRecCount)
 				Recorded[RecCount++] = pAct;
 			else
 			{
-				pOut->PrintMessage("recording stoped");
+				pOut->PrintMessage("Recording Stopped");
 				Recording = false;
 			}
 
@@ -357,7 +362,7 @@ void ApplicationManager::RedoLastAction()
 }
 void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 {
-	if (ListCounter_Undo_Redo < 5)
+	if (ListCounter_Undo_Redo < MaxUndoCount)
 	{
 		SaveUndo_RedoActions[ListCounter_Undo_Redo++] = pAct;
 	}
@@ -440,7 +445,6 @@ void ApplicationManager::ClearAll()
 			Recorded[i] = NULL;
 		}
 		RecCount = 0;
-
 	}
 	ActionCount = 0;
 	Undo_RedoCount = 0;
@@ -505,32 +509,26 @@ void  ApplicationManager::SetRandFigCount(int C)
 {
 	RandFigCount = C;
 }
+int ApplicationManager::GetTypeClrCount()const
+{
+	return FigTypeClr;
+}
+void  ApplicationManager::SetTypeClrCount(int C)
+{
+	FigTypeClr = C;
+}
 shape ApplicationManager::GetRandomFig(int random){
 	
 	if (!FigCount) return noshape;
 	if (random == -1) {
 		random = rand() % FigCount;
 	}
-	shape Figtype;
-	if (dynamic_cast<CRectangle*>(FigList[random])) Figtype = rectangle;
-	else if (dynamic_cast<CSquare*>(FigList[random])) Figtype = square;
-	else if (dynamic_cast<CCircle*>(FigList[random])) Figtype = circle;
-	else if (dynamic_cast<CTriangle*>(FigList[random])) Figtype = triangle;
-	else if (dynamic_cast<CHexagon*>(FigList[random])) Figtype = hexagon;
+	shape Figtype = FigList[random]->GetFigType();
 	for (int i = 0; i < FigCount; i++) {
-		if (Figtype == rectangle && dynamic_cast<CRectangle*>(FigList[i])) {
-			RandFigCount++;
-		}
-		else if (Figtype == triangle && dynamic_cast<CTriangle*>(FigList[i])) {
-			RandFigCount++;	
-		}
-		else if (Figtype == square && dynamic_cast<CSquare*>(FigList[i])) {
-			RandFigCount++;
-		}
-		else if (Figtype == circle && dynamic_cast<CCircle*>(FigList[i])) {
-			RandFigCount++;
-		}
-		else if (Figtype == hexagon && dynamic_cast<CHexagon*>(FigList[i])) {
+		if (Figtype == FigList[i]->GetFigType()) {
+			if (FigList[random]->getColor() == FigList[i]->getColor()) {
+				FigTypeClr++;
+			}
 			RandFigCount++;
 		}
 	}
@@ -540,12 +538,13 @@ string ApplicationManager::GetRandomClr(int &random)
 {
 	if(FigCount == 0) return "NO COLORED FIG";
 	random = rand() % FigCount;
-
+	bool Check = false;
 	for (int i = 0; i < FigCount; i++)
 	{
-		if (FigList[i]->getColor() == "NO FILL CLR")
-			return "NO COLORED FIG";
+		if (FigList[i]->getColor() != "NO FILL CLR")
+			Check = true;
 	}
+	if (!Check) return "NO COLORED FIG";
 	while (true)
 	{
 		if (FigList[random]->getColor() == "NO FILL CLR")
@@ -556,6 +555,7 @@ string ApplicationManager::GetRandomClr(int &random)
 	for (int i = 0; i < FigCount; i++)
 		if (FigList[random]->getColor() == FigList[i]->getColor())
 			ClrCount++;
+
 
 	return FigList[random]->getColor();
 }

@@ -21,6 +21,7 @@ private:
 	int ActionCount;
 	int ClrCount;
 	int RandFigCount;
+	int FigTypeClr;
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
@@ -87,6 +88,8 @@ public:
 	void SetClrCount(int );
 	int GetRandFigCount()const;
 	void SetRandFigCount(int);
+	int GetTypeClrCount()const;
+	void SetTypeClrCount(int);
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

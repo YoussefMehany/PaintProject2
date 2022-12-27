@@ -1,6 +1,4 @@
-#ifndef CTRINAGLE_H
-#define CTRIANGLE_H
-
+#pragma once
 #include "CFigure.h"
 
 class CTriangle : public CFigure
@@ -19,5 +17,3 @@ public:
 	virtual CFigure* GetNewFigure();
 	virtual void PrintInfo(Output* pOut);
 };
-
-#endif

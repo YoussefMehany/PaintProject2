@@ -45,6 +45,9 @@ void CFigure::ChngFillClr(color Fclr)
 	FigGfxInfo.isFilled = true;
 	FigGfxInfo.FillClr = Fclr; 
 }
+shape CFigure::GetFigType() const{
+	return FigType;
+}
 string CFigure::getColor(color clr)
 {
 	if (clr == BISQUE) 

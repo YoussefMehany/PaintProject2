@@ -5,9 +5,11 @@ CHexagon::CHexagon(Point P1, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 	Center = P1;
 	Side = 100;
 	CalcCorners(Corners);
+	FigType = hexagon;
 }
 CHexagon::CHexagon()
 {
+	FigType = hexagon;
 	Side = 100;
 }
 

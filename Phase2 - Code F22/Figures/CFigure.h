@@ -13,6 +13,7 @@ protected:
 	static int ID_Num;
 	bool Selected;	//true if the figure is selected.
 	bool Blocked;
+	shape FigType;
 	GfxInfo FigGfxInfo;	//Figure graphis info
 	/// Add more parameters if needed.
 
@@ -26,7 +27,7 @@ public:
 	void SetID(int id);
 	int GetID()const;
 	virtual void Draw(Output* pOut) const  = 0 ;		//Draw the figure
-	
+	shape GetFigType() const;
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
 	void ChngFillClr(color Fclr);  //changes the figure's filling color
 	virtual void ChngClr()=0;	
