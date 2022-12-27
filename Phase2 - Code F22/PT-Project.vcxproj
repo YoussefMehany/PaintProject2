@@ -142,6 +142,7 @@
     <ClCompile Include="Actions\MoveByDragAction.cpp" />
     <ClCompile Include="Actions\PickColors.cpp" />
     <ClCompile Include="Actions\PickFigures.cpp" />
+    <ClCompile Include="Actions\PickTypeandColor.cpp" />
     <ClCompile Include="Actions\PlayRecAction.cpp" />
     <ClCompile Include="Actions\RedoAction.cpp" />
     <ClCompile Include="Actions\SaveAction.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Actions\MoveByDragAction.h" />
     <ClInclude Include="Actions\PickColors.h" />
     <ClInclude Include="Actions\PickFigures.h" />
+    <ClInclude Include="Actions\PickTypeandColor.h" />
     <ClInclude Include="Actions\PlayRecAction.h" />
     <ClInclude Include="Actions\RedoAction.h" />
     <ClInclude Include="Actions\SaveAction.h" />

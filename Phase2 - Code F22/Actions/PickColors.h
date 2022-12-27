@@ -1,6 +1,7 @@
 #pragma once
 #include "Action.h"
 #include "../ApplicationManager.h"
+
 class PickColors :public Action
 {
 	Output* pOut;
@@ -9,6 +10,7 @@ class PickColors :public Action
 	Point P;
 	int CCounter;
 	int FCounter;
+	int Random;
 public:
 	PickColors(ApplicationManager* pApp);
 	//Reads parameters required for action to execute (code depends on action type)

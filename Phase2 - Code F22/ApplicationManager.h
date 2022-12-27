@@ -79,8 +79,8 @@ public:
 	bool IsPlayMode()const;
 	void SetPlayMode(bool);
 	void SetKEY(bool);
-	string GetRandomClr();
-	shape GetRandomFig();
+	string GetRandomClr(int&);
+	shape GetRandomFig(int = -1);
 	void UnBlock();
 	void BlockFig(CFigure*);
 	int GetClrCount()const;

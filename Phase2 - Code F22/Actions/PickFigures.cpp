@@ -1,9 +1,4 @@
 #include "PickFigures.h"
-#include "..\Figures\CCircle.h"
-#include "..\Figures\CTriangle.h"
-#include "..\Figures\CSquare.h"
-#include "..\Figures\CRectangle.h"
-#include "..\Figures\CHexagon.h"
 
 PickFigures::PickFigures(ApplicationManager* pApp) :Action(pApp)
 {

@@ -24,7 +24,7 @@ void PickColors::Execute()
 	}
 	CFigure* select = NULL;
 	int figcount = pManager->getFigCount();
-	color = pManager->GetRandomClr();
+	color = pManager->GetRandomClr(Random);
 	if (color == "NO COLORED FIG")
 	{
 		pOut->PrintMessage("NO COLORED FIGURE");

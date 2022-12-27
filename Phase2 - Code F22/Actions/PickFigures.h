@@ -1,6 +1,11 @@
 #pragma once
 #include "Action.h"
 #include "../ApplicationManager.h"
+#include "..\Figures\CCircle.h"
+#include "..\Figures\CTriangle.h"
+#include "..\Figures\CSquare.h"
+#include "..\Figures\CRectangle.h"
+#include "..\Figures\CHexagon.h"
 class PickFigures :public Action
 {
 	Output* pOut;
@@ -9,6 +14,7 @@ class PickFigures :public Action
 	Point P;
 	int CCounter;
 	int FCounter;
+	int Random;
 public:
 	PickFigures(ApplicationManager* pApp);
 	//Reads parameters required for action to execute (code depends on action type)

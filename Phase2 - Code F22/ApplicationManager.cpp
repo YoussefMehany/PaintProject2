@@ -1,5 +1,4 @@
 #include <windows.h> 
-#include <Windows.h>
 #include <MMSystem.h>
 #include "ApplicationManager.h"
 #include "Actions\AddRectAction.h"
@@ -506,15 +505,17 @@ void  ApplicationManager::SetRandFigCount(int C)
 {
 	RandFigCount = C;
 }
-shape ApplicationManager::GetRandomFig(){
+shape ApplicationManager::GetRandomFig(int random){
 	
 	if (!FigCount) return noshape;
-	int random = rand() % FigCount;
+	if (random == -1) {
+		random = rand() % FigCount;
+	}
 	shape Figtype;
 	if (dynamic_cast<CRectangle*>(FigList[random])) Figtype = rectangle;
-	else if (dynamic_cast<CTriangle*>(FigList[random])) Figtype = triangle;
 	else if (dynamic_cast<CSquare*>(FigList[random])) Figtype = square;
 	else if (dynamic_cast<CCircle*>(FigList[random])) Figtype = circle;
+	else if (dynamic_cast<CTriangle*>(FigList[random])) Figtype = triangle;
 	else if (dynamic_cast<CHexagon*>(FigList[random])) Figtype = hexagon;
 	for (int i = 0; i < FigCount; i++) {
 		if (Figtype == rectangle && dynamic_cast<CRectangle*>(FigList[i])) {
@@ -535,10 +536,10 @@ shape ApplicationManager::GetRandomFig(){
 	}
 	return Figtype;
 }
-string ApplicationManager::GetRandomClr()
+string ApplicationManager::GetRandomClr(int &random)
 {
 	if(FigCount == 0) return "NO COLORED FIG";
-	int random = rand() % FigCount;
+	random = rand() % FigCount;
 
 	for (int i = 0; i < FigCount; i++)
 	{
