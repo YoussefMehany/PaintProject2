@@ -1,7 +1,5 @@
 #include "AddTriangleAction.h"
 #include "..\Figures\CTriangle.h"
-//#include "..\ApplicationManager.h"
-
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
 

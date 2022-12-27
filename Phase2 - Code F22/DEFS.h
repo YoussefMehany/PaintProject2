@@ -19,6 +19,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	YELLOWCLR,
 	BLACKCLR,
     MOVE_FIGURE,
+	DRAG_FIGURE,
     DELETE_FIGURE,
 	SELECT_FIGURE,
 	RETURN,
@@ -35,14 +36,16 @@ enum ActionType //The actions supported (you can add more if needed)
 	PICK_TYPECLR,
 	EMPTY,			//A click on empty place in the toolbar
 	DRAWING_AREA,	//A click on the drawing area
-	STATUS,			//A click on the status bar
+	STATUS,//A click on the status bar
+	TO_PLAY, //Switch interface to Play mode
+	TO_DRAW, //Switch interface to Draw mode
 	START_REC,
 	STOP_REC,
 	PLAY_REC,
 	LOAD_PROGRESS,
 	SAVE_PROGRESS,
-	TO_PLAY, //Switch interface to Play mode
-	TO_DRAW,		//Switch interface to Draw mode
+	
+			
 	EXIT,
 	///TODO: Add the other action types of the two modes
 };

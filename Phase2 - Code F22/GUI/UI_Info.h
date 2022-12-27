@@ -29,6 +29,8 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 
 	MOVE,
 
+	MOVE_BY_DRAG,
+
     REDO,
 
 	UNDO,

@@ -1,8 +1,6 @@
 #ifndef ADD_TRIANGLE_ACTION_H
 #define ADD_TRIANGLE_ACTION_H
-
 #include "Action.h"
-//#include "..\Figures\CTriangle.h"
 
 #include "..\ApplicationManager.h"
 //Add Triangle Action class

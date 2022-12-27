@@ -20,7 +20,10 @@
 #include "Actions\ReturnAction.h"
 #include "Actions\ClearAllAction.h"
 #include "Actions\RedoAction.h"
-#include <iostream>
+#include "Actions/MoveByDragAction.h"
+#include "Actions/ExitAction.h"
+#include  "Actions/SwitchToDrawAction.h"
+#include "Actions/SwitchToPlayAction.h"
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -133,7 +136,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		}
 		pAct = new MoveAction(this);
 		break;
-
+	case DRAG_FIGURE:
+		if (SelectedFig == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
+			break;
+		}
+		pAct = new MoveByDragAction(this);
+		break;
 	case SELECT_FIGURE:
 		pAct = new SelectAction(this);
 		break;
@@ -233,29 +242,34 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case CLEAR_ALL:
 		pAct = new ClearAllAction(this);
 		break;
-
+	case TO_PLAY:
+		pAct = new SwitchToPlayAction(this);
+		break;
+	case TO_DRAW:
+		pAct = new SwitchToDrawAction(this);
+		break;
 	case EXIT:
-		///create ExitAction here
-
+		pAct = new ExitAction(this);
 		break;
 	}
 
 	if (pAct != NULL)
 	{
-		LastAction = ActType;
-		CheckUpdate = true;
-		pAct->Execute(); //Execute
-		if (Recording && ActType < 30) // all the action types that can be recorded
-		{
-			if (RecCount < MaxRecCount)
-				Recorded[RecCount++] = pAct;
-			else
+			LastAction = ActType;
+			CheckUpdate = true;
+			pAct->Execute(); //Execute
+			if (Recording && ActType < 33) // all the action types that can be recorded
 			{
-				pOut->PrintMessage("recording stoped");
-				Recording = false;
+				if (RecCount < MaxRecCount)
+					Recorded[RecCount++] = pAct;
+				else
+				{
+					pOut->PrintMessage("recording stoped");
+					Recording = false;
+				}
+
 			}
 
-		}
 	}
 }
 //==================================================================================//
@@ -392,11 +406,11 @@ void ApplicationManager::ClearAll()
 		i = 0;
 	else
 		i = 5 - (ActionCount - RecCount);
-		for (; i < ListCounter_Undo_Redo; i++)
-		{
-			delete SaveUndo_RedoActions[i];
-			SaveUndo_RedoActions[i] = NULL;
-		}
+	for (; i < ListCounter_Undo_Redo; i++)
+	{
+		delete SaveUndo_RedoActions[i];
+		SaveUndo_RedoActions[i] = NULL;
+	}
 	if (!PlayingRec) {
 		for (int i = 0; i < RecCount; i++)
 		{
@@ -416,6 +430,7 @@ CFigure* ApplicationManager::GetSelectedFig()const
 {
 	return SelectedFig;
 }
+
 int ApplicationManager::getFigCount()const
 {
 	return FigCount;
@@ -426,6 +441,7 @@ bool ApplicationManager::IsRecording() const {
 bool ApplicationManager::IsPlayingRec() const {
 	return PlayingRec;
 }
+
 void ApplicationManager::SetRec(bool IsRec)
 {
 	Recording = IsRec;

@@ -1,5 +1,5 @@
 #include "MoveAction.h"
-#include <iostream>
+
 MoveAction::MoveAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved = NULL;
@@ -14,7 +14,7 @@ void MoveAction::ReadActionParameters()
 	if (pManager->IsPlayingRec())
 		P = P_Rec;
 	else {
-		//pIn->GetPointClicked(P.x, P.y);
+		pIn->GetPointClicked(P.x, P.y);
 		P_Rec = P;
 	}
 	pOut->ClearStatusBar();
@@ -29,22 +29,8 @@ void MoveAction::Execute()
 	ReadActionParameters();
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
-	bool Check_1 = false;
-	bool Check_2 = true;
-	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP) {
-		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
-		{
-			Sleep(5);
-			if (pManager->GetFigure(P) != pManager->GetSelectedFig()&& Check_2 ) { Check_1 = true; break; }
-			pManager->MoveFigure(P);
-			pManager->UpdateInterface();
-			Check_1 = true;
-			Check_2 = false;
-		}
-		if (Check_1)  break;
-	}
+	pManager->MoveFigure(P);
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
-
 }
 void MoveAction::UndoActions()
 {

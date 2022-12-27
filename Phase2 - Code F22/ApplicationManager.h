@@ -22,14 +22,16 @@ private:
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
+	bool CheckExcute;
 	bool Undo;
 	bool Redo;
 	ActionType LastAction;
 
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	CFigure* SelectedFig; //Pointer to the selected figure
-	Action* SaveUndo_RedoActions[MaxUndoCount]; //saves figures before being changed 
 
+
+	Action* SaveUndo_RedoActions[MaxUndoCount]; //saves figures before being changed 
 	Action* Recorded[MaxRecCount];
 	
 	//Pointers to Input and Output classes
@@ -60,7 +62,6 @@ public:
 	void DeleteFigure(CFigure*F=NULL);
 	void SaveFile(ofstream& OutFile);
 	void ClearAll();
-
 	// -- Undo-Redo
 	void UndoLastAction();
 	void RedoLastAction();

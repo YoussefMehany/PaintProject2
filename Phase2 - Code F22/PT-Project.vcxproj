@@ -133,10 +133,12 @@
     <ClCompile Include="Actions\ClearAllAction.cpp" />
     <ClCompile Include="Actions\ColorMenuAction.cpp" />
     <ClCompile Include="Actions\DeleteAction.cpp" />
+    <ClCompile Include="Actions\ExitAction.cpp" />
     <ClCompile Include="Actions\FigureMenuAction.cpp" />
     <ClCompile Include="Actions\AddHexAction.cpp" />
     <ClCompile Include="Actions\LoadAction.cpp" />
     <ClCompile Include="Actions\MoveAction.cpp" />
+    <ClCompile Include="Actions\MoveByDragAction.cpp" />
     <ClCompile Include="Actions\PlayRecAction.cpp" />
     <ClCompile Include="Actions\RedoAction.cpp" />
     <ClCompile Include="Actions\SaveAction.cpp" />
@@ -145,6 +147,8 @@
     <ClCompile Include="Actions\StartRecAction.cpp" />
     <ClCompile Include="Actions\AddTriangleAction.cpp" />
     <ClCompile Include="Actions\StopRecAction.cpp" />
+    <ClCompile Include="Actions\SwitchToDrawAction.cpp" />
+    <ClCompile Include="Actions\SwitchToPlayAction.cpp" />
     <ClCompile Include="Actions\UndoAction.cpp" />
     <ClCompile Include="Actions\ReturnAction.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp" />
@@ -201,10 +205,12 @@
     <ClInclude Include="Actions\ClearAllAction.h" />
     <ClInclude Include="Actions\ColorMenuAction.h" />
     <ClInclude Include="Actions\DeleteAction.h" />
+    <ClInclude Include="Actions\ExitAction.h" />
     <ClInclude Include="Actions\FigureMenuAction.h" />
     <ClInclude Include="Actions\AddHexAction.h" />
     <ClInclude Include="Actions\LoadAction.h" />
     <ClInclude Include="Actions\MoveAction.h" />
+    <ClInclude Include="Actions\MoveByDragAction.h" />
     <ClInclude Include="Actions\PlayRecAction.h" />
     <ClInclude Include="Actions\RedoAction.h" />
     <ClInclude Include="Actions\SaveAction.h" />
@@ -213,6 +219,8 @@
     <ClInclude Include="Actions\StartRecAction.h" />
     <ClInclude Include="Actions\AddTriangleAction.h" />
     <ClInclude Include="Actions\StopRecAction.h" />
+    <ClInclude Include="Actions\SwitchToDrawAction.h" />
+    <ClInclude Include="Actions\SwitchToPlayAction.h" />
     <ClInclude Include="Actions\UndoAction.h" />
     <ClInclude Include="Actions\ReturnAction.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />

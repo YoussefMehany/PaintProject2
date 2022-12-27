@@ -81,6 +81,7 @@ void Output::CreateDrawToolBar() const
 	MenuItemImages[PAINT] = "images\\MenuItems\\PAINT.jpg";
 	MenuItemImages[BORDER] = "images\\MenuItems\\BORDER.jpg";
 	MenuItemImages[MOVE] = "images\\MenuItems\\MOVE.jpg";
+	MenuItemImages[MOVE_BY_DRAG] = "images\\MenuItems\\MOVE_BY_DRAG.jpg";
 	MenuItemImages[UNDO] = "images\\MenuItems\\UNDO.jpg";
 	MenuItemImages[REDO] = "images\\MenuItems\\REDO.jpg";
 	MenuItemImages[DELETe] = "images\\MenuItems\\DELETE.jpg";
