@@ -19,13 +19,16 @@ private:
 	int Undo_RedoCount;
 	int ListCounter_Undo_Redo;
 	int ActionCount;
+	int ClrCount;
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
-	bool CheckExcute;
+	bool PlayMode;
+	bool KEY;
 	bool Undo;
 	bool Redo;
 	ActionType LastAction;
+	
 
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
 	CFigure* SelectedFig; //Pointer to the selected figure
@@ -68,6 +71,15 @@ public:
 	void DeleteLastFig();
 	void SwapFigures(CFigure*);
 	void Add_Undo_Redo_Actions(Action*);
+	// --Play Mode_
+	bool IsPlayMode()const;
+	void SetPlayMode(bool);
+	void SetKEY(bool);
+	string GetRandomClr();
+	void UnBlock();
+	void BlockFig(CFigure*);
+	int GetClrCount()const;
+	void SetClrCount(int );
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

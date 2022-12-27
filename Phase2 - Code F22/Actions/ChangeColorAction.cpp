@@ -21,7 +21,6 @@ void ChangeColorAction::Execute()
 {
 	ReadActionParameters();
 	CFigure* selected = pManager->GetSelectedFig();
-	
 	if (UI.Choose == BORDER)
 	{
 		UI.DrawColor = colour;

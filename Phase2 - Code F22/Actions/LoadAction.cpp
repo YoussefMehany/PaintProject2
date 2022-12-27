@@ -1,5 +1,6 @@
 #include"LoadAction.h"
 #include "../ApplicationManager.h"
+
 LoadAction::LoadAction(ApplicationManager* pApp) :Action(pApp)
 {
 }
@@ -28,6 +29,7 @@ void LoadAction::Execute()
 	pManager->ClearAll();
 	if (InFile.is_open())
 	{
+		
 		string Word;
 		InFile >> Word;
 		UI.DrawColor = getColorr(Word);
@@ -49,7 +51,7 @@ void LoadAction::Execute()
 void LoadAction::CreateFigure(string Word) 
 {
 	if (Word[0] == '0') 
-	{
+	{  
 		CHexagon* Fig = new CHexagon();
 		Fig->Load(InFile);
 		pManager->AddFigure(Fig);

@@ -24,6 +24,8 @@
 #include "Actions/ExitAction.h"
 #include  "Actions/SwitchToDrawAction.h"
 #include "Actions/SwitchToPlayAction.h"
+#include "Actions/PickColors.h"
+#include <iostream>
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -33,9 +35,12 @@ ApplicationManager::ApplicationManager()
 	SelectedFig = NULL;
 	Recording = false;
 	PlayingRec = false;
+	PlayMode = false;
+	KEY = false;
 	Undo = false;
 	Redo = false;
-
+	
+	ClrCount = 0;
 	FigCount = 0;
 	RecCount = 0;
 	Undo_RedoCount = 0;
@@ -43,6 +48,7 @@ ApplicationManager::ApplicationManager()
 	ActionCount = 0;
 	CheckUpdate = false;
 	LastAction = START_PROGRAM;
+	srand(NULL);
 	//Create an array of figure pointers and set them to NULL		
 	for (int i = 0; i < MaxFigCount; i++)
 		FigList[i] = NULL;
@@ -248,6 +254,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case TO_DRAW:
 		pAct = new SwitchToDrawAction(this);
 		break;
+	case PICK_CLR:
+		pAct = new PickColors(this);
+		break;
 	case EXIT:
 		pAct = new ExitAction(this);
 		break;
@@ -255,23 +264,25 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	if (pAct != NULL)
 	{
-			LastAction = ActType;
-			CheckUpdate = true;
-			pAct->Execute(); //Execute
-			if (Recording && ActType < 33) // all the action types that can be recorded
+		LastAction = ActType;
+		CheckUpdate = true;
+		pAct->Execute(); //Execute
+		if (Recording && ActType < 33) // all the action types that can be recorded
+		{
+			if (RecCount < MaxRecCount)
+				Recorded[RecCount++] = pAct;
+			else
 			{
-				if (RecCount < MaxRecCount)
-					Recorded[RecCount++] = pAct;
-				else
-				{
-					pOut->PrintMessage("recording stoped");
-					Recording = false;
-				}
-
+				pOut->PrintMessage("recording stoped");
+				Recording = false;
 			}
 
+		}
+
 	}
+	cout << FigCount << endl;
 }
+
 //==================================================================================//
 //						Figures Management Functions								//
 //==================================================================================//
@@ -281,6 +292,7 @@ void ApplicationManager::AddFigure(CFigure* pFig)
 {
 	if (FigCount < MaxFigCount) {
 		FigList[FigCount++] = pFig;
+		pFig->SetBlock(false);
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
@@ -441,7 +453,18 @@ bool ApplicationManager::IsRecording() const {
 bool ApplicationManager::IsPlayingRec() const {
 	return PlayingRec;
 }
-
+bool ApplicationManager::IsPlayMode() const
+{
+	return PlayMode;
+}
+void ApplicationManager::SetPlayMode(bool B)
+{
+	PlayMode = B;
+}
+void ApplicationManager::SetKEY(bool B)
+{
+	KEY = B;
+}
 void ApplicationManager::SetRec(bool IsRec)
 {
 	Recording = IsRec;
@@ -449,6 +472,49 @@ void ApplicationManager::SetRec(bool IsRec)
 void ApplicationManager::SetSelectedFig(CFigure* F)
 {
 	SelectedFig = F;
+}
+int ApplicationManager::GetClrCount()const
+{
+	return ClrCount;
+}
+void  ApplicationManager::SetClrCount(int C) 
+{
+	ClrCount = C;
+}
+string ApplicationManager::GetRandomClr()
+{
+	int random = 1 + (rand() % (FigCount - 1));
+	int rand2 = random;
+	int check = 0;
+	for (int i = 0; i < FigCount; i++) 
+	{
+		if (check == FigCount)
+			return "NO Fig COLORED";
+		if (FigList[random]->getColor() == "NO FILL CLR") 
+		{
+			random = 1 + (rand() % (FigCount - 1));
+			if (rand2 == random)
+				continue;
+			rand2 = random;
+			check++;
+			i = 0;
+			continue;
+		}
+		if (FigList[random]->getColor() == FigList[i]->getColor())
+			ClrCount++;
+	}
+	return FigList[random]->getColor();
+}
+void ApplicationManager::UnBlock()
+{
+	for (int i = 0; i < FigCount; i++)
+	{
+		FigList[i]->SetBlock(false);
+	}
+}
+void ApplicationManager::BlockFig(CFigure* Fig)
+{
+	Fig->SetBlock(true);
 }
 void ApplicationManager::PlayRec() {
 	PlayingRec = true;
@@ -485,8 +551,12 @@ void ApplicationManager::UpdateInterface()
 {
 	if (CheckUpdate) {
 		pOut->ClearDrawArea();
-		for (int i = 0; i < FigCount; i++)
-			FigList[i]->Draw(pOut); //Call Draw function (virtual member fn)
+		if (!PlayMode || KEY)
+			for (int i = 0; i < FigCount; i++)
+			{
+				if (!FigList[i]->IsBlocked())
+					FigList[i]->Draw(pOut); //Call Draw function (virtual member fn)
+			}
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////

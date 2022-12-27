@@ -16,4 +16,5 @@ void SwitchToDrawAction::ReadActionParameters()
 void SwitchToDrawAction::Execute()
 {
 	ReadActionParameters();
+	pManager->SetPlayMode(false);
 }

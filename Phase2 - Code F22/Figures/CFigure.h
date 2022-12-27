@@ -12,6 +12,7 @@ protected:
 	int ID;		//Each figure has an ID
 	static int ID_Num;
 	bool Selected;	//true if the figure is selected.
+	bool Blocked;
 	GfxInfo FigGfxInfo;	//Figure graphis info
 	/// Add more parameters if needed.
 
@@ -19,7 +20,9 @@ public:
 	CFigure(GfxInfo FigureGfxInfo);
 	CFigure::CFigure();
 	void SetSelected(bool s);	//select/unselect the figure
+	void SetBlock(bool);
 	bool IsSelected() const;	//check whether fig is selected
+	bool IsBlocked() const;
 	void SetID(int id);
 	int GetID()const;
 	virtual void Draw(Output* pOut) const  = 0 ;		//Draw the figure
@@ -35,8 +38,8 @@ public:
 	///It should be overridden by each inherited figure
 
 	///Decide the parameters that you should pass to each function	
-	string getColor(color);
-	color getColorr(string);
+	string getColor(color = BISQUE);
+	color getColorr(string ="BISQUE");
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file
 	virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file

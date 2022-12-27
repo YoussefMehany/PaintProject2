@@ -5,6 +5,7 @@ CFigure::CFigure(GfxInfo FigureGfxInfo)
 { 
 	FigGfxInfo = FigureGfxInfo;	//Default status is non-filled.
 	Selected = false;
+	Blocked = false;
 	ID = ++ID_Num;
 }
 
@@ -12,6 +13,14 @@ CFigure::CFigure()
 {
 	FigGfxInfo.isFilled = false;
 	Selected = false;
+}
+void CFigure::SetBlock(bool B)
+{
+	Blocked = B;
+}
+bool CFigure::IsBlocked() const
+{
+	return Blocked;
 }
 void CFigure::SetID(int id) {
 	ID = id;
@@ -38,6 +47,12 @@ void CFigure::ChngFillClr(color Fclr)
 }
 string CFigure::getColor(color clr)
 {
+	if (clr == BISQUE) 
+	{
+		if (FigGfxInfo.isFilled == false) 
+			return "NO FILL CLR";
+		return getColor(FigGfxInfo.FillClr);
+	}
 	if (clr == BLUE)
 	{
 		return "BLUE";
@@ -75,6 +90,10 @@ string CFigure::getColor(color clr)
 }
 color CFigure::getColorr(string clr)
 {
+	if (clr == "BISQUE") 
+	{
+		return FigGfxInfo.FillClr;
+	}
 	if (clr == "BLUE")
 	{
 		return BLUE;
