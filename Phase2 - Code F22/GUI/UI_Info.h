@@ -49,6 +49,8 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 
 	CLEAR,
 
+	SOUND,
+
 	SWITCH_PLAY,
 
 	ITM_EXIT,		//Exit item

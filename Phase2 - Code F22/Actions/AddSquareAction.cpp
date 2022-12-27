@@ -14,7 +14,9 @@ void AddSquareAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 	pManager->Add_Undo_Redo_Actions(this);
-
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Square.wav"), NULL, SND_SYNC);
+	}
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Square: Click at the Center");
 	if (pManager->IsPlayingRec())
@@ -43,6 +45,7 @@ void AddSquareAction::Execute()
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
+
 }
 void AddSquareAction::UndoActions()
 {

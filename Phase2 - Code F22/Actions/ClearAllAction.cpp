@@ -15,6 +15,8 @@ void ClearAllAction::ReadActionParameters()
 void ClearAllAction::Execute()
 {
 	ReadActionParameters();
-
 	pManager->ClearAll();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Cleared.wav"), NULL, SND_SYNC);
+	}
 }

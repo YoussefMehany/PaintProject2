@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Actions\ChangeColorAction.cpp" />
     <ClCompile Include="Actions\AddCircAction.cpp" />
+    <ClCompile Include="Actions\ChangeSoundState.cpp" />
     <ClCompile Include="Actions\ClearAllAction.cpp" />
     <ClCompile Include="Actions\ColorMenuAction.cpp" />
     <ClCompile Include="Actions\DeleteAction.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="Actions\MoveAction.cpp" />
     <ClCompile Include="Actions\MoveByDragAction.cpp" />
     <ClCompile Include="Actions\PickColors.cpp" />
+    <ClCompile Include="Actions\PickFigures.cpp" />
     <ClCompile Include="Actions\PlayRecAction.cpp" />
     <ClCompile Include="Actions\RedoAction.cpp" />
     <ClCompile Include="Actions\SaveAction.cpp" />
@@ -203,6 +205,7 @@
   <ItemGroup>
     <ClInclude Include="Actions\ChangeColorAction.h" />
     <ClInclude Include="Actions\AddCircAction.h" />
+    <ClInclude Include="Actions\ChangeSoundState.h" />
     <ClInclude Include="Actions\ClearAllAction.h" />
     <ClInclude Include="Actions\ColorMenuAction.h" />
     <ClInclude Include="Actions\DeleteAction.h" />
@@ -213,6 +216,7 @@
     <ClInclude Include="Actions\MoveAction.h" />
     <ClInclude Include="Actions\MoveByDragAction.h" />
     <ClInclude Include="Actions\PickColors.h" />
+    <ClInclude Include="Actions\PickFigures.h" />
     <ClInclude Include="Actions\PlayRecAction.h" />
     <ClInclude Include="Actions\RedoAction.h" />
     <ClInclude Include="Actions\SaveAction.h" />

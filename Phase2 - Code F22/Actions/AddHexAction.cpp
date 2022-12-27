@@ -15,8 +15,9 @@ void AddHexAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 	pManager->Add_Undo_Redo_Actions(this);
-
-
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Hexagon.wav"), NULL, SND_SYNC);
+	}
 	//Read the center point
 	pOut->PrintMessage("New Hexagon: Click at the Center");
 	if (pManager->IsPlayingRec())
@@ -47,6 +48,7 @@ void AddHexAction::Execute()
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
+
 }
 void AddHexAction::UndoActions()
 {

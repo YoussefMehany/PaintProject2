@@ -8,6 +8,9 @@ PlayRecAction::PlayRecAction(ApplicationManager* pApp) :Action(pApp)
 void PlayRecAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Play_recording.wav"), NULL, SND_SYNC);
+	}
 	pOut->PrintMessage("Playing Recording");
 }
 

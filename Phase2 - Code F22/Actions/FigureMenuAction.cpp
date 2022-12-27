@@ -9,6 +9,9 @@ void FigureMenuAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->Figure_menu();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Draw_a_figure.wav"), NULL, SND_SYNC);
+	}
 }
 
 //Execute action (code depends on action type)

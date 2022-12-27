@@ -19,10 +19,13 @@ void PickColors::Execute()
 {
 	ReadActionParameters();
 	pManager->UpdateInterface();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Pick_a_color.wav"), NULL, SND_SYNC);
+	}
 	CFigure* select = NULL;
 	int figcount = pManager->getFigCount();
 	color = pManager->GetRandomClr();
-	if (color == "NO Fig COLORED") 
+	if (color == "NO COLORED FIG")
 	{
 		pOut->PrintMessage("NO COLORED FIGURE");
 		pManager->SetClrCount(0);
@@ -43,13 +46,13 @@ void PickColors::Execute()
 		if (select->getColor() == color)
 		{
 			CCounter++;
-			pOut->PrintMessage("Correct : " + to_string(CCounter) + "      Incorrect : " + to_string(FCounter));
 		}
 		else
 		{
 			FCounter++;
-			pOut->PrintMessage("Correct : " + to_string(CCounter) + "      Incorrect : " + to_string(FCounter));
 		}
+		pOut->PrintMessage("Correct : " + to_string(CCounter) + "      Incorrect : " + to_string(FCounter));
+
 		if (CCounter == pManager->GetClrCount())
 			break;
 		pManager->BlockFig(select);

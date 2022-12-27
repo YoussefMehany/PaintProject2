@@ -20,6 +20,7 @@ private:
 	int ListCounter_Undo_Redo;
 	int ActionCount;
 	int ClrCount;
+	int RandFigCount;
 	bool CheckUpdate;
 	bool Recording;
 	bool PlayingRec;
@@ -27,6 +28,7 @@ private:
 	bool KEY;
 	bool Undo;
 	bool Redo;
+	bool Sound;
 	ActionType LastAction;
 	
 
@@ -64,6 +66,8 @@ public:
 	int getFigCount()const;
 	void DeleteFigure(CFigure*F=NULL);
 	void SaveFile(ofstream& OutFile);
+	void SetSound(bool sound);
+	bool IsSoundOn() const;
 	void ClearAll();
 	// -- Undo-Redo
 	void UndoLastAction();
@@ -76,10 +80,13 @@ public:
 	void SetPlayMode(bool);
 	void SetKEY(bool);
 	string GetRandomClr();
+	shape GetRandomFig();
 	void UnBlock();
 	void BlockFig(CFigure*);
 	int GetClrCount()const;
 	void SetClrCount(int );
+	int GetRandFigCount()const;
+	void SetRandFigCount(int);
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

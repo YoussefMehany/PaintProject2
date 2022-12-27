@@ -15,7 +15,9 @@ void AddRectAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 	pManager->Add_Undo_Redo_Actions(this);
 
-
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Rectangle.wav"), NULL, SND_SYNC);
+	}
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Rectangle: Click at first corner");
 	if (pManager->IsPlayingRec())
@@ -56,6 +58,7 @@ void AddRectAction::Execute()
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
+
 }
 void AddRectAction::UndoActions()
 {

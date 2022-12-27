@@ -15,7 +15,9 @@ void AddTriangleAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 	pManager->Add_Undo_Redo_Actions(this);
-
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Triangle.wav"), NULL, SND_SYNC);
+	}
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Triangle: Click at first corner");
 	if (pManager->IsPlayingRec())
@@ -62,6 +64,7 @@ void AddTriangleAction::Execute()
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
+
 }
 void AddTriangleAction::UndoActions()
 {

@@ -1,4 +1,6 @@
 #include <windows.h> 
+#include <Windows.h>
+#include <MMSystem.h>
 #include "ApplicationManager.h"
 #include "Actions\AddRectAction.h"
 #include "Actions\AddCircAction.h"
@@ -25,7 +27,8 @@
 #include  "Actions/SwitchToDrawAction.h"
 #include "Actions/SwitchToPlayAction.h"
 #include "Actions/PickColors.h"
-#include <iostream>
+#include "Actions/PickFigures.h"
+#include "Actions/ChangeSoundState.h"
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -39,10 +42,12 @@ ApplicationManager::ApplicationManager()
 	KEY = false;
 	Undo = false;
 	Redo = false;
-	
+	Sound = false;
+
 	ClrCount = 0;
 	FigCount = 0;
 	RecCount = 0;
+	RandFigCount = 0;
 	Undo_RedoCount = 0;
 	ListCounter_Undo_Redo = 0;
 	ActionCount = 0;
@@ -257,6 +262,13 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case PICK_CLR:
 		pAct = new PickColors(this);
 		break;
+	case PICK_TYPE:
+		pAct = new PickFigures(this);
+		break;
+	case SOUND_STATE:
+		pAct = new ChangeSoundState(this);
+		break;
+
 	case EXIT:
 		pAct = new ExitAction(this);
 		break;
@@ -280,7 +292,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		}
 
 	}
-	cout << FigCount << endl;
 }
 
 //==================================================================================//
@@ -447,6 +458,12 @@ int ApplicationManager::getFigCount()const
 {
 	return FigCount;
 }
+void ApplicationManager::SetSound(bool sound) {
+	Sound = sound;
+}
+bool ApplicationManager::IsSoundOn() const {
+	return Sound;
+}
 bool ApplicationManager::IsRecording() const {
 	return Recording;
 }
@@ -481,28 +498,64 @@ void  ApplicationManager::SetClrCount(int C)
 {
 	ClrCount = C;
 }
+int ApplicationManager::GetRandFigCount()const
+{
+	return RandFigCount;
+}
+void  ApplicationManager::SetRandFigCount(int C)
+{
+	RandFigCount = C;
+}
+shape ApplicationManager::GetRandomFig(){
+	
+	if (!FigCount) return noshape;
+	int random = rand() % FigCount;
+	shape Figtype;
+	if (dynamic_cast<CRectangle*>(FigList[random])) Figtype = rectangle;
+	else if (dynamic_cast<CTriangle*>(FigList[random])) Figtype = triangle;
+	else if (dynamic_cast<CSquare*>(FigList[random])) Figtype = square;
+	else if (dynamic_cast<CCircle*>(FigList[random])) Figtype = circle;
+	else if (dynamic_cast<CHexagon*>(FigList[random])) Figtype = hexagon;
+	for (int i = 0; i < FigCount; i++) {
+		if (Figtype == rectangle && dynamic_cast<CRectangle*>(FigList[i])) {
+			RandFigCount++;
+		}
+		else if (Figtype == triangle && dynamic_cast<CTriangle*>(FigList[i])) {
+			RandFigCount++;	
+		}
+		else if (Figtype == square && dynamic_cast<CSquare*>(FigList[i])) {
+			RandFigCount++;
+		}
+		else if (Figtype == circle && dynamic_cast<CCircle*>(FigList[i])) {
+			RandFigCount++;
+		}
+		else if (Figtype == hexagon && dynamic_cast<CHexagon*>(FigList[i])) {
+			RandFigCount++;
+		}
+	}
+	return Figtype;
+}
 string ApplicationManager::GetRandomClr()
 {
-	int random = 1 + (rand() % (FigCount - 1));
-	int rand2 = random;
-	int check = 0;
-	for (int i = 0; i < FigCount; i++) 
+	if(FigCount == 0) return "NO COLORED FIG";
+	int random = rand() % FigCount;
+
+	for (int i = 0; i < FigCount; i++)
 	{
-		if (check == FigCount)
-			return "NO Fig COLORED";
-		if (FigList[random]->getColor() == "NO FILL CLR") 
-		{
-			random = 1 + (rand() % (FigCount - 1));
-			if (rand2 == random)
-				continue;
-			rand2 = random;
-			check++;
-			i = 0;
-			continue;
-		}
+		if (FigList[i]->getColor() == "NO FILL CLR")
+			return "NO COLORED FIG";
+	}
+	while (true)
+	{
+		if (FigList[random]->getColor() == "NO FILL CLR")
+			random = rand() % FigCount;
+		else
+			break;
+	}
+	for (int i = 0; i < FigCount; i++)
 		if (FigList[random]->getColor() == FigList[i]->getColor())
 			ClrCount++;
-	}
+
 	return FigList[random]->getColor();
 }
 void ApplicationManager::UnBlock()
@@ -539,6 +592,7 @@ void ApplicationManager::SaveFile(ofstream& OutFile)
 		FigList[i]->Save(OutFile);
 	}
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 

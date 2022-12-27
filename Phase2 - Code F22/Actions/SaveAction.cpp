@@ -9,6 +9,9 @@ void SaveAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Save.wav"), NULL, SND_SYNC);
+	}
 	pOut->PrintMessage("Enter the file name ");
 
 

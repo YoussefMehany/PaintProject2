@@ -42,6 +42,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	START_REC,
 	STOP_REC,
 	PLAY_REC,
+	SOUND_STATE,
 	LOAD_PROGRESS,
 	SAVE_PROGRESS,
 	
@@ -69,6 +70,7 @@ enum shape
 	rectangle,
 	triangle,
 	circle,
-	square
+	square,
+	noshape
 };
 #endif

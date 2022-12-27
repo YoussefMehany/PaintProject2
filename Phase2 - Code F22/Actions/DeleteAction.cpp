@@ -9,6 +9,9 @@ DeleteAction::DeleteAction(ApplicationManager* pApp) :Action(pApp)
 void DeleteAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Deleted.wav"), NULL, SND_SYNC);
+	}
 	pOut->ClearStatusBar();
 	pManager->Add_Undo_Redo_Actions(this);
 	Saved = pManager->GetSelectedFig()->GetNewFigure();

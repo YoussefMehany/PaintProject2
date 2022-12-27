@@ -21,15 +21,19 @@ void MoveByDragAction::Execute()
 
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Move_by_drag.wav"), NULL, SND_SYNC);
+	}
 	bool Check_1 = false;
 	bool Check_2 = true;
 	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP) {
+		Sleep(10);
 		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
 		{
-			Sleep(20);
+			Sleep(10);
 			if (pManager->GetFigure(P) != pManager->GetSelectedFig() && Check_2)
 			{
-				pOut->PrintMessage("Please drag the Selected figure ,Try agian");
+				pOut->PrintMessage("Please drag the Selected figure ,Try again");
 				Check_1 = true;
 				break;
 			}

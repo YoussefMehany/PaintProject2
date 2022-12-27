@@ -10,6 +10,9 @@ void MoveAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Move.wav"), NULL, SND_SYNC);
+	}
 	pOut->PrintMessage("New Position : Click at the new position");
 	if (pManager->IsPlayingRec())
 		P = P_Rec;

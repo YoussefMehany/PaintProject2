@@ -66,6 +66,7 @@ ActionType Input::GetUserAction() const
 			case SAVE: return SAVE_PROGRESS;
 			case CLEAR: return CLEAR_ALL;
 			case SWITCH_PLAY: return TO_PLAY;
+			case SOUND: return SOUND_STATE;
 			case ITM_EXIT: return EXIT;	
 			
 			default: return EMPTY;

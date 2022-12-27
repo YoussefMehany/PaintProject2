@@ -1,7 +1,7 @@
 #include "AddCircAction.h"
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
-#include <iostream>
+
 AddCircAction::AddCircAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
@@ -15,7 +15,9 @@ void AddCircAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 	pManager->Add_Undo_Redo_Actions(this);
-
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Circle.wav"), NULL, SND_SYNC);
+	}
 	//Read the center point
 	pOut->PrintMessage("New Circle: Click at the Center");
 	if (pManager->IsPlayingRec())
@@ -47,12 +49,12 @@ void AddCircAction::Execute()
 	//This action needs to read some parameters first
 	ReadActionParameters();
 	//Create a Circle with the parameters read from the user
-
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
 
 	//Add the Circle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
+
 }
 void AddCircAction::UndoActions()
 {
