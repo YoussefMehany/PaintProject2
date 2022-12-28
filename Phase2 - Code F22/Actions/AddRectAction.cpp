@@ -20,22 +20,12 @@ void AddRectAction::ReadActionParameters()
 	}
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Rectangle: Click at first corner");
-	if (pManager->IsPlayingRec())
-		P1 = P1_Rec;
-	else {
-		pIn->GetPointClicked(P1.x, P1.y);
-		P1_Rec = P1;
-	}
+	pIn->GetPointClicked(P1.x, P1.y);
 
 
 	//Read 2nd corner and store in point P2
 	pOut->PrintMessage("New Rectangle: Click at second corner");
-	if (pManager->IsPlayingRec())
-		P2 = P2_Rec;
-	else {
-		pIn->GetPointClicked(P2.x, P2.y);
-		P2_Rec = P2;
-	}
+	pIn->GetPointClicked(P2.x, P2.y);
 	pOut->ClearStatusBar();
 
 
@@ -49,7 +39,7 @@ void AddRectAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddRectAction::Execute(bool ReadParams)
+bool AddRectAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -59,7 +49,7 @@ void AddRectAction::Execute(bool ReadParams)
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
-
+	return false;
 }
 void AddRectAction::UndoActions()
 {

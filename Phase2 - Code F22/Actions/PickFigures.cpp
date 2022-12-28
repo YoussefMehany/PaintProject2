@@ -15,7 +15,7 @@ void PickFigures::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void PickFigures::Execute(bool ReadParams)
+bool PickFigures::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -32,7 +32,7 @@ void PickFigures::Execute(bool ReadParams)
 		pManager->SetRandFigCount(0);
 		pManager->UnBlock();
 		pManager->SetKEY(false);
-		return;
+		return false;
 	}
 	pManager->UpdateInterface();
 	pOut->PrintMessage("Pick All " + TypetoString(FigType));
@@ -65,6 +65,7 @@ void PickFigures::Execute(bool ReadParams)
 	pManager->SetTypeClrCount(0);
 	pManager->UnBlock();
 	pManager->SetKEY(false);
+	return true;
 }
 bool PickFigures::CanBeRecorded() const
 {

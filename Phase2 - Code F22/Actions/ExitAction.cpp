@@ -12,13 +12,14 @@ void ExitAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ExitAction::Execute(bool ReadParams)
+bool ExitAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
 	}
 
 	pManager->ClearAll();
+	return true;
 }
 bool ExitAction::CanBeRecorded() const
 {

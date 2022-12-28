@@ -17,7 +17,7 @@ void PickTypeandColor::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void PickTypeandColor::Execute(bool ReadParams)
+bool PickTypeandColor::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -34,7 +34,7 @@ void PickTypeandColor::Execute(bool ReadParams)
 		pManager->SetClrCount(0);
 		pManager->UnBlock();
 		pManager->SetKEY(false);
-		return;
+		return false;
 	}
 	pManager->UpdateInterface();
 	FigType = pManager->GetRandomFig(Random);
@@ -69,6 +69,7 @@ void PickTypeandColor::Execute(bool ReadParams)
 	pManager->SetTypeClrCount(0);
 	pManager->UnBlock();
 	pManager->SetKEY(false);
+	return true;
 }
 bool PickTypeandColor::CanBeRecorded() const
 {

@@ -8,7 +8,6 @@ class AddTriangleAction : public Action
 {
 private:
 	Point P1, P2, P3; //Triangle Corners
-	Point P1_Rec, P2_Rec, P3_Rec;
 	GfxInfo TriangleGfxInfo;
 	CFigure* Saved_Redo;
 public:
@@ -18,7 +17,7 @@ public:
 	virtual void ReadActionParameters();
 
 	//Add Triangle to the ApplicationManager
-	virtual void Execute(bool ReadParams = true);
+	virtual bool Execute(bool ReadParams = true);
 	virtual void UndoActions();
 	virtual void RedoActions();
 	virtual bool CanBeRecorded() const;

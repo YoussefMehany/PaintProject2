@@ -20,7 +20,7 @@ void SaveAction::ReadActionParameters()
 	pOut->PrintMessage("File saved");
 }
 
-void SaveAction::Execute(bool ReadParams)
+bool SaveAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -34,6 +34,7 @@ void SaveAction::Execute(bool ReadParams)
 	OutFile << DrawClr << '\t' << FillClr << '\n' << FiguresCount << '\n';
 	pManager->SaveFile(OutFile);
 	OutFile.close();
+	return true;
 }
 bool SaveAction::CanBeRecorded() const
 {

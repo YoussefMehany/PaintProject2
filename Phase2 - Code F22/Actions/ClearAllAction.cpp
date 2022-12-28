@@ -12,7 +12,7 @@ void ClearAllAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ClearAllAction::Execute(bool ReadParams)
+bool ClearAllAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -21,6 +21,7 @@ void ClearAllAction::Execute(bool ReadParams)
 	if (pManager->IsSoundOn()) {
 		PlaySound(TEXT("Sound/Cleared.wav"), NULL, SND_SYNC);
 	}
+	return false;
 }
 bool ClearAllAction::CanBeRecorded() const
 {

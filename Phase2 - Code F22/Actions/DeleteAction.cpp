@@ -19,12 +19,13 @@ void DeleteAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void DeleteAction::Execute(bool ReadParams)
+bool DeleteAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
 	}
 	pManager->DeleteFigure();
+	return false;
 }
 void DeleteAction::UndoActions()
 {

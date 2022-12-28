@@ -17,7 +17,7 @@ void StartRecAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void StartRecAction::Execute(bool ReadParams)
+bool StartRecAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -29,6 +29,7 @@ void StartRecAction::Execute(bool ReadParams)
 		}
 	}
 	pManager->SetRec(true);
+	return false;
 }
 bool StartRecAction::CanBeRecorded() const
 {

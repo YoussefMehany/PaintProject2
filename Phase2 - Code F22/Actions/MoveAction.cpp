@@ -14,12 +14,8 @@ void MoveAction::ReadActionParameters()
 		PlaySound(TEXT("Sound/Move.wav"), NULL, SND_SYNC);
 	}
 	pOut->PrintMessage("New Position : Click at the new position");
-	if (pManager->IsPlayingRec())
-		P = P_Rec;
-	else {
-		pIn->GetPointClicked(P.x, P.y);
-		P_Rec = P;
-	}
+	pIn->GetPointClicked(P.x, P.y);
+
 	pOut->ClearStatusBar();
 	pManager->Add_Undo_Redo_Actions(this);
 
@@ -27,7 +23,7 @@ void MoveAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void MoveAction::Execute(bool ReadParams)
+bool MoveAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -37,6 +33,7 @@ void MoveAction::Execute(bool ReadParams)
 	CFigure* Fig = pManager->GetSelectedFig();
 	Fig->MoveTo(P);
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
+	return false;
 }
 void MoveAction::UndoActions()
 {

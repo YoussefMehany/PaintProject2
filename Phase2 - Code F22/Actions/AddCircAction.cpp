@@ -20,21 +20,12 @@ void AddCircAction::ReadActionParameters()
 	}
 	//Read the center point
 	pOut->PrintMessage("New Circle: Click at the Center");
-	if (pManager->IsPlayingRec())
-		P1 = P1_Rec;
-	else {
-		pIn->GetPointClicked(P1.x, P1.y);
-		P1_Rec = P1;
-	}
+	pIn->GetPointClicked(P1.x, P1.y);
+
 
 	//Read 2nd corner and store in point P2
 	pOut->PrintMessage("New Circle: Click at a point on the radius");
-	if (pManager->IsPlayingRec())
-		P2 = P2_Rec;
-	else {
-		pIn->GetPointClicked(P2.x, P2.y);
-		P2_Rec = P2;
-	}
+	pIn->GetPointClicked(P2.x, P2.y);
 
 	pOut->ClearStatusBar();
 	CircGfxInfo.isFilled = UI.IsFilled;
@@ -44,7 +35,7 @@ void AddCircAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddCircAction::Execute(bool ReadParams)
+bool AddCircAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -55,7 +46,7 @@ void AddCircAction::Execute(bool ReadParams)
 	//Add the Circle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
-
+	return false;
 }
 void AddCircAction::UndoActions()
 {

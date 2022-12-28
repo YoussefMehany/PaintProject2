@@ -11,7 +11,6 @@ class AddSquareAction : public Action
 {
 private:
 	Point P1; //Square Corners
-	Point P1_Rec;
 	GfxInfo SquareGfxInfo;
 	CFigure* Saved_Redo;
 public:
@@ -21,7 +20,7 @@ public:
 	virtual void ReadActionParameters();
 
 	//Add rectangle to the ApplicationManager
-	virtual void Execute(bool ReadParams = true);
+	virtual bool Execute(bool ReadParams = true);
 	virtual void UndoActions();
 	virtual void RedoActions();
 	virtual bool CanBeRecorded() const;

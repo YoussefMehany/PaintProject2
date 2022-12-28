@@ -20,12 +20,8 @@ void AddHexAction::ReadActionParameters()
 	}
 	//Read the center point
 	pOut->PrintMessage("New Hexagon: Click at the Center");
-	if (pManager->IsPlayingRec())
-		P1 = P1_Rec;
-	else {
-		pIn->GetPointClicked(P1.x, P1.y);
-		P1_Rec = P1;
-	}
+	pIn->GetPointClicked(P1.x, P1.y);
+
 	pOut->ClearStatusBar();
 
 
@@ -39,7 +35,7 @@ void AddHexAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddHexAction::Execute(bool ReadParams)
+bool AddHexAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -49,7 +45,7 @@ void AddHexAction::Execute(bool ReadParams)
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
-
+	return false;
 }
 void AddHexAction::UndoActions()
 {

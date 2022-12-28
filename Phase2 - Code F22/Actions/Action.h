@@ -18,7 +18,7 @@ public:
 	virtual void ReadActionParameters() = 0;
 
 	//Execute action (code depends on action type)
-	virtual void Execute(bool = true) = 0;
+	virtual bool Execute(bool = true) = 0;
 	virtual void UndoActions() {};
 	virtual void RedoActions() {};
 	void SetRecorded(bool B) { Recorded = B; }

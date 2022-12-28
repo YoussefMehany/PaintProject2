@@ -15,12 +15,13 @@ void StopRecAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void StopRecAction::Execute(bool ReadParams)
+bool StopRecAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
 	}
 	pManager->SetRec(false);
+	return true;
 }
 bool StopRecAction::CanBeRecorded() const
 {

@@ -20,29 +20,17 @@ void AddTriangleAction::ReadActionParameters()
 	}
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Triangle: Click at first corner");
-	if (pManager->IsPlayingRec())
-		P1 = P1_Rec;
-	else {
-		pIn->GetPointClicked(P1.x, P1.y);
-		P1_Rec = P1;
-	}
+	pIn->GetPointClicked(P1.x, P1.y);
+
 	//Read 2nd corner and store in point P2
 	pOut->PrintMessage("New Triangle: Click at second corner");
-	if (pManager->IsPlayingRec())
-		P2 = P2_Rec;
-	else {
-		pIn->GetPointClicked(P2.x, P2.y);
-		P2_Rec = P2;
-	}
+	pIn->GetPointClicked(P2.x, P2.y);
+
 
 	//Read 3rd corner and store in point P2
 	pOut->PrintMessage("New Triangle: Click at third corner");
-	if (pManager->IsPlayingRec())
-		P3 = P3_Rec;
-	else {
-		pIn->GetPointClicked(P3.x, P3.y);
-		P3_Rec = P3;
-	}
+	pIn->GetPointClicked(P3.x, P3.y);
+
 	pOut->ClearStatusBar();
 
 	TriangleGfxInfo.isFilled = UI.IsFilled;
@@ -55,7 +43,7 @@ void AddTriangleAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddTriangleAction::Execute(bool ReadParams)
+bool AddTriangleAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -65,7 +53,7 @@ void AddTriangleAction::Execute(bool ReadParams)
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
-
+	return false;
 }
 bool AddTriangleAction::CanBeRecorded() const
 {

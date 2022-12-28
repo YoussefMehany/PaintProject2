@@ -11,7 +11,6 @@ class AddCircAction : public Action
 {
 private:
 	Point P1, P2; //Center and point on the circle
-	Point P1_Rec, P2_Rec;
 	GfxInfo CircGfxInfo;
 	CFigure* Saved_Redo;
 public:
@@ -21,7 +20,7 @@ public:
 	virtual void ReadActionParameters();
 
 	//Add rectangle to the ApplicationManager
-	virtual void Execute(bool ReadParams = true);
+	virtual bool Execute(bool ReadParams = true);
 	virtual void UndoActions();
 	virtual void RedoActions();
 	virtual bool CanBeRecorded() const;

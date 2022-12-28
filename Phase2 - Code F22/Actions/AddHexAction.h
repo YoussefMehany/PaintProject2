@@ -10,7 +10,6 @@ class AddHexAction : public Action
 {
 private:
 	Point P1; //Hexagon Corners
-	Point P1_Rec;
 	GfxInfo HexGfxInfo;
 	CFigure* Saved_Redo;
 public:
@@ -20,7 +19,7 @@ public:
 	virtual void ReadActionParameters();
 
 	//Add rectangle to the ApplicationManager
-	virtual void Execute(bool ReadParams = true);
+	virtual bool Execute(bool ReadParams = true);
 	virtual void UndoActions();
 	virtual void RedoActions();
 	virtual bool CanBeRecorded() const;

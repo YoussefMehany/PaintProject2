@@ -15,7 +15,7 @@ void PickColors::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void PickColors::Execute(bool ReadParams)
+bool PickColors::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -32,7 +32,7 @@ void PickColors::Execute(bool ReadParams)
 		pManager->SetClrCount(0);
 		pManager->UnBlock();
 		pManager->SetKEY(false);
-		return;
+		return false;
 	}
 	pManager->UpdateInterface();
 	pOut->PrintMessage("Pick All " + color + " Figures");
@@ -63,6 +63,7 @@ void PickColors::Execute(bool ReadParams)
 	pManager->SetClrCount(0);
 	pManager->UnBlock();
 	pManager->SetKEY(false);
+	return true;
 }
 bool PickColors::CanBeRecorded() const
 {

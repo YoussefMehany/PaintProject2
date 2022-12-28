@@ -8,12 +8,21 @@ void UndoAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void UndoAction::Execute(bool ReadParams)
+bool UndoAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
-		ReadActionParameters();
+	Output* pOut = pManager->GetOutput();
+	if (pManager->GetUndoRedoCount() == 0)
+	{
+		pOut->PrintMessage("No Action to undo");
+		return true;
+	}
+	if (pManager->GetUndoRedoCount() == 5 && pManager->IsUndo())
+	{
+		pOut->PrintMessage("Undo Limit Exceeded,Please make another action first");
+		return true;
 	}
 	pManager->UndoLastAction();
+	return false;
 }
 bool UndoAction::CanBeRecorded() const
 {

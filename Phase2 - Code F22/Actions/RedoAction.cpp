@@ -10,12 +10,13 @@ void RedoAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void RedoAction::Execute(bool ReadParams)
+bool RedoAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
 	}
 	pManager->RedoLastAction();
+	return false;
 }
 bool RedoAction::CanBeRecorded() const
 {

@@ -19,12 +19,7 @@ void AddSquareAction::ReadActionParameters()
 	}
 	//Read 1st corner and store in point P1
 	pOut->PrintMessage("New Square: Click at the Center");
-	if (pManager->IsPlayingRec())
-		P1 = P1_Rec;
-	else {
-		pIn->GetPointClicked(P1.x, P1.y);
-		P1_Rec = P1;
-	}
+	pIn->GetPointClicked(P1.x, P1.y);
 	pOut->ClearStatusBar();
 
 	SquareGfxInfo.isFilled = UI.IsFilled;
@@ -36,7 +31,7 @@ void AddSquareAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddSquareAction::Execute(bool ReadParams)
+bool AddSquareAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -46,7 +41,7 @@ void AddSquareAction::Execute(bool ReadParams)
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
-
+	return false;
 }
 bool AddSquareAction::CanBeRecorded() const
 {

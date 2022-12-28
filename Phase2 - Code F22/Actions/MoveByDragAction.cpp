@@ -15,7 +15,7 @@ void MoveByDragAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void MoveByDragAction::Execute(bool ReadParams)
+bool MoveByDragAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -56,7 +56,7 @@ void MoveByDragAction::Execute(bool ReadParams)
 		P_Rec = P;
 	}
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
-	//pOut->PrintMessage("out");
+	return false;
 }
 void MoveByDragAction::UndoActions()
 {

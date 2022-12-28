@@ -13,17 +13,12 @@ void SelectAction::ReadActionParameters()
         PlaySound(TEXT("Sound/Select.wav"), NULL, SND_SYNC);
     }
 	pOut->PrintMessage("New Position : Click on any figure");
-	if (pManager->IsPlayingRec())
-		P = P_Rec;
-	else {
-		pIn->GetPointClicked(P.x, P.y);
-		P_Rec = P;
-	}
+	pIn->GetPointClicked(P.x, P.y);
 	pOut->ClearStatusBar();
 }
 
 //Execute action (code depends on action type)
-void SelectAction::Execute(bool ReadParams)
+bool SelectAction::Execute(bool ReadParams)
 {
     if (ReadParams) {
         ReadActionParameters();
@@ -47,6 +42,7 @@ void SelectAction::Execute(bool ReadParams)
     else {
         pOut->PrintMessage("A click on an empty area");
     }
+    return false;
 }
 bool SelectAction::CanBeRecorded() const
 {

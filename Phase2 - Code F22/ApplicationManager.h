@@ -77,6 +77,8 @@ public:
 	void RedoLastAction();
 	void SwapFigures(CFigure*);
 	void Add_Undo_Redo_Actions(Action*);
+	bool IsUndo() const;
+	int GetUndoRedoCount() const;
 	// --Play Mode
 	bool IsPlayMode()const;
 	void SetPlayMode(bool);

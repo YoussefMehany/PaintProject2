@@ -117,7 +117,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 
 	case UNDO_ACTION:
-		if (Undo_Redo_Count == 0)
+		/*if (Undo_Redo_Count == 0)
 		{
 			pOut->PrintMessage("No Action to undo");
 			break;
@@ -126,7 +126,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		{
 			pOut->PrintMessage("Undo Limit Exceeded,Please make another action first");
 			break;
-		}
+		}*/
 		pAct = new UndoAction(this);
 		break;
 
@@ -281,11 +281,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	if (pAct != NULL)
 	{
 		LastActionType = ActType;
-		LastAction = pAct;
 		CheckUpdate = true;
-		pAct->Execute(); //Execute
+		bool Delete = pAct->Execute(); //Execute
+		if (Delete) delete pAct;
 		pAct = NULL;
-
+		if(pAct) LastAction = pAct;
 		if (Recording) {
 			RecAction->Execute(false);
 		}
@@ -354,8 +354,14 @@ Action* ApplicationManager::GetLastAction() const
 {
 	return LastAction;
 }
-
+int ApplicationManager::GetUndoRedoCount() const
+{
+	return Undo_RedoCount;
+}
 /////////////////////////////////////////////////////////////////////////////////
+bool ApplicationManager::IsUndo() const{
+	return Undo;
+}
 void ApplicationManager::UndoLastAction()
 {
 	Undo_RedoCount++;
@@ -555,7 +561,7 @@ void ApplicationManager::PlayRec() {
 	for (int i = 0; i < RecCount; i++) {
 		Sleep(1000);
 
-		Recorded[i]->Execute();
+		Recorded[i]->Execute(false);
 
 		UpdateInterface();
 	}

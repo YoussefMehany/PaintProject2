@@ -26,7 +26,7 @@ void LoadAction::ReadActionParameters()
 	}
 }
 
-void LoadAction::Execute(bool ReadParams)
+bool LoadAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -52,6 +52,7 @@ void LoadAction::Execute(bool ReadParams)
 		}
 		InFile.close();
 	}
+	return true;
 }
 void LoadAction::CreateFigure(string Word) 
 {

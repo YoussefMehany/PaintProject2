@@ -17,7 +17,7 @@ void ChangeColorAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ChangeColorAction::Execute(bool ReadParams)
+bool ChangeColorAction::Execute(bool ReadParams)
 {
 	if (ReadParams) {
 		ReadActionParameters();
@@ -35,6 +35,7 @@ void ChangeColorAction::Execute(bool ReadParams)
 		selected->ChngFillClr(UI.FillColor);
 	}
 	Saved_Redo = selected->GetNewFigure();
+	return false;
 }
 bool ChangeColorAction::CanBeRecorded() const
 {
