@@ -55,16 +55,21 @@ void AddTriangleAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddTriangleAction::Execute()
+void AddTriangleAction::Execute(bool ReadParams)
 {
-	//This action needs to read some parameters first
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	//Create a Triangle with the parameters read from the user
 	CTriangle* R = new CTriangle(P1, P2, P3, TriangleGfxInfo);
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
 
+}
+bool AddTriangleAction::CanBeRecorded() const
+{
+	return true;
 }
 void AddTriangleAction::UndoActions()
 {

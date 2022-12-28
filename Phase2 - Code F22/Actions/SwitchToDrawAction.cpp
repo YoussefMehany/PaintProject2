@@ -13,8 +13,14 @@ void SwitchToDrawAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void SwitchToDrawAction::Execute()
+void SwitchToDrawAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	pManager->SetPlayMode(false);
+}
+bool SwitchToDrawAction::CanBeRecorded() const
+{
+	return false;
 }

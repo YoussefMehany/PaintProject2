@@ -27,12 +27,15 @@ void MoveAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void MoveAction::Execute()
+void MoveAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
-	pManager->MoveFigure(P);
+	CFigure* Fig = pManager->GetSelectedFig();
+	Fig->MoveTo(P);
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
 }
 void MoveAction::UndoActions()
@@ -44,6 +47,10 @@ void MoveAction::RedoActions()
 {
 	pManager->SwapFigures(Saved_Redo);
 	Saved_Redo = Saved_Redo->GetNewFigure();
+}
+bool MoveAction::CanBeRecorded() const
+{
+	return true;
 }
 MoveAction::~MoveAction()
 {

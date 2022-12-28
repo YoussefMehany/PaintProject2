@@ -26,9 +26,11 @@ void LoadAction::ReadActionParameters()
 	}
 }
 
-void LoadAction::Execute()
+void LoadAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	pManager->ClearAll();
 	if (InFile.is_open())
 	{
@@ -83,6 +85,10 @@ void LoadAction::CreateFigure(string Word)
 		Fig->Load(InFile);
 		pManager->AddFigure(Fig);
 	}
+}
+bool LoadAction::CanBeRecorded() const
+{
+	return false;
 }
 color LoadAction::getColorr(string clr)
 {

@@ -36,16 +36,21 @@ void AddSquareAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddSquareAction::Execute()
+void AddSquareAction::Execute(bool ReadParams)
 {
-	//This action needs to read some parameters first
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	//Create a rectangle with the parameters read from the user
 	CSquare* R = new CSquare(P1, SquareGfxInfo);
 	//Add the rectangle to the list of figures
 	pManager->AddFigure(R);
 	id = R->GetID();
 
+}
+bool AddSquareAction::CanBeRecorded() const
+{
+	return true;
 }
 void AddSquareAction::UndoActions()
 {

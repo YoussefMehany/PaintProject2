@@ -39,10 +39,11 @@ void AddHexAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddHexAction::Execute()
+void AddHexAction::Execute(bool ReadParams)
 {
-	//This action needs to read some parameters first
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	//Create a rectangle with the parameters read from the user
 	CHexagon* R = new CHexagon(P1, HexGfxInfo);
 	//Add the rectangle to the list of figures
@@ -59,6 +60,10 @@ void AddHexAction::UndoActions()
 void AddHexAction::RedoActions()
 {
 	pManager->AddFigure(Saved_Redo);
+}
+bool AddHexAction::CanBeRecorded() const
+{
+	return true;
 }
 AddHexAction::~AddHexAction()
 {

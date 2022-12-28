@@ -17,9 +17,11 @@ void PickTypeandColor::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void PickTypeandColor::Execute()
+void PickTypeandColor::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	if (pManager->IsSoundOn()) {
 		PlaySound(TEXT("Sound/Pick_a_figure_with_a_color.wav"), NULL, SND_SYNC);
 	}
@@ -67,6 +69,10 @@ void PickTypeandColor::Execute()
 	pManager->SetTypeClrCount(0);
 	pManager->UnBlock();
 	pManager->SetKEY(false);
+}
+bool PickTypeandColor::CanBeRecorded() const
+{
+	return false;
 }
 string PickTypeandColor::TypetoString(shape FigType) {
 	if (FigType == hexagon) return "Hexagons";

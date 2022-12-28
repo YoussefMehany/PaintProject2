@@ -15,9 +15,11 @@ void MoveByDragAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void MoveByDragAction::Execute()
+void MoveByDragAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
@@ -37,7 +39,7 @@ void MoveByDragAction::Execute()
 				Check_1 = true;
 				break;
 			}
-			pManager->MoveFigure(P);
+			pManager->GetSelectedFig()->MoveTo(P);
 			pManager->UpdateInterface();
 			Check_1 = true;
 			Check_2 = false;
@@ -60,6 +62,10 @@ void MoveByDragAction::UndoActions()
 {
 	pManager->SwapFigures(Saved);
 	Saved = Saved->GetNewFigure();
+}
+bool MoveByDragAction::CanBeRecorded() const
+{
+	return true;
 }
 void MoveByDragAction::RedoActions()
 {

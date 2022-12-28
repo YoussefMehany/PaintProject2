@@ -14,7 +14,8 @@ class LoadAction :public Action
 public:
 	LoadAction(ApplicationManager* pApp);
 	virtual void ReadActionParameters();
-	virtual void Execute();
+	virtual void Execute(bool ReadParams = true);
 	void CreateFigure(string Word);
 	color getColorr(string clr);
+	virtual bool CanBeRecorded() const;
 };

@@ -21,9 +21,15 @@ void SwitchToPlayAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void SwitchToPlayAction::Execute()
+void SwitchToPlayAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	pManager->SetPlayMode(true);
 	pManager->SetRec(false);
+}
+bool SwitchToPlayAction::CanBeRecorded() const
+{
+	return false;
 }

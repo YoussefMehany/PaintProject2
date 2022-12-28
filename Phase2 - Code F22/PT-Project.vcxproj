@@ -128,6 +128,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actions\Action.cpp" />
     <ClCompile Include="Actions\ChangeColorAction.cpp" />
     <ClCompile Include="Actions\AddCircAction.cpp" />
     <ClCompile Include="Actions\ChangeSoundState.cpp" />
@@ -229,8 +230,8 @@
     <ClInclude Include="Actions\StopRecAction.h" />
     <ClInclude Include="Actions\SwitchToDrawAction.h" />
     <ClInclude Include="Actions\SwitchToPlayAction.h" />
-    <ClInclude Include="Actions\UndoAction.h" />
     <ClInclude Include="Actions\ReturnAction.h" />
+    <ClInclude Include="Actions\UndoAction.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />

@@ -11,6 +11,7 @@ public:
 	virtual void ReadActionParameters();
 
 	//Execute action (code depends on action type)
-	virtual void Execute();
+	virtual void Execute(bool ReadParams = true);
+	virtual bool CanBeRecorded() const;
 };
 

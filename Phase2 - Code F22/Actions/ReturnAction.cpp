@@ -13,7 +13,13 @@ void ReturnAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ReturnAction::Execute()
+void ReturnAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
+}
+bool ReturnAction::CanBeRecorded() const
+{
+	return true;
 }

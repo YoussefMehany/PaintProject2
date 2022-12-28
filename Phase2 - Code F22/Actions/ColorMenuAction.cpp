@@ -16,7 +16,13 @@ void ColorMenuAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ColorMenuAction::Execute()
+void ColorMenuAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
+}
+bool ColorMenuAction::CanBeRecorded() const
+{
+	return true;
 }

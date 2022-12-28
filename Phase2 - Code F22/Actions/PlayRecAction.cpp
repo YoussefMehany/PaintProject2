@@ -15,8 +15,14 @@ void PlayRecAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void PlayRecAction::Execute()
+void PlayRecAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	pManager->PlayRec();
+}
+bool PlayRecAction::CanBeRecorded() const
+{
+	return false;
 }

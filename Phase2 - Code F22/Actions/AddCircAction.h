@@ -21,9 +21,10 @@ public:
 	virtual void ReadActionParameters();
 
 	//Add rectangle to the ApplicationManager
-	virtual void Execute();
+	virtual void Execute(bool ReadParams = true);
 	virtual void UndoActions();
 	virtual void RedoActions();
+	virtual bool CanBeRecorded() const;
 	~AddCircAction();
 };
 

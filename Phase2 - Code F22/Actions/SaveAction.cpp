@@ -20,9 +20,11 @@ void SaveAction::ReadActionParameters()
 	pOut->PrintMessage("File saved");
 }
 
-void SaveAction::Execute()
+void SaveAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 
 	int FiguresCount = pManager->getFigCount();
 	string DrawClr = getColor(UI.DrawColor);
@@ -33,7 +35,10 @@ void SaveAction::Execute()
 	pManager->SaveFile(OutFile);
 	OutFile.close();
 }
-
+bool SaveAction::CanBeRecorded() const
+{
+	return false;
+}
 string SaveAction::getColor(color clr)
 {
 	if (clr == BLUE)

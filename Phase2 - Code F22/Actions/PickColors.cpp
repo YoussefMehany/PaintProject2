@@ -15,9 +15,11 @@ void PickColors::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void PickColors::Execute()
+void PickColors::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	if (pManager->IsSoundOn()) {
 		PlaySound(TEXT("Sound/Pick_a_color.wav"), NULL, SND_SYNC);
 	}
@@ -61,4 +63,8 @@ void PickColors::Execute()
 	pManager->SetClrCount(0);
 	pManager->UnBlock();
 	pManager->SetKEY(false);
+}
+bool PickColors::CanBeRecorded() const
+{
+	return false;
 }

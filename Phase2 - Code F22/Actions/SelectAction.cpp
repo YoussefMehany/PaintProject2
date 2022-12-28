@@ -23,9 +23,11 @@ void SelectAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void SelectAction::Execute()
+void SelectAction::Execute(bool ReadParams)
 {
-    ReadActionParameters();
+    if (ReadParams) {
+        ReadActionParameters();
+    }
     Output* pOut = pManager->GetOutput();
     CFigure* FigPtr = pManager->GetFigure(P);
     CFigure* SelectedFig = pManager->GetSelectedFig();
@@ -45,4 +47,8 @@ void SelectAction::Execute()
     else {
         pOut->PrintMessage("A click on an empty area");
     }
+}
+bool SelectAction::CanBeRecorded() const
+{
+    return true;
 }

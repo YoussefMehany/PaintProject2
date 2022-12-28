@@ -12,9 +12,15 @@ void ExitAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ExitAction::Execute()
+void ExitAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 
 	pManager->ClearAll();
+}
+bool ExitAction::CanBeRecorded() const
+{
+	return false;
 }

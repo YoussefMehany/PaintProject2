@@ -17,8 +17,14 @@ void ChangeSoundState::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ChangeSoundState::Execute()
+void ChangeSoundState::Execute(bool ReadParams)
 {
-    ReadActionParameters();
+    if (ReadParams) {
+        ReadActionParameters();
+    }
     pManager->SetSound(!pManager->IsSoundOn());
+}
+bool ChangeSoundState::CanBeRecorded() const
+{
+    return true;
 }

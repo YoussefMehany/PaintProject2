@@ -20,9 +20,11 @@ void DeleteAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void DeleteAction::Execute()
+void DeleteAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	pManager->DeleteFigure();
 }
 void DeleteAction::UndoActions()
@@ -35,6 +37,10 @@ void DeleteAction::RedoActions()
 	CFigure*S= Saved_Redo->GetNewFigure();
 	pManager->DeleteFigure(Saved_Redo);
 	Saved_Redo = S;
+}
+bool DeleteAction::CanBeRecorded() const
+{
+	return true;
 }
 DeleteAction::~DeleteAction()
 {

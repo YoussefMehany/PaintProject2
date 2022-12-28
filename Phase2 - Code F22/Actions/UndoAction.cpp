@@ -8,8 +8,14 @@ void UndoAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void UndoAction::Execute()
+void UndoAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	pManager->UndoLastAction();
+}
+bool UndoAction::CanBeRecorded() const
+{
+	return true;
 }

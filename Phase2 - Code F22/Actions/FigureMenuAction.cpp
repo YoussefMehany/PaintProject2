@@ -15,7 +15,13 @@ void FigureMenuAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void FigureMenuAction::Execute()
+void FigureMenuAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
+}
+bool FigureMenuAction::CanBeRecorded() const
+{
+	return true;
 }

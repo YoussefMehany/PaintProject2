@@ -23,7 +23,7 @@
 #include "Actions\RedoAction.h"
 #include "Actions/MoveByDragAction.h"
 #include "Actions/ExitAction.h"
-#include  "Actions/SwitchToDrawAction.h"
+#include "Actions/SwitchToDrawAction.h"
 #include "Actions/SwitchToPlayAction.h"
 #include "Actions/PickColors.h"
 #include "Actions/PickFigures.h"
@@ -53,7 +53,7 @@ ApplicationManager::ApplicationManager()
 	ListCounter_Undo_Redo = 0;
 	ActionCount = 0;
 	CheckUpdate = false;
-	LastAction = START_PROGRAM;
+	LastActionType = START_PROGRAM;
 	srand(time(NULL));
 	//Create an array of figure pointers and set them to NULL		
 	for (int i = 0; i < MaxFigCount; i++)
@@ -123,7 +123,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pOut->PrintMessage("No Action to undo");
 			break;
 		}
-		if (Undo_RedoCount == 5 && LastAction == UNDO_ACTION)
+		if (Undo_RedoCount == 5 && LastActionType == UNDO_ACTION)
 		{
 			pOut->PrintMessage("Undo Limit Exceeded,Please make another action first");
 			break;
@@ -132,7 +132,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 
 	case REDO_ACTION:
-		if ((LastAction != UNDO_ACTION && LastAction != REDO_ACTION) || Undo_RedoCount == 0)
+		if ((LastActionType != UNDO_ACTION && LastActionType != REDO_ACTION) || Undo_RedoCount == 0)
 		{
 			pOut->PrintMessage("No Undo to Redo");
 			break;
@@ -228,11 +228,12 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 
 	case START_REC:
-		if (LastAction != START_PROGRAM && LastAction != CLEAR_ALL) {
+		if (LastActionType != START_PROGRAM && LastActionType != CLEAR_ALL) {
 			pOut->PrintMessage("You can only record after the program start or after clear all");
 			break;
 		}
 		pAct = new StartRecAction(this);
+		RecAction = pAct;
 		break;
 
 	case STOP_REC:
@@ -280,24 +281,15 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	if (pAct != NULL)
 	{
-		LastAction = ActType;
+		LastActionType = ActType;
+		LastAction = pAct;
 		CheckUpdate = true;
 		pAct->Execute(); //Execute
-		if (Recording && ActType < 29) // all the action types that can be recorded
-		{
-			if (RecCount < MaxRecCount)
-			{
-				Recorded[RecCount++] = pAct;
-				pAct->SetRecorded(true);
-			}
-			else
-			{
-				pOut->PrintMessage("Recording Stopped");
-				Recording = false;
-			}
+		pAct = NULL;
 
+		if (Recording) {
+			RecAction->Execute(false);
 		}
-
 	}
 }
 
@@ -313,7 +305,6 @@ void ApplicationManager::AddFigure(CFigure* pFig)
 		pFig->SetBlock(false);
 	}
 }
-////////////////////////////////////////////////////////////////////////////////////
 CFigure* ApplicationManager::GetFigure(Point P1) const
 {
 	for (int i = FigCount - 1; i >= 0; i--) {
@@ -322,10 +313,6 @@ CFigure* ApplicationManager::GetFigure(Point P1) const
 		}
 	}
 	return NULL;
-}
-void ApplicationManager::MoveFigure(Point P1)
-{
-	SelectedFig->MoveTo(P1);
 }
 void ApplicationManager::DeleteFigure(CFigure* F)
 {
@@ -353,6 +340,23 @@ void ApplicationManager::DeleteFigure(CFigure* F)
 		SelectedFig = save;
 	}
 }
+//==============================================================================//
+//								Recording functions								//
+//==============================================================================//
+void ApplicationManager::AddActionRec(Action* Act)
+{
+	if (RecCount < MaxRecCount)
+	{
+		Recorded[RecCount++] = Act;
+		Act->SetRecorded(true);
+	}
+}
+Action* ApplicationManager::GetLastAction() const
+{
+	return LastAction;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
 void ApplicationManager::UndoLastAction()
 {
 	Undo_RedoCount++;

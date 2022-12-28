@@ -44,10 +44,11 @@ void AddCircAction::ReadActionParameters()
 }
 
 //Execute the action
-void AddCircAction::Execute()
+void AddCircAction::Execute(bool ReadParams)
 {
-	//This action needs to read some parameters first
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	//Create a Circle with the parameters read from the user
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
 
@@ -65,6 +66,10 @@ void AddCircAction::UndoActions()
 void AddCircAction::RedoActions()
 {
 	pManager->AddFigure(Saved_Redo);
+}
+bool AddCircAction::CanBeRecorded() const
+{
+	return true;
 }
 AddCircAction::~AddCircAction()
 {

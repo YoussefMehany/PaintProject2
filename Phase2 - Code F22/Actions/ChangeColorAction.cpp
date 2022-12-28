@@ -17,9 +17,11 @@ void ChangeColorAction::ReadActionParameters()
 }
 
 //Execute action (code depends on action type)
-void ChangeColorAction::Execute()
+void ChangeColorAction::Execute(bool ReadParams)
 {
-	ReadActionParameters();
+	if (ReadParams) {
+		ReadActionParameters();
+	}
 	CFigure* selected = pManager->GetSelectedFig();
 	if (UI.Choose == BORDER)
 	{
@@ -33,6 +35,10 @@ void ChangeColorAction::Execute()
 		selected->ChngFillClr(UI.FillColor);
 	}
 	Saved_Redo = selected->GetNewFigure();
+}
+bool ChangeColorAction::CanBeRecorded() const
+{
+	return true;
 }
 void ChangeColorAction::UndoActions()
 {

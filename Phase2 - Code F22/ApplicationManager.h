@@ -30,7 +30,7 @@ private:
 	bool Undo;
 	bool Redo;
 	bool Sound;
-	ActionType LastAction;
+	ActionType LastActionType;
 	
 
 	CFigure* FigList[MaxFigCount];	//List of all figures (Array of pointers)
@@ -39,7 +39,9 @@ private:
 
 	Action* SaveUndo_RedoActions[MaxUndoCount]; //saves figures before being changed 
 	Action* Recorded[MaxRecCount];
-	
+	Action* LastAction;
+	Action* RecAction;
+
 	//Pointers to Input and Output classes
 
 	Input *pIn;
@@ -53,11 +55,12 @@ public:
 	//Reads the input command from the user and returns the corresponding action type
 	ActionType GetUserAction() const;
 	void ExecuteAction(ActionType) ; //Creates an action and executes it
-	
+	void AddActionRec(Action*);
+	Action* GetLastAction() const;
+
 	// -- Figures Management Functions
 	CFigure *GetFigure(Point P1) const;//Search for a figure given a point inside the figure
 	void AddFigure(CFigure* pFig);   //Adds a new figure to the FigList
-	void MoveFigure(Point P1);
 	bool IsRecording() const;
 	bool IsPlayingRec() const;
 	void SetRec(bool IsRec);
