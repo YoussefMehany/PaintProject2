@@ -43,11 +43,13 @@ bool ChangeColorAction::CanBeRecorded() const
 void ChangeColorAction::UndoActions()
 {
 	pManager->SwapFigures(Saved);
+	Saved->ChngClr();
 	Saved = Saved->GetNewFigure();
 }
 void ChangeColorAction::RedoActions()
 {
 	pManager->SwapFigures(Saved_Redo);
+	Saved_Redo->ChngClr();
 	Saved_Redo = Saved_Redo->GetNewFigure();
 }
 ChangeColorAction::~ChangeColorAction()

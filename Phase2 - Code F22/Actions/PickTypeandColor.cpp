@@ -26,7 +26,7 @@ void PickTypeandColor::Execute(bool ReadParams)
 		PlaySound(TEXT("Sound/Pick_a_figure_with_a_color.wav"), NULL, SND_SYNC);
 	}
 	CFigure* select = NULL;
-	int figcount = pManager->getFigCount();
+	int figcount = pManager->GetFigCount();
 	color = pManager->GetRandomClr(Random);
 	if (color == "NO COLORED FIG")
 	{

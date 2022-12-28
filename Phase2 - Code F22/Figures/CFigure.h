@@ -19,7 +19,7 @@ protected:
 
 public:
 	CFigure(GfxInfo FigureGfxInfo);
-	CFigure::CFigure();
+	CFigure();
 	void SetSelected(bool s);	//select/unselect the figure
 	void SetBlock(bool);
 	bool IsSelected() const;	//check whether fig is selected
@@ -40,7 +40,7 @@ public:
 
 	///Decide the parameters that you should pass to each function	
 	string getColor(color = BISQUE);
-	color getColorr(string ="BISQUE");
+	color getColorr(string);
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file
 	virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file

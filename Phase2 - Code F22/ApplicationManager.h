@@ -17,8 +17,7 @@ private:
 	int FigCount; //Actual number of figures
 	int RecCount;
 	int Undo_RedoCount;
-	int ListCounter_Undo_Redo;
-	int ActionCount;
+	int Undo_Redo_Count;
 	int ClrCount;
 	int RandFigCount;
 	int FigTypeClr;
@@ -37,7 +36,7 @@ private:
 	CFigure* SelectedFig; //Pointer to the selected figure
 
 
-	Action* SaveUndo_RedoActions[MaxUndoCount]; //saves figures before being changed 
+	Action* Undo_Redo_List[MaxUndoCount]; //saves figures before being changed 
 	Action* Recorded[MaxRecCount];
 	Action* LastAction;
 	Action* RecAction;
@@ -67,8 +66,8 @@ public:
 	void SetSelectedFig(CFigure*);
 	CFigure* GetSelectedFig()const;
 	void PlayRec();
-	int getFigCount()const;
-	void DeleteFigure(CFigure*F=NULL);
+	int GetFigCount()const;
+	void DeleteFigure(bool B=false);
 	void SaveFile(ofstream& OutFile);
 	void SetSound(bool sound);
 	bool IsSoundOn() const;
@@ -76,10 +75,9 @@ public:
 	// -- Undo-Redo
 	void UndoLastAction();
 	void RedoLastAction();
-	void DeleteLastFig();
 	void SwapFigures(CFigure*);
 	void Add_Undo_Redo_Actions(Action*);
-	// --Play Mode_
+	// --Play Mode
 	bool IsPlayMode()const;
 	void SetPlayMode(bool);
 	void SetKEY(bool);

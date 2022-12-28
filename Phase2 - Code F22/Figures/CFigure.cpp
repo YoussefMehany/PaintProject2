@@ -93,9 +93,13 @@ string CFigure::getColor(color clr)
 }
 color CFigure::getColorr(string clr)
 {
-	if (clr == "BISQUE") 
+	if (clr == "FillColor") 
 	{
 		return FigGfxInfo.FillClr;
+	}
+	if (clr == "DrawClr") 
+	{
+		return FigGfxInfo.DrawClr;
 	}
 	if (clr == "BLUE")
 	{

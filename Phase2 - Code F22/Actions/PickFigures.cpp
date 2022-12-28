@@ -24,7 +24,7 @@ void PickFigures::Execute(bool ReadParams)
 		PlaySound(TEXT("Sound/Pick_a_figure.wav"), NULL, SND_SYNC);
 	}
 	CFigure* select = NULL;
-	int figcount = pManager->getFigCount();
+	int figcount = pManager->GetFigCount();
 	FigType = pManager->GetRandomFig();
 	if (FigType == noshape)
 	{

@@ -50,8 +50,7 @@ ApplicationManager::ApplicationManager()
 	RecCount = 0;
 	RandFigCount = 0;
 	Undo_RedoCount = 0;
-	ListCounter_Undo_Redo = 0;
-	ActionCount = 0;
+	Undo_Redo_Count = 0;
 	CheckUpdate = false;
 	LastActionType = START_PROGRAM;
 	srand(time(NULL));
@@ -61,7 +60,7 @@ ApplicationManager::ApplicationManager()
 	for (int i = 0; i < MaxRecCount; i++)
 		Recorded[i] = NULL;
 	for (int i = 0; i < MaxUndoCount; i++)
-		SaveUndo_RedoActions[i] = NULL;
+		Undo_Redo_List[i] = NULL;
 
 }
 //==================================================================================//
@@ -118,7 +117,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 
 	case UNDO_ACTION:
-		if (ListCounter_Undo_Redo == 0)
+		if (Undo_Redo_Count == 0)
 		{
 			pOut->PrintMessage("No Action to undo");
 			break;
@@ -314,12 +313,12 @@ CFigure* ApplicationManager::GetFigure(Point P1) const
 	}
 	return NULL;
 }
-void ApplicationManager::DeleteFigure(CFigure* F)
+void ApplicationManager::DeleteFigure(bool B)
 {
 	CFigure* save = SelectedFig;
-	if (F)
+	if (B)
 	{
-		SelectedFig = F;
+		SelectedFig = FigList[FigCount - 1];
 	}
 	if (FigCount > 0)
 	{
@@ -335,7 +334,7 @@ void ApplicationManager::DeleteFigure(CFigure* F)
 		SelectedFig = NULL;
 		FigList[--FigCount] = NULL;
 	}
-	if (F)
+	if (B)
 	{
 		SelectedFig = save;
 	}
@@ -360,52 +359,32 @@ Action* ApplicationManager::GetLastAction() const
 void ApplicationManager::UndoLastAction()
 {
 	Undo_RedoCount++;
-	SaveUndo_RedoActions[--ListCounter_Undo_Redo]->UndoActions();
+	Undo_Redo_List[--Undo_Redo_Count]->UndoActions();
 }
 void ApplicationManager::RedoLastAction()
 {
 	Undo_RedoCount--;
-	SaveUndo_RedoActions[ListCounter_Undo_Redo++]->RedoActions();
+	Undo_Redo_List[Undo_Redo_Count++]->RedoActions();
 }
 void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 {
-	if (ListCounter_Undo_Redo < MaxUndoCount)
+	if (Undo_Redo_Count < MaxUndoCount)
 	{
-		SaveUndo_RedoActions[ListCounter_Undo_Redo++] = pAct;
+		Undo_Redo_List[Undo_Redo_Count++] = pAct;
 	}
 	else
 	{
-		if (!SaveUndo_RedoActions[0]->IsRecorded()) {
-			delete SaveUndo_RedoActions[0];
+		if (!Undo_Redo_List[0]->IsRecorded()) {
+			delete Undo_Redo_List[0];
 		}
-		SaveUndo_RedoActions[0] = NULL;
-		for (int i = 0; i < ListCounter_Undo_Redo - 1; i++)
+		Undo_Redo_List[0] = NULL;
+		for (int i = 0; i < Undo_Redo_Count - 1; i++)
 		{
-			SaveUndo_RedoActions[i] = SaveUndo_RedoActions[i + 1];
+			Undo_Redo_List[i] = Undo_Redo_List[i + 1];
 		}
-		SaveUndo_RedoActions[ListCounter_Undo_Redo - 1] = pAct;
+		Undo_Redo_List[Undo_Redo_Count - 1] = pAct;
 	}
-	ActionCount++;
 	Undo_RedoCount = 0;
-}
-void ApplicationManager::DeleteLastFig()
-{
-	if (FigCount > 0)
-	{
-		int max = 0;
-		int index = 0;
-		for (int i = 0; i < FigCount; i++)
-		{
-			if (FigList[i]->GetID() > max)
-			{
-				max = FigList[i]->GetID();
-				index = i;
-			}
-		}
-		delete FigList[index];
-		FigList[index] = FigList[--FigCount];
-		FigList[FigCount] = NULL;
-	}
 }
 void ApplicationManager::SwapFigures(CFigure* F)
 {
@@ -421,7 +400,7 @@ void ApplicationManager::SwapFigures(CFigure* F)
 				SetSelectedFig(F);
 			delete FigList[i];
 			FigList[i] = F;
-			FigList[i]->ChngClr();
+			//FigList[i]->ChngClr();
 			break;
 		}
 	}
@@ -435,11 +414,11 @@ void ApplicationManager::ClearAll()
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
-	for (int i = 0; i < ListCounter_Undo_Redo; i++)
+	for (int i = 0; i < Undo_Redo_Count; i++)
 	{
-		if (!SaveUndo_RedoActions[i]->IsRecorded())
-			delete SaveUndo_RedoActions[i];
-		SaveUndo_RedoActions[i] = NULL;
+		if (!Undo_Redo_List[i]->IsRecorded())
+			delete Undo_Redo_List[i];
+		Undo_Redo_List[i] = NULL;
 	}
 	if (!PlayingRec) {
 		for (int i = 0; i < RecCount; i++)
@@ -449,9 +428,8 @@ void ApplicationManager::ClearAll()
 		}
 		RecCount = 0;
 	}
-	ActionCount = 0;
 	Undo_RedoCount = 0;
-	ListCounter_Undo_Redo = 0;
+	Undo_Redo_Count = 0;
 	FigCount = 0;
 	SelectedFig = NULL;
 }
@@ -460,7 +438,7 @@ CFigure* ApplicationManager::GetSelectedFig()const
 	return SelectedFig;
 }
 
-int ApplicationManager::getFigCount()const
+int ApplicationManager::GetFigCount()const
 {
 	return FigCount;
 }
@@ -558,8 +536,6 @@ string ApplicationManager::GetRandomClr(int& random)
 	for (int i = 0; i < FigCount; i++)
 		if (FigList[random]->getColor() == FigList[i]->getColor())
 			ClrCount++;
-
-
 	return FigList[random]->getColor();
 }
 void ApplicationManager::UnBlock()
@@ -636,5 +612,4 @@ ApplicationManager::~ApplicationManager()
 		delete FigList[i];
 	delete pIn;
 	delete pOut;
-
 }

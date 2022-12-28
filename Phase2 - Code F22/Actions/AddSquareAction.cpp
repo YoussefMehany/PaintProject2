@@ -57,7 +57,7 @@ void AddSquareAction::UndoActions()
 	
 	Saved_Redo = new CSquare(P1, SquareGfxInfo);
 	Saved_Redo->SetID(id);
-	pManager->DeleteLastFig();
+	pManager->DeleteFigure(true);
 }
 void AddSquareAction::RedoActions()
 {

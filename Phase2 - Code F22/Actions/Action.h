@@ -21,7 +21,7 @@ public:
 	virtual void Execute(bool = true) = 0;
 	virtual void UndoActions() {};
 	virtual void RedoActions() {};
-	void SetRecorded(bool B) { Recorded = true; }
+	void SetRecorded(bool B) { Recorded = B; }
 	bool IsRecorded() const
 	{
 		return Recorded;

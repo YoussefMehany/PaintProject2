@@ -16,7 +16,6 @@ void DeleteAction::ReadActionParameters()
 	pManager->Add_Undo_Redo_Actions(this);
 	Saved = pManager->GetSelectedFig()->GetNewFigure();
 	Saved->SetSelected(false);
-	Saved_Redo = Saved->GetNewFigure();
 }
 
 //Execute action (code depends on action type)
@@ -34,9 +33,7 @@ void DeleteAction::UndoActions()
 }
 void DeleteAction::RedoActions()
 {
-	CFigure*S= Saved_Redo->GetNewFigure();
-	pManager->DeleteFigure(Saved_Redo);
-	Saved_Redo = S;
+	pManager->DeleteFigure(true);
 }
 bool DeleteAction::CanBeRecorded() const
 {
@@ -44,8 +41,6 @@ bool DeleteAction::CanBeRecorded() const
 }
 DeleteAction::~DeleteAction()
 {
-	if (Saved_Redo)
-		delete Saved_Redo;
 	if (Saved)
 		delete Saved;
 }

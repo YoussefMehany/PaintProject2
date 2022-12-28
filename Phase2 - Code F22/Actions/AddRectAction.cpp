@@ -65,7 +65,7 @@ void AddRectAction::UndoActions()
 {
 	Saved_Redo = new CRectangle(P1, P2, RectGfxInfo);
 	Saved_Redo->SetID(id);
-	pManager->DeleteLastFig();
+	pManager->DeleteFigure(true);
 
 }
 bool AddRectAction::CanBeRecorded() const

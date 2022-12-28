@@ -32,7 +32,7 @@ void MoveByDragAction::Execute(bool ReadParams)
 		Sleep(10);
 		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
 		{
-			Sleep(10);
+			Sleep(20);
 			if (pManager->GetFigure(P) != pManager->GetSelectedFig() && Check_2)
 			{
 				pOut->PrintMessage("Please drag the Selected figure ,Try again");

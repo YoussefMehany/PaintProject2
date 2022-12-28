@@ -73,7 +73,6 @@ void CCircle::ChngClr()
 	UI.DrawColor = FigGfxInfo.DrawClr;
 	UI.IsFilled = FigGfxInfo.isFilled;
 	UI.FillColor = FigGfxInfo.FillClr;
-
 }
 void CCircle::PrintInfo(Output* pOut) {
 	string info;

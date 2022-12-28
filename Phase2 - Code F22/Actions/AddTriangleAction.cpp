@@ -75,7 +75,7 @@ void AddTriangleAction::UndoActions()
 {
 	Saved_Redo = new CTriangle(P1, P2, P3, TriangleGfxInfo);
 	Saved_Redo->SetID(id);
-	pManager->DeleteLastFig();
+	pManager->DeleteFigure(true);
 }
 void AddTriangleAction::RedoActions()
 {

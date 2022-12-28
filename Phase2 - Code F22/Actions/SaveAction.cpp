@@ -26,7 +26,7 @@ void SaveAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 
-	int FiguresCount = pManager->getFigCount();
+	int FiguresCount = pManager->GetFigCount();
 	string DrawClr = getColor(UI.DrawColor);
 	string FillClr;
 	if (UI.IsFilled) FillClr = getColor(UI.FillColor);

@@ -55,7 +55,7 @@ void AddHexAction::UndoActions()
 {
 	Saved_Redo = new CHexagon(P1, HexGfxInfo);
 	Saved_Redo->SetID(id);
-	pManager->DeleteLastFig();
+	pManager->DeleteFigure(true);
 }
 void AddHexAction::RedoActions()
 {
