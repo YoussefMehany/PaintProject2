@@ -22,7 +22,8 @@ bool CFigure::IsBlocked() const
 {
 	return Blocked;
 }
-void CFigure::SetID(int id) {
+void CFigure::SetID(int id) 
+{
 	ID_Num--;
 	ID = id;
 }
@@ -31,10 +32,14 @@ int CFigure::GetID()const
 	return ID;
 }
 void CFigure::SetSelected(bool s)
-{	Selected = s; }
+{
+	Selected = s; 
+}
 
 bool CFigure::IsSelected() const
-{	return Selected; }
+{
+	return Selected; 
+}
 
 void CFigure::ChngDrawClr(color Dclr)
 {	
@@ -46,7 +51,8 @@ void CFigure::ChngFillClr(color Fclr)
 	FigGfxInfo.isFilled = true;
 	FigGfxInfo.FillClr = Fclr; 
 }
-shape CFigure::GetFigType() const{
+shape CFigure::GetFigType() const
+{
 	return FigType;
 }
 string CFigure::getColor(color clr)
@@ -94,14 +100,6 @@ string CFigure::getColor(color clr)
 }
 color CFigure::getColorr(string clr)
 {
-	if (clr == "FillColor") 
-	{
-		return FigGfxInfo.FillClr;
-	}
-	if (clr == "DrawClr") 
-	{
-		return FigGfxInfo.DrawClr;
-	}
 	if (clr == "BLUE")
 	{
 		return BLUE;

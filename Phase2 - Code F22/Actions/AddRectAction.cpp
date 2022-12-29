@@ -15,7 +15,8 @@ void AddRectAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 	pManager->Add_Undo_Redo_Actions(this);
 
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Rectangle.wav"), NULL, SND_SYNC);
 	}
 	//Read 1st corner and store in point P1
@@ -41,7 +42,8 @@ void AddRectAction::ReadActionParameters()
 //Execute the action
 bool AddRectAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	//Create a rectangle with the parameters read from the user
@@ -56,14 +58,20 @@ void AddRectAction::UndoActions()
 	Saved_Redo = new CRectangle(P1, P2, RectGfxInfo);
 	Saved_Redo->SetID(id);
 	if (pManager->GetSelectedFig() != NULL)
-		if (pManager->GetSelectedFig()->GetID() == id) { Saved_Redo->SetSelected(true); }
+		if (pManager->GetSelectedFig()->GetID() == id) 
+		{
+			Saved_Redo->SetSelected(true);
+		}
 
 	pManager->DeleteFigure();
 
 }
 void AddRectAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected()) { pManager->SetSelectedFig(Saved_Redo); }
+	if (Saved_Redo->IsSelected()) 
+	{
+		pManager->SetSelectedFig(Saved_Redo);
+	}
 	pManager->AddFigure(Saved_Redo);
 }
 bool AddRectAction::CanBeRecorded() const

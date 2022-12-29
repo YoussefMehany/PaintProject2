@@ -1,10 +1,5 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  PickTypeandColor.cpp
-  PickFigures.cpp
-  PickColors.cpp
-  Generating Code...
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Actions\PickFigures.cpp(92): warning C4715: 'PickFigures::TypetoString': not all control paths return a value
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Actions\PickTypeandColor.cpp(97): warning C4715: 'PickTypeandColor::TypetoString': not all control paths return a value
-  LINK : .\Debug\PT Project.exe not found or not built by the last incremental link; performing full link
+  ApplicationManager.cpp
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\ApplicationManager.cpp(59,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 Action.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  PT-Project.vcxproj -> C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe
+  PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

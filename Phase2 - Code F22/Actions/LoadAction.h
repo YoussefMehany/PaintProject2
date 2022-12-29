@@ -1,3 +1,4 @@
+#pragma once
 #include "Action.h"
 #include "..\Figures\CHexagon.h"
 #include "..\Figures\CRectangle.h"

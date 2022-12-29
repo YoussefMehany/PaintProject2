@@ -10,12 +10,14 @@ void SwitchToPlayAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Play Mode");
 	CFigure* SelectedFig = pManager->GetSelectedFig();
-	if (SelectedFig) {
+	if (SelectedFig) 
+	{
 		pManager->SetSelectedFig(NULL);
 		SelectedFig->SetSelected(false);
 	}
 	pOut->CreatePlayToolBar();
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Lets_Play.wav"), NULL, SND_SYNC);
 	}
 }
@@ -23,7 +25,8 @@ void SwitchToPlayAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool SwitchToPlayAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	pManager->SetPlayMode(true);

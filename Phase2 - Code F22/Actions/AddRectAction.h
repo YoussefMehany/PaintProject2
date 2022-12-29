@@ -1,6 +1,4 @@
-#ifndef ADD_RECT_ACTION_H
-#define ADD_RECT_ACTION_H
-
+#pragma once
 #include "Action.h"
 #include "..\Figures\CRectangle.h"
 
@@ -26,5 +24,3 @@ public:
 	virtual bool CanBeRecorded() const;
 	~AddRectAction();
 };
-
-#endif

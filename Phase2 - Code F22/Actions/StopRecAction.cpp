@@ -9,7 +9,8 @@ void StopRecAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Recording Stopped");
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Recording_Stopped.wav"), NULL, SND_SYNC);
 	}
 
@@ -19,8 +20,10 @@ void StopRecAction::ReadActionParameters()
 bool StopRecAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) {
-		if (!pManager->IsRecording()) {
+	if (ReadParams) 
+	{
+		if (!pManager->IsRecording()) 
+		{
 			pOut->PrintMessage("Record some actions first");
 			return true;
 		}

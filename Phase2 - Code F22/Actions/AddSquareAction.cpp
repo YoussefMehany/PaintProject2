@@ -14,7 +14,8 @@ void AddSquareAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 	pManager->Add_Undo_Redo_Actions(this);
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Square.wav"), NULL, SND_SYNC);
 	}
 	//Read 1st corner and store in point P1
@@ -33,7 +34,8 @@ void AddSquareAction::ReadActionParameters()
 //Execute the action
 bool AddSquareAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	//Create a rectangle with the parameters read from the user
@@ -52,12 +54,18 @@ void AddSquareAction::UndoActions()
 	Saved_Redo = new CSquare(P1, SquareGfxInfo);
 	Saved_Redo->SetID(id);
 	if (pManager->GetSelectedFig() != NULL)
-		if (pManager->GetSelectedFig()->GetID() == id) { Saved_Redo->SetSelected(true); }
+		if (pManager->GetSelectedFig()->GetID() == id) 
+		{
+			Saved_Redo->SetSelected(true); 
+		}
 	pManager->DeleteFigure();
 }
 void AddSquareAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected()) { pManager->SetSelectedFig(Saved_Redo); }
+	if (Saved_Redo->IsSelected()) 
+	{
+		pManager->SetSelectedFig(Saved_Redo);
+	}
 	pManager->AddFigure(Saved_Redo);
 }
 AddSquareAction::~AddSquareAction()

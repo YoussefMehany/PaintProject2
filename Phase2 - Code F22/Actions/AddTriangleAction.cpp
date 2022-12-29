@@ -15,7 +15,8 @@ void AddTriangleAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 	pManager->Add_Undo_Redo_Actions(this);
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Triangle.wav"), NULL, SND_SYNC);
 	}
 	//Read 1st corner and store in point P1
@@ -45,7 +46,8 @@ void AddTriangleAction::ReadActionParameters()
 //Execute the action
 bool AddTriangleAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	//Create a Triangle with the parameters read from the user
@@ -64,12 +66,18 @@ void AddTriangleAction::UndoActions()
 	Saved_Redo = new CTriangle(P1, P2, P3, TriangleGfxInfo);
 	Saved_Redo->SetID(id);
 	if (pManager->GetSelectedFig() != NULL)
-		if (pManager->GetSelectedFig()->GetID() == id) { Saved_Redo->SetSelected(true); }
+		if (pManager->GetSelectedFig()->GetID() == id) 
+		{
+			Saved_Redo->SetSelected(true); 
+		}
 	pManager->DeleteFigure();
 }
 void AddTriangleAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected()) { pManager->SetSelectedFig(Saved_Redo); }
+	if (Saved_Redo->IsSelected()) 
+	{
+		pManager->SetSelectedFig(Saved_Redo); 
+	}
 	pManager->AddFigure(Saved_Redo);
 }
 AddTriangleAction::~AddTriangleAction()

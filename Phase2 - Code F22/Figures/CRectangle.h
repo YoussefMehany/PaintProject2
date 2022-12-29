@@ -1,16 +1,14 @@
-#ifndef CRECT_H
-#define CRECT_H
-
+#pragma once
 #include "CFigure.h"
 
 class CRectangle : public CFigure
 {
 private:
-	Point Corner1;	
+	Point Corner1;
 	Point Corner2;
 	int Length, Width;
 public:
-	CRectangle(Point , Point, GfxInfo FigureGfxInfo );
+	CRectangle(Point, Point, GfxInfo FigureGfxInfo);
 	CRectangle();
 	void Calc_Length_Width();
 	virtual void Draw(Output* pOut) const;
@@ -22,5 +20,3 @@ public:
 	virtual CFigure* GetNewFigure();
 	virtual void PrintInfo(Output* pOut);
 };
-
-#endif

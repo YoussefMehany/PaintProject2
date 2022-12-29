@@ -9,7 +9,8 @@ void SelectAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-    if (pManager->IsSoundOn()) {
+    if (pManager->IsSoundOn()) 
+    {
         PlaySound(TEXT("Sound/Select.wav"), NULL, SND_SYNC);
     }
 	pOut->PrintMessage("New Position : Click on any figure");
@@ -20,26 +21,31 @@ void SelectAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool SelectAction::Execute(bool ReadParams)
 {
-    if (ReadParams) {
+    if (ReadParams) 
+    {
         ReadActionParameters();
     }
     Output* pOut = pManager->GetOutput();
     CFigure* FigPtr = pManager->GetFigure(P);
     CFigure* SelectedFig = pManager->GetSelectedFig();
-    if (FigPtr) {
-        if (FigPtr->IsSelected()) {
+    if (FigPtr) 
+    {
+        if (FigPtr->IsSelected())
+        {
             FigPtr->SetSelected(false);
             pManager->SetSelectedFig(NULL);
             pOut->PrintMessage("Figure unselected");
         }
-        else {
+        else 
+        {
             FigPtr->SetSelected(true);
             if (SelectedFig) SelectedFig->SetSelected(false);
             pManager->SetSelectedFig(FigPtr);
             FigPtr->PrintInfo(pOut);
         }
     }
-    else {
+    else 
+    {
         pOut->PrintMessage("A click on an empty area");
     }
     return false;

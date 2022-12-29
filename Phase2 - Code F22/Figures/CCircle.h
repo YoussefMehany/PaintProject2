@@ -1,6 +1,4 @@
-#ifndef CCIRC_H
-#define CCIRC_H
-
+#pragma once
 #include "CFigure.h"
 
 class CCircle : public CFigure
@@ -21,5 +19,3 @@ public:
 	virtual CFigure* GetNewFigure();
 	virtual void PrintInfo(Output* pOut);
 };
-
-#endif

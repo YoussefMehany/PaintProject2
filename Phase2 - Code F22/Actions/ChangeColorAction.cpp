@@ -9,15 +9,14 @@ ChangeColorAction::ChangeColorAction(ApplicationManager* pApp, color clr) :Actio
 //Reads parameters required for action to execute (code depends on action type)
 void ChangeColorAction::ReadActionParameters()
 {
-	
-
 }
 
 //Execute action (code depends on action type)
 bool ChangeColorAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (pManager->GetSelectedFig() == NULL) {
+	if (pManager->GetSelectedFig() == NULL) 
+	{
 		pOut->PrintMessage("Please Select a Figure First");
 		return true;
 	}

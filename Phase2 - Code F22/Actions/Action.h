@@ -12,7 +12,11 @@ protected:
 	bool Recorded;
 public:
 
-	Action(ApplicationManager* pApp) { pManager = pApp; Recorded = false; }	//constructor
+	Action(ApplicationManager* pApp) //constructor
+	{
+		pManager = pApp;
+		Recorded = false;
+	}
 
 	//Reads parameters required for action to execute (code depends on action type)
 	virtual void ReadActionParameters() = 0;
@@ -21,7 +25,10 @@ public:
 	virtual bool Execute(bool = true) = 0;
 	virtual void UndoActions() {};
 	virtual void RedoActions() {};
-	void SetRecorded(bool B) { Recorded = B; }
+	void SetRecorded(bool B) 
+	{
+		Recorded = B;
+	}
 	bool IsRecorded() const
 	{
 		return Recorded;

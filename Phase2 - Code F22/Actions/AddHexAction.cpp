@@ -15,7 +15,8 @@ void AddHexAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 	pManager->Add_Undo_Redo_Actions(this);
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Hexagon.wav"), NULL, SND_SYNC);
 	}
 	//Read the center point
@@ -37,7 +38,8 @@ void AddHexAction::ReadActionParameters()
 //Execute the action
 bool AddHexAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	//Create a rectangle with the parameters read from the user
@@ -52,13 +54,19 @@ void AddHexAction::UndoActions()
 	Saved_Redo = new CHexagon(P1, HexGfxInfo);
 	Saved_Redo->SetID(id);
 	if (pManager->GetSelectedFig() != NULL)
-		if (pManager->GetSelectedFig()->GetID() == id) { Saved_Redo->SetSelected(true); }
+		if (pManager->GetSelectedFig()->GetID() == id) 
+		{
+			Saved_Redo->SetSelected(true);
+		}
 
 	pManager->DeleteFigure();
 }
 void AddHexAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected()) { pManager->SetSelectedFig(Saved_Redo); }
+	if (Saved_Redo->IsSelected()) 
+	{
+		pManager->SetSelectedFig(Saved_Redo);
+	}
 	pManager->AddFigure(Saved_Redo);
 }
 bool AddHexAction::CanBeRecorded() const

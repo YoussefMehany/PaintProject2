@@ -1,6 +1,4 @@
-#ifndef CFIGURE_H
-#define CFIGURE_H
-
+#pragma once
 #include "..\defs.h"
 #include "..\GUI\Output.h"
 #include <cmath>
@@ -47,4 +45,3 @@ public:
 
 	virtual void PrintInfo(Output* pOut) = 0;	//print all figure info on the status bar
 };
-#endif

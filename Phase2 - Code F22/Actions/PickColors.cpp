@@ -18,10 +18,12 @@ void PickColors::ReadActionParameters()
 //Execute action (code depends on action type)
 bool PickColors::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Pick_a_color.wav"), NULL, SND_SYNC);
 	}
 	CFigure* select = NULL;

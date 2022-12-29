@@ -15,7 +15,8 @@ void ReturnAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool ReturnAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	return false;

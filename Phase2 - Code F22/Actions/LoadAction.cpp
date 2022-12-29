@@ -9,7 +9,8 @@ void LoadAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Load.wav"), NULL, SND_SYNC);
 	}
 	pOut->PrintMessage("Enter the file name ");
@@ -28,7 +29,8 @@ void LoadAction::ReadActionParameters()
 
 bool LoadAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	pManager->ClearAll();
@@ -39,7 +41,8 @@ bool LoadAction::Execute(bool ReadParams)
 		InFile >> Word;
 		UI.DrawColor = getColorr(Word);
 		InFile >> Word;
-		if (Word != "NO_FILL") {
+		if (Word != "NO_FILL") 
+		{
 			UI.IsFilled = true;
 			UI.FillColor = getColorr(Word);
 		}

@@ -13,15 +13,19 @@ void PlayRecAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool PlayRecAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
-		ReadActionParameters();
-	}
 	Output* pOut = pManager->GetOutput();
-	if (pManager->IsRecording()) {
+	if (pManager->IsRecording()) 
+	{
 		pOut->PrintMessage("Stop the recording first");
 		return true;
 	}
-	if (pManager->IsSoundOn()) {
+	if (pManager->GetRecCount() == 0)
+	{
+		pOut->PrintMessage("Record some actions first");
+		return true;
+	}
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Play_recording.wav"), NULL, SND_SYNC);
 	}
 	pOut->PrintMessage("Playing Recording");

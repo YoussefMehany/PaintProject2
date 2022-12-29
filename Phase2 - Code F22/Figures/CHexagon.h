@@ -1,5 +1,4 @@
-#ifndef CHEX_H
-#define CHEX_H
+#pragma once
 
 #include "CFigure.h"
 
@@ -22,5 +21,3 @@ public:
 	virtual CFigure* GetNewFigure();
 	virtual void PrintInfo(Output* pOut);
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef ADD_TRIANGLE_ACTION_H
-#define ADD_TRIANGLE_ACTION_H
+#pragma once
 #include "Action.h"
 
 #include "..\ApplicationManager.h"
@@ -23,5 +22,3 @@ public:
 	virtual bool CanBeRecorded() const;
 	~AddTriangleAction();
 };
-
-#endif

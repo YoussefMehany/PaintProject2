@@ -1,6 +1,4 @@
-#ifndef ADD_HEX_ACTION_H
-#define ADD_HEX_ACTION_H
-
+#pragma once
 #include "Action.h"
 #include "..\Figures\CHexagon.h"
 
@@ -25,5 +23,3 @@ public:
 	virtual bool CanBeRecorded() const;
 	~AddHexAction();
 };
-
-#endif

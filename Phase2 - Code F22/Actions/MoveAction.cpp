@@ -10,7 +10,8 @@ void MoveAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Move.wav"), NULL, SND_SYNC);
 	}
 	pOut->PrintMessage("New Position : Click at the new position");
@@ -26,9 +27,11 @@ void MoveAction::ReadActionParameters()
 bool MoveAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 
-		if (pManager->GetSelectedFig() == NULL) {
+		if (pManager->GetSelectedFig() == NULL) 
+		{
 			pOut->PrintMessage("Please Select a Figure First");
 			return true;
 		}

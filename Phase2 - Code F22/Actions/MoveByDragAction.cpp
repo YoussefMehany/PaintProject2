@@ -18,20 +18,24 @@ void MoveByDragAction::ReadActionParameters()
 bool MoveByDragAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) {
-		if (pManager->GetSelectedFig() == NULL) {
+	if (ReadParams) 
+	{
+		if (pManager->GetSelectedFig() == NULL) 
+		{
 			pOut->PrintMessage("Please Select a Figure First");
 			return true;
 		}
 		ReadActionParameters();
 	}
 	Input* pIn = pManager->GetInput();
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Move_by_drag.wav"), NULL, SND_SYNC);
 	}
 	bool Check_1 = false;
 	bool Check_2 = true;
-	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP) {
+	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP) 
+	{
 		Sleep(10);
 		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
 		{

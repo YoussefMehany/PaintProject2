@@ -35,7 +35,11 @@ ApplicationManager::ApplicationManager()
 	//Create Input and output
 	pOut = new Output;
 	pIn = pOut->CreateInput();
+
+	//Initialize the data members
+
 	SelectedFig = NULL;
+
 	Recording = false;
 	PlayingRec = false;
 	PlayMode = false;
@@ -51,9 +55,9 @@ ApplicationManager::ApplicationManager()
 	RandFigCount = 0;
 	Undo_RedoLimit = 0;
 	Undo_Redo_Count = 0;
-	CheckUpdate = false;
-	LastActionType = START_PROGRAM;
-	srand(time(NULL));
+
+	srand(time(NULL)); //starts the seed time with zero
+
 	//Create an array of figure pointers and set them to NULL		
 	for (int i = 0; i < MaxFigCount; i++)
 		FigList[i] = NULL;
@@ -71,59 +75,46 @@ ActionType ApplicationManager::GetUserAction() const
 	//Ask the input to get the action from the user.
 	return pIn->GetUserAction();
 }
-////////////////////////////////////////////////////////////////////////////////////
 //Creates an action and executes it
 void ApplicationManager::ExecuteAction(ActionType ActType)
 {
 	Action* pAct = NULL;
 	//According to Action Type, create the corresponding action object
-	CheckUpdate = false;
 	switch (ActType)
 	{
 	case DRAW_FIGURE: //expanding the figures menu
 		pAct = new FigureMenuAction(this);
 		break;
-
 	case FILL_COLOR: //expanding the fill colors menu
 		pAct = new ColorMenuAction(this, PAINT);
 		break;
-
 	case BORDER_COLOR: //expanding the border colors menu
 		pAct = new ColorMenuAction(this, BORDER);
 		break;
-
 	case DRAW_RECT:
 		pAct = new AddRectAction(this);
 		break;
-
 	case DRAW_CIRC:
 		pAct = new AddCircAction(this);
 		break;
-
 	case DRAW_HEX:
 		pAct = new AddHexAction(this);
 		break;
-
 	case DRAW_TRIANGLE:
 		pAct = new AddTriangleAction(this);
 		break;
-
 	case DRAW_SQUARE:
 		pAct = new AddSquareAction(this);
 		break;
-
 	case RETURN:
 		pAct = new ReturnAction(this);
 		break;
-
 	case UNDO_ACTION:
 		pAct = new UndoAction(this);
 		break;
-
 	case REDO_ACTION:
 		pAct = new RedoAction(this);
 		break;
-
 	case MOVE_FIGURE:
 		pAct = new MoveAction(this);
 		break;
@@ -133,63 +124,43 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case SELECT_FIGURE:
 		pAct = new SelectAction(this);
 		break;
-
-	case STATUS:	//a click on the status bar ==> no action
-		return;
-
 	case GREENCLR:
 		pAct = new ChangeColorAction(this, GREEN);
 		break;
-
 	case REDCLR:
 		pAct = new ChangeColorAction(this, RED);
 		break;
-
 	case BLUECLR:
 		pAct = new ChangeColorAction(this, BLUE);
 		break;
-
 	case ORANGECLR:
 		pAct = new ChangeColorAction(this, ORANGE);
 		break;
-
 	case YELLOWCLR:
 		pAct = new ChangeColorAction(this, YELLOW);
 		break;
-
 	case BLACKCLR:
 		pAct = new ChangeColorAction(this, BLACK);
 		break;
-
 	case DELETE_FIGURE:
 		pAct = new DeleteAction(this);
 		break;
-
 	case SAVE_PROGRESS:
 		pAct = new SaveAction(this);
 		break;
-
 	case LOAD_PROGRESS:
 		pAct = new LoadAction(this);
 		break;
-
 	case START_REC:
-		if (LastActionType != START_PROGRAM && LastActionType != CLEAR_ALL) {
-			pOut->PrintMessage("You can only record after the program start or after clear all");
-			break;
-		}
 		pAct = new StartRecAction(this);
 		RecAction = pAct;
 		break;
-
 	case STOP_REC:
 		pAct = new StopRecAction(this);
 		break;
-
 	case PLAY_REC:
 		pAct = new PlayRecAction(this);
 		break;
-
 	case CLEAR_ALL:
 		pAct = new ClearAllAction(this);
 		break;
@@ -211,7 +182,8 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	case SOUND_STATE:
 		pAct = new ChangeSoundState(this);
 		break;
-
+	case STATUS:
+		return;
 	case EXIT:
 		pAct = new ExitAction(this);
 		break;
@@ -219,15 +191,18 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 	if (pAct != NULL)
 	{
-		LastActionType = ActType;
-		CheckUpdate = true;
 		bool Delete = pAct->Execute(); //Execute
-		if (Delete) delete pAct;
-		pAct = NULL;
+		if (Delete)
+		{
+			delete pAct;
+			pAct = NULL;
+		}
 		if (pAct) LastAction = pAct;
-		if (Recording) {
+		if (Recording) 
+		{
 			RecAction->Execute(false);
 		}
+		pAct = NULL;
 	}
 }
 
@@ -238,91 +213,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	if (FigCount < MaxFigCount) {
+	if (FigCount < MaxFigCount) 
+	{
 		FigList[FigCount++] = pFig;
 		pFig->SetBlock(false);
 	}
-}
-CFigure* ApplicationManager::GetFigure(Point P1) const
-{
-	for (int i = FigCount - 1; i >= 0; i--) {
-		if (FigList[i]->IsPointInside(P1)) {
-			return FigList[i];
-		}
-	}
-	return NULL;
-}
-void ApplicationManager::DeleteFigure(CFigure* B)
-{
-	CFigure* save = SelectedFig;
-	if (Undo || Redo)
-		if (B == NULL)
-		{
-			SelectedFig = GetLastAdd();
-		}
-		else
-		{
-			SelectedFig = B;
-		}
-	if (FigCount > 0)
-	{
-		for (int i = 0; i < FigCount; i++) {
-			if (FigList[i] == SelectedFig) {
-				delete FigList[i];
-				for (int j = i; j < FigCount - 1; j++) {
-					FigList[j] = FigList[j + 1];
-				}
-				break;
-			}
-		}
-		SelectedFig = NULL;
-		FigList[--FigCount] = NULL;
-	}
-	if (Undo || Redo)
-		SelectedFig = save;
-}
-//==============================================================================//
-//								Recording functions								//
-//==============================================================================//
-void ApplicationManager::AddActionRec(Action* Act)
-{
-	if (RecCount < MaxRecCount)
-	{
-		Recorded[RecCount++] = Act;
-		Act->SetRecorded(true);
-	}
-}
-Action* ApplicationManager::GetLastAction() const
-{
-	return LastAction;
-}
-int ApplicationManager::GetUndoRedoCount() const
-{
-	return Undo_Redo_Count;
-}
-int ApplicationManager::GetUndoRedoLimit() const
-{
-	return Undo_RedoLimit;
-}
-/////////////////////////////////////////////////////////////////////////////////
-bool ApplicationManager::IsUndo() const {
-	return Undo;
-}
-bool ApplicationManager::IsRedo() const
-{
-	return Redo;
-}
-void ApplicationManager::UndoLastAction()
-{
-	Undo = true;
-	Undo_RedoLimit++;
-	Undo_Redo_List[--Undo_Redo_Count]->UndoActions();
-}
-void ApplicationManager::RedoLastAction()
-{
-	Redo = true;
-	Undo_RedoLimit--;
-	Undo_Redo_List[Undo_Redo_Count++]->RedoActions();
 }
 CFigure* ApplicationManager::GetLastAdd()
 {
@@ -340,27 +235,6 @@ CFigure* ApplicationManager::GetLastAdd()
 		return FigList[index];
 	}
 	return NULL;
-}
-void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
-{
-	if (Undo_Redo_Count < MaxUndoCount)
-	{
-		Undo_Redo_List[Undo_Redo_Count++] = pAct;
-	}
-	else
-	{
-		if (!Undo_Redo_List[0]->IsRecorded()) {
-			delete Undo_Redo_List[0];
-		}
-		Undo_Redo_List[0] = NULL;
-		for (int i = 0; i < Undo_Redo_Count - 1; i++)
-		{
-			Undo_Redo_List[i] = Undo_Redo_List[i + 1];
-		}
-		Undo_Redo_List[Undo_Redo_Count - 1] = pAct;
-	}
-	Undo = Redo = false;
-	Undo_RedoLimit = 0;
 }
 void ApplicationManager::SwapFigures(CFigure* F)
 {
@@ -381,12 +255,130 @@ void ApplicationManager::SwapFigures(CFigure* F)
 		}
 	}
 }
+CFigure* ApplicationManager::GetFigure(Point P1) const
+{
+	for (int i = FigCount - 1; i >= 0; i--) 
+	{
+		if (FigList[i]->IsPointInside(P1)) 
+		{
+			return FigList[i];
+		}
+	}
+	return NULL;
+}
+void ApplicationManager::DeleteFigure(CFigure* B)
+{
+	CFigure* save = SelectedFig;
+	if (Undo || Redo)
+		if (!B)
+		{
+			SelectedFig = GetLastAdd();
+		}
+		else
+		{
+			SelectedFig = B;
+		}
+	if (FigCount > 0)
+	{
+		for (int i = 0; i < FigCount; i++) 
+		{
+			if (FigList[i] == SelectedFig) 
+			{
+				delete FigList[i];
+				for (int j = i; j < FigCount - 1; j++) //Shifts each pointer to point at the figure of its next element
+				{
+					FigList[j] = FigList[j + 1];
+				}
+				break;
+			}
+		}
+		SelectedFig = NULL;
+		FigList[--FigCount] = NULL;
+	}
+	if (Undo || Redo)
+		SelectedFig = save;
+}
+//==============================================================================//
+//								Recording functions								//
+//==============================================================================//
+
+void ApplicationManager::AddActionRec(Action* Act)
+{
+	if (RecCount < MaxRecCount)
+	{
+		Recorded[RecCount++] = Act;
+		Act->SetRecorded(true);
+	}
+}
+void ApplicationManager::PlayRec()
+{
+	PlayingRec = true;
+	ClearAll();
+	for (int i = 0; i < RecCount; i++)
+	{
+		Sleep(1000);
+
+		Recorded[i]->Execute(false);
+
+		UpdateInterface();
+	}
+	PlayingRec = false;
+}
+
+//==============================================================================//
+//								Undo and Redo Functions							//
+//==============================================================================//
+
+bool ApplicationManager::IsUndo() const {
+	return Undo;
+}
+bool ApplicationManager::IsRedo() const
+{
+	return Redo;
+}
+void ApplicationManager::UndoLastAction()
+{
+	Undo = true;
+	Undo_RedoLimit++;
+	Undo_Redo_List[--Undo_Redo_Count]->UndoActions();
+}
+void ApplicationManager::RedoLastAction()
+{
+	Redo = true;
+	Undo_RedoLimit--;
+	Undo_Redo_List[Undo_Redo_Count++]->RedoActions();
+}
+
+void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
+{
+	if (Undo_Redo_Count < MaxUndoCount)
+	{
+		Undo_Redo_List[Undo_Redo_Count++] = pAct;
+	}
+	else
+	{
+		if (!Undo_Redo_List[0]->IsRecorded()) 
+		{
+			delete Undo_Redo_List[0];
+		}
+		Undo_Redo_List[0] = NULL;
+		for (int i = 0; i < Undo_Redo_Count - 1; i++)
+		{
+			Undo_Redo_List[i] = Undo_Redo_List[i + 1];
+		}
+		Undo_Redo_List[Undo_Redo_Count - 1] = pAct;
+	}
+	Undo = Redo = false;
+	Undo_RedoLimit = 0;
+}
+
 void ApplicationManager::ClearAll()
 {
 	UI.IsFilled = false;
 	UI.DrawColor = BLUE;    //Drawing color
 	UI.FillColor = GREEN;    //Filling color
-	for (int i = 0; i < FigCount; i++) {
+	for (int i = 0; i < FigCount; i++) 
+	{
 		delete FigList[i];
 		FigList[i] = NULL;
 	}
@@ -396,7 +388,8 @@ void ApplicationManager::ClearAll()
 			delete Undo_Redo_List[i];
 		Undo_Redo_List[i] = NULL;
 	}
-	if (!PlayingRec) {
+	if (!PlayingRec) 
+	{
 		for (int i = 0; i < RecCount; i++)
 		{
 			delete Recorded[i];
@@ -409,25 +402,60 @@ void ApplicationManager::ClearAll()
 	FigCount = 0;
 	SelectedFig = NULL;
 }
+/////////////////////////////////////////////////////////////////////////////////
+//==============================================================================//
+//								Setters and getters   						    //
+//==============================================================================//
+
 CFigure* ApplicationManager::GetSelectedFig()const
 {
 	return SelectedFig;
 }
-
+Action* ApplicationManager::GetLastAction() const
+{
+	return LastAction;
+}
+int ApplicationManager::GetRandFigCount()const
+{
+	return RandFigCount;
+}
+int ApplicationManager::GetUndoRedoCount() const
+{
+	return Undo_Redo_Count;
+}
+int ApplicationManager::GetUndoRedoLimit() const
+{
+	return Undo_RedoLimit;
+}
+int ApplicationManager::GetTypeClrCount()const
+{
+	return FigTypeClr;
+}
 int ApplicationManager::GetFigCount()const
 {
 	return FigCount;
 }
-void ApplicationManager::SetSound(bool sound) {
-	Sound = sound;
+int ApplicationManager::GetRecCount()const
+{
+	return RecCount;
 }
-bool ApplicationManager::IsSoundOn() const {
+int ApplicationManager::GetClrCount(int random)
+{
+	for (int i = 0; i < FigCount; i++)
+		if (FigList[random]->getColor() == FigList[i]->getColor())
+			ClrCount++;
+	return ClrCount;
+}
+bool ApplicationManager::IsSoundOn() const 
+{
 	return Sound;
 }
-bool ApplicationManager::IsRecording() const {
+bool ApplicationManager::IsRecording() const
+{
 	return Recording;
 }
-bool ApplicationManager::IsPlayingRec() const {
+bool ApplicationManager::IsPlayingRec() const 
+{
 	return PlayingRec;
 }
 bool ApplicationManager::IsPlayMode() const
@@ -446,44 +474,42 @@ void ApplicationManager::SetRec(bool IsRec)
 {
 	Recording = IsRec;
 }
-void ApplicationManager::SetSelectedFig(CFigure* F)
+void ApplicationManager::SetSound(bool sound)
 {
-	SelectedFig = F;
-}
-int ApplicationManager::GetClrCount(int random)
-{
-	for (int i = 0; i < FigCount; i++)
-		if (FigList[random]->getColor() == FigList[i]->getColor())
-			ClrCount++;
-	return ClrCount;
-}
-void  ApplicationManager::SetClrCount(int C)
-{
-	ClrCount = C;
-}
-int ApplicationManager::GetRandFigCount()const
-{
-	return RandFigCount;
+	Sound = sound;
 }
 void  ApplicationManager::SetRandFigCount(int C)
 {
 	RandFigCount = C;
 }
-int ApplicationManager::GetTypeClrCount()const
+void ApplicationManager::SetSelectedFig(CFigure* F)
 {
-	return FigTypeClr;
+	SelectedFig = F;
+}
+void  ApplicationManager::SetClrCount(int C)
+{
+	ClrCount = C;
 }
 void  ApplicationManager::SetTypeClrCount(int C)
 {
 	FigTypeClr = C;
 }
-shape ApplicationManager::GetRandomFig(int random) {
+/////////////////////////////////////////////////////////////////////////////////
+//==============================================================================//
+//								Play Mode Functions   						    //
+//==============================================================================//
+
+shape ApplicationManager::GetRandomFig(int random) 
+{
 
 	if (!FigCount) return noshape;
 	shape Figtype = FigList[random]->GetFigType();
-	for (int i = 0; i < FigCount; i++) {
-		if (Figtype == FigList[i]->GetFigType()) {
-			if (FigList[random]->getColor() == FigList[i]->getColor()) {
+	for (int i = 0; i < FigCount; i++) 
+	{
+		if (Figtype == FigList[i]->GetFigType()) 
+		{
+			if (FigList[random]->getColor() == FigList[i]->getColor()) 
+			{
 				FigTypeClr++;
 			}
 			RandFigCount++;
@@ -525,18 +551,8 @@ void ApplicationManager::BlockFig(CFigure* Fig)
 {
 	Fig->SetBlock(true);
 }
-void ApplicationManager::PlayRec() {
-	PlayingRec = true;
-	ClearAll();
-	for (int i = 0; i < RecCount; i++) {
-		Sleep(1000);
 
-		Recorded[i]->Execute(false);
 
-		UpdateInterface();
-	}
-	PlayingRec = false;
-}
 //==================================================================================//
 //							Save/Load Functions										//
 //==================================================================================//
@@ -557,15 +573,13 @@ void ApplicationManager::SaveFile(ofstream& OutFile)
 //Draw all figures on the user interface
 void ApplicationManager::UpdateInterface()
 {
-	if (CheckUpdate) {
-		pOut->ClearDrawArea();
-		if (!PlayMode || KEY)
-			for (int i = 0; i < FigCount; i++)
-			{
-				if (!FigList[i]->IsBlocked())
-					FigList[i]->Draw(pOut); //Call Draw function (virtual member fn)
-			}
-	}
+	pOut->ClearDrawArea();
+	if (!PlayMode || KEY)
+		for (int i = 0; i < FigCount; i++)
+		{
+			if (!FigList[i]->IsBlocked())
+				FigList[i]->Draw(pOut); //Call Draw function (virtual member fn)
+		}
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Return a pointer to the input

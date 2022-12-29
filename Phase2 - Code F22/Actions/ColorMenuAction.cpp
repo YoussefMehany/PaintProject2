@@ -7,10 +7,9 @@ ColorMenuAction::ColorMenuAction(ApplicationManager* pApp, DrawMenuItem choose) 
 //Reads parameters required for action to execute (code depends on action type)
 void ColorMenuAction::ReadActionParameters()
 {
-	Output* pOut = pManager->GetOutput();
 	UI.Choose = ChooseMenuItem;
-	pOut->Color_menu();
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Choose_a_color.wav"), NULL, SND_SYNC);
 	}
 }
@@ -18,9 +17,12 @@ void ColorMenuAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool ColorMenuAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	Output* pOut = pManager->GetOutput();
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
+	pOut->Color_menu();
 	return false;
 }
 bool ColorMenuAction::CanBeRecorded() const

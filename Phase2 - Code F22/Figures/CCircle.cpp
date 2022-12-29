@@ -22,7 +22,8 @@ void CCircle::MoveTo(Point P)
 	Radius.x = radius + P.x;
 	Radius.y = P.y;
 }
-bool CCircle::IsPointInside(Point P) {
+bool CCircle::IsPointInside(Point P) 
+{
 	int distance = (int)sqrt(pow((P.x - Center.x), 2) + pow((P.y - Center.y), 2));
 	if (distance <= radius) return true;
 	return false;
@@ -40,7 +41,8 @@ void CCircle::Save(ofstream& OutFile)
 	}
 	OutFile << circle << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t' << Radius.x << '\t' << Radius.y << '\t' << DrawClr << '\t' << FillClr << '\n';
 }
-void CCircle::Load(ifstream& InFile) {
+void CCircle::Load(ifstream& InFile) 
+{
 	string Word;
 	InFile >> Word;
 	ID = stoi(Word);
@@ -56,7 +58,8 @@ void CCircle::Load(ifstream& InFile) {
 	InFile >> Word;
 	FigGfxInfo.DrawClr = getColorr(Word);
 	InFile >> Word;
-	if (Word != "NO_FILL") {
+	if (Word != "NO_FILL") 
+	{
 		FigGfxInfo.FillClr = getColorr(Word);
 		FigGfxInfo.isFilled = true;
 	}
@@ -74,7 +77,8 @@ void CCircle::ChngClr()
 	UI.IsFilled = FigGfxInfo.isFilled;
 	UI.FillColor = FigGfxInfo.FillClr;
 }
-void CCircle::PrintInfo(Output* pOut) {
+void CCircle::PrintInfo(Output* pOut) 
+{
 	string info;
 	info = "You selected a Circle with ID: " + to_string(ID) + ", Center Coordinates(" + to_string(Center.x) + ", " + to_string(Center.y) + ")";
 	info += ", Point on Radius Coordinates(" + to_string(Radius.x) + ", " + to_string(Radius.y) + ")";

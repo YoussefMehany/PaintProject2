@@ -1,6 +1,4 @@
-#ifndef ADD_SQUARE_ACTION_H
-#define ADD_SQUARE_ACTION_H
-
+#pragma once
 #include "Action.h"
 #include "..\Figures\CSquare.h"
 
@@ -26,5 +24,3 @@ public:
 	virtual bool CanBeRecorded() const;
 	~AddSquareAction();
 };
-
-#endif

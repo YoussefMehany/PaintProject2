@@ -14,7 +14,8 @@ void ExitAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool ExitAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 

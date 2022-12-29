@@ -202,19 +202,6 @@ void Output::ClearDrawArea() const
 	
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-void Output::UpdateToolBar() const
-{
-	/*if (UI.InterfaceMode == MODE_DRAW) {
-		CreateDrawToolBar();
-
-	}
-	else if (UI.InterfaceMode == MODE_FIGURE) {
-		Figure_menu();
-	}
-	else if (UI.InterfaceMode == MODE_COLOR) {
-		Color_menu();
-	}*/
-}
 
 void Output::PrintMessage(string msg) const	//Prints a message on status bar
 {
@@ -261,7 +248,6 @@ void Output::DrawRect(Point P1, Point P2, GfxInfo RectGfxInfo, bool selected) co
 
 	
 	pWind->DrawRectangle(P1.x, P1.y, P2.x, P2.y, style);
-	UpdateToolBar();
 }
 void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool selected)const
 {
@@ -284,7 +270,6 @@ void Output::DrawTrig(Point P1, Point P2, Point P3, GfxInfo TrigGfxInfo, bool se
 
 
 	pWind->DrawTriangle(P1.x, P1.y, P2.x, P2.y, P3.x, P3.y, style);
-	UpdateToolBar();
 }
 void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 {
@@ -306,7 +291,6 @@ void Output::DrawCir(Point P1, Point P2, GfxInfo CirGfxInfo, bool selected)const
 	int Radius = 0;
 	Radius = sqrt(pow((P1.x - P2.x), 2) + pow((P1.y - P2.y), 2));
 	pWind->DrawCircle(P1.x, P1.y, Radius, style);
-	UpdateToolBar();
 }
 void Output::DrawHex(const Point P1[], int Side, GfxInfo HexGfxInfo, bool selected)const
 {
@@ -329,7 +313,6 @@ void Output::DrawHex(const Point P1[], int Side, GfxInfo HexGfxInfo, bool select
 	for (int i = 0; i < 6; i++) Px[i] = P1[i].x;
 	for (int i = 0; i < 6; i++) Py[i] = P1[i].y;
 	pWind->DrawPolygon(Px, Py, 6, style);
-	UpdateToolBar();
 	
 }
 void Output::DrawSquare(Point P1, int Side, GfxInfo SquareGfxInfo, bool selected)const
@@ -353,7 +336,6 @@ void Output::DrawSquare(Point P1, int Side, GfxInfo SquareGfxInfo, bool selected
 	P2.x = P1.x - Side / 2, P2.y = P1.y - Side / 2;
 	P3.x = P1.x + Side / 2, P3.y = P1.y + Side / 2;
 	pWind->DrawRectangle(P2.x, P2.y, P3.x, P3.y, style);
-	UpdateToolBar();
 	
 }
 

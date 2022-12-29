@@ -1,3 +1,4 @@
+#pragma once
 #include "Action.h"
 #include "../ApplicationManager.h"
 class ChangeSoundState :public Action

@@ -13,7 +13,8 @@ void RedoAction::ReadActionParameters()
 bool RedoAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
 	if ((!pManager->IsUndo() && !pManager->IsRedo()) || pManager->GetUndoRedoLimit() == 0)

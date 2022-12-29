@@ -18,10 +18,12 @@ void PickFigures::ReadActionParameters()
 //Execute action (code depends on action type)
 bool PickFigures::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Pick_a_figure.wav"), NULL, SND_SYNC);
 	}
 	CFigure* select = NULL;
@@ -83,7 +85,8 @@ bool PickFigures::CanBeRecorded() const
 {
 	return false;
 }
-string PickFigures::TypetoString(shape FigType) {
+string PickFigures::TypetoString(shape FigType) 
+{
 	if (FigType == hexagon) return "Hexagons";
 	if (FigType == triangle) return "Triangles";
 	if (FigType == square) return "Squares";

@@ -13,7 +13,8 @@ void DeleteAction::ReadActionParameters()
 	pManager->Add_Undo_Redo_Actions(this);
 	Saved = pManager->GetSelectedFig()->GetNewFigure();
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Deleted.wav"), NULL, SND_SYNC);
 	}
 }
@@ -22,8 +23,10 @@ void DeleteAction::ReadActionParameters()
 bool DeleteAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) {
-		if (pManager->GetSelectedFig() == NULL) {
+	if (ReadParams) 
+	{
+		if (pManager->GetSelectedFig() == NULL) 
+		{
 			pOut->PrintMessage("Please Select a Figure First");
 			return true;
 		}

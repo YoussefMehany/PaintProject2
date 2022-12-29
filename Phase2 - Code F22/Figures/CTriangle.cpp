@@ -21,24 +21,29 @@ void CTriangle::MoveTo(Point P)
 	Center1.x = (Corners[0].x + Corners[1].x + Corners[2].x) / 3;
 	Center1.y = (Corners[0].y + Corners[1].y + Corners[2].y) / 3;
 	//getting the new corners
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) 
+	{
 		Corners[i].x += P.x - Center1.x;
 		Corners[i].y += P.y - Center1.y;
 	}
 }
-bool CTriangle::IsPointInside(Point P) {
+bool CTriangle::IsPointInside(Point P) 
+{
 	double vectorsx[3];
 	double vectorsy[3];
 	double vectorsmag[3];
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) 
+	{
 		vectorsx[i] = Corners[i].x - P.x;
 		vectorsy[i] = Corners[i].y - P.y;
 	}
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) 
+	{
 		vectorsmag[i] = sqrt(pow(vectorsx[i], 2) + pow(vectorsy[i], 2));
 	}
 	double angle = 0;
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) 
+	{
 		int nextpoint = (i + 1) % 3;
 		double dotproduct = vectorsx[i] * vectorsx[nextpoint] + vectorsy[i] * vectorsy[nextpoint];
 		double magnitudeproduct = vectorsmag[i] * vectorsmag[nextpoint];
@@ -52,7 +57,8 @@ void CTriangle::Save(ofstream& OutFile)
 	string DrawClr = getColor(FigGfxInfo.DrawClr);
 	string FillClr;
 	OutFile << triangle << '\t' << ID << '\t' ;
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) 
+	{
 		OutFile << Corners[i].x << '\t' << Corners[i].y << '\t';
 	}
 	if (FigGfxInfo.isFilled == true)
@@ -64,11 +70,13 @@ void CTriangle::Save(ofstream& OutFile)
 	}
 	OutFile << DrawClr << '\t' << FillClr << '\n';
 }
-void CTriangle::Load(ifstream& InFile) {
+void CTriangle::Load(ifstream& InFile) 
+{
 	string Word;
 	InFile >> Word;
 	ID = stoi(Word);
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) 
+	{
 		InFile >> Word;
 		Corners[i].x = stoi(Word);
 		InFile >> Word;
@@ -77,7 +85,8 @@ void CTriangle::Load(ifstream& InFile) {
 	InFile >> Word;
 	FigGfxInfo.DrawClr = getColorr(Word);
 	InFile >> Word;
-	if (Word != "NO_FILL") {
+	if (Word != "NO_FILL") 
+	{
 		FigGfxInfo.FillClr = getColorr(Word);
 		FigGfxInfo.isFilled = true;
 	}
@@ -96,7 +105,8 @@ void CTriangle::ChngClr()
 	UI.FillColor = FigGfxInfo.FillClr;
 
 }
-void CTriangle::PrintInfo(Output* pOut) {
+void CTriangle::PrintInfo(Output* pOut) 
+{
 	string info;
 	info = "You selected a Triangle with ID: " + to_string(ID) + ", First Corner(" + to_string(Corners[0].x) + ", " + to_string(Corners[0].y) + ")";
 	info += ", Second Corner(" + to_string(Corners[1].x) + ", " + to_string(Corners[1].y) + ")";

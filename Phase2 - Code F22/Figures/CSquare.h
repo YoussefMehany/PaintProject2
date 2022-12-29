@@ -1,6 +1,4 @@
-#ifndef CSQUARE_H
-#define CSQUARE_H
-
+#pragma once
 #include "CFigure.h"
 
 class CSquare : public CFigure
@@ -20,5 +18,3 @@ public:
 	virtual CFigure* GetNewFigure();
 	virtual void PrintInfo(Output* pOut);
 };
-
-#endif

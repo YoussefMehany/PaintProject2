@@ -1,6 +1,7 @@
 #ifndef ADD_CIRC_ACTION_H
 #define ADD_CIRC_ACTION_H
 
+#pragma once
 #include "Action.h"
 #include "..\Figures\CCircle.h"
 

@@ -20,10 +20,12 @@ void PickTypeandColor::ReadActionParameters()
 //Execute action (code depends on action type)
 bool PickTypeandColor::Execute(bool ReadParams)
 {
-	if (ReadParams) {
+	if (ReadParams) 
+	{
 		ReadActionParameters();
 	}
-	if (pManager->IsSoundOn()) {
+	if (pManager->IsSoundOn()) 
+	{
 		PlaySound(TEXT("Sound/Pick_a_figure_with_a_color.wav"), NULL, SND_SYNC);
 	}
 	CFigure* select = NULL;
@@ -63,7 +65,6 @@ bool PickTypeandColor::Execute(bool ReadParams)
 			i--;
 			continue;
 		}
-		//if (Act == PICK_TYPECLR) { pManager->UnBlock(); Execute(); }
 		if (select->GetFigType() == FigType && select->getColor() == color)
 		{
 			CCounter++;
@@ -88,7 +89,8 @@ bool PickTypeandColor::CanBeRecorded() const
 {
 	return false;
 }
-string PickTypeandColor::TypetoString(shape FigType) {
+string PickTypeandColor::TypetoString(shape FigType) 
+{
 	if (FigType == hexagon) return "Hexagons";
 	if (FigType == triangle) return "Triangles";
 	if (FigType == square) return "Squares";

@@ -8,10 +8,12 @@ ChangeSoundState::ChangeSoundState(ApplicationManager* pApp) :Action(pApp)
 void ChangeSoundState::ReadActionParameters()
 {
     Output* pOut = pManager->GetOutput();
-    if (pManager->IsSoundOn()) {
+    if (pManager->IsSoundOn()) 
+    {
         pOut->PrintMessage("Sound disabled");
     }
-    else {
+    else 
+    {
         pOut->PrintMessage("Sound enabled");
     }
 }
@@ -19,7 +21,8 @@ void ChangeSoundState::ReadActionParameters()
 //Execute action (code depends on action type)
 bool ChangeSoundState::Execute(bool ReadParams)
 {
-    if (ReadParams) {
+    if (ReadParams) 
+    {
         ReadActionParameters();
     }
     pManager->SetSound(!pManager->IsSoundOn());
