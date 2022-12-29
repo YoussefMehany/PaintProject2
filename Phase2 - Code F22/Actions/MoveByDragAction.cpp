@@ -17,12 +17,15 @@ void MoveByDragAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool MoveByDragAction::Execute(bool ReadParams)
 {
+	Output* pOut = pManager->GetOutput();
 	if (ReadParams) {
+		if (pManager->GetSelectedFig() == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
+			return true;
+		}
 		ReadActionParameters();
 	}
-
 	Input* pIn = pManager->GetInput();
-	Output* pOut = pManager->GetOutput();
 	if (pManager->IsSoundOn()) {
 		PlaySound(TEXT("Sound/Move_by_drag.wav"), NULL, SND_SYNC);
 	}

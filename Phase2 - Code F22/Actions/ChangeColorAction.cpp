@@ -9,19 +9,21 @@ ChangeColorAction::ChangeColorAction(ApplicationManager* pApp, color clr) :Actio
 //Reads parameters required for action to execute (code depends on action type)
 void ChangeColorAction::ReadActionParameters()
 {
-	Output* pOut = pManager->GetOutput();
-	pOut->ClearStatusBar();
-	pManager->Add_Undo_Redo_Actions(this);
-	Saved = pManager->GetSelectedFig()->GetNewFigure();
+	
 
 }
 
 //Execute action (code depends on action type)
 bool ChangeColorAction::Execute(bool ReadParams)
 {
-	if (ReadParams) {
-		ReadActionParameters();
+	Output* pOut = pManager->GetOutput();
+	if (pManager->GetSelectedFig() == NULL) {
+		pOut->PrintMessage("Please Select a Figure First");
+		return true;
 	}
+	pOut->ClearStatusBar();
+	pManager->Add_Undo_Redo_Actions(this);
+	Saved = pManager->GetSelectedFig()->GetNewFigure();
 	CFigure* selected = pManager->GetSelectedFig();
 	if (UI.Choose == BORDER)
 	{

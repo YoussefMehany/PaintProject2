@@ -49,7 +49,7 @@ ApplicationManager::ApplicationManager()
 	FigCount = 0;
 	RecCount = 0;
 	RandFigCount = 0;
-	Undo_RedoCount = 0;
+	Undo_RedoLimit = 0;
 	Undo_Redo_Count = 0;
 	CheckUpdate = false;
 	LastActionType = START_PROGRAM;
@@ -117,41 +117,17 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 
 	case UNDO_ACTION:
-		/*if (Undo_Redo_Count == 0)
-		{
-			pOut->PrintMessage("No Action to undo");
-			break;
-		}
-		if (Undo_RedoCount == 5 && LastActionType == UNDO_ACTION)
-		{
-			pOut->PrintMessage("Undo Limit Exceeded,Please make another action first");
-			break;
-		}*/
 		pAct = new UndoAction(this);
 		break;
 
 	case REDO_ACTION:
-		if ((LastActionType != UNDO_ACTION && LastActionType != REDO_ACTION) || Undo_RedoCount == 0)
-		{
-			pOut->PrintMessage("No Undo to Redo");
-			break;
-		}
 		pAct = new RedoAction(this);
 		break;
 
 	case MOVE_FIGURE:
-
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new MoveAction(this);
 		break;
 	case DRAG_FIGURE:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new MoveByDragAction(this);
 		break;
 	case SELECT_FIGURE:
@@ -162,59 +138,30 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		return;
 
 	case GREENCLR:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new ChangeColorAction(this, GREEN);
 		break;
 
 	case REDCLR:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new ChangeColorAction(this, RED);
 		break;
 
 	case BLUECLR:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
-
 		pAct = new ChangeColorAction(this, BLUE);
 		break;
 
 	case ORANGECLR:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new ChangeColorAction(this, ORANGE);
 		break;
 
 	case YELLOWCLR:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new ChangeColorAction(this, YELLOW);
 		break;
 
 	case BLACKCLR:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new ChangeColorAction(this, BLACK);
 		break;
 
 	case DELETE_FIGURE:
-		if (SelectedFig == NULL) {
-			pOut->PrintMessage("Please Select a Figure First");
-			break;
-		}
 		pAct = new DeleteAction(this);
 		break;
 
@@ -236,18 +183,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 
 	case STOP_REC:
-		if (!Recording) {
-			pOut->PrintMessage("Record some actions first");
-			break;
-		}
 		pAct = new StopRecAction(this);
 		break;
 
 	case PLAY_REC:
-		if (Recording) {
-			pOut->PrintMessage("Stop the recording first");
-			break;
-		}
 		pAct = new PlayRecAction(this);
 		break;
 
@@ -285,7 +224,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		bool Delete = pAct->Execute(); //Execute
 		if (Delete) delete pAct;
 		pAct = NULL;
-		if(pAct) LastAction = pAct;
+		if (pAct) LastAction = pAct;
 		if (Recording) {
 			RecAction->Execute(false);
 		}
@@ -313,13 +252,18 @@ CFigure* ApplicationManager::GetFigure(Point P1) const
 	}
 	return NULL;
 }
-void ApplicationManager::DeleteFigure(bool B)
+void ApplicationManager::DeleteFigure(CFigure* B)
 {
 	CFigure* save = SelectedFig;
-	if (B)
-	{
-		SelectedFig = FigList[FigCount - 1];
-	}
+	if (Undo || Redo)
+		if (B == NULL)
+		{
+			SelectedFig = GetLastAdd();
+		}
+		else
+		{
+			SelectedFig = B;
+		}
 	if (FigCount > 0)
 	{
 		for (int i = 0; i < FigCount; i++) {
@@ -334,10 +278,8 @@ void ApplicationManager::DeleteFigure(bool B)
 		SelectedFig = NULL;
 		FigList[--FigCount] = NULL;
 	}
-	if (B)
-	{
+	if (Undo || Redo)
 		SelectedFig = save;
-	}
 }
 //==============================================================================//
 //								Recording functions								//
@@ -356,21 +298,48 @@ Action* ApplicationManager::GetLastAction() const
 }
 int ApplicationManager::GetUndoRedoCount() const
 {
-	return Undo_RedoCount;
+	return Undo_Redo_Count;
+}
+int ApplicationManager::GetUndoRedoLimit() const
+{
+	return Undo_RedoLimit;
 }
 /////////////////////////////////////////////////////////////////////////////////
-bool ApplicationManager::IsUndo() const{
+bool ApplicationManager::IsUndo() const {
 	return Undo;
+}
+bool ApplicationManager::IsRedo() const
+{
+	return Redo;
 }
 void ApplicationManager::UndoLastAction()
 {
-	Undo_RedoCount++;
+	Undo = true;
+	Undo_RedoLimit++;
 	Undo_Redo_List[--Undo_Redo_Count]->UndoActions();
 }
 void ApplicationManager::RedoLastAction()
 {
-	Undo_RedoCount--;
+	Redo = true;
+	Undo_RedoLimit--;
 	Undo_Redo_List[Undo_Redo_Count++]->RedoActions();
+}
+CFigure* ApplicationManager::GetLastAdd()
+{
+	if (FigCount > 0)
+	{
+		int max = 0, index = 0;
+		for (int i = 0; i < FigCount; i++)
+		{
+			if (FigList[i]->GetID() > max)
+			{
+				max = FigList[i]->GetID();
+				index = i;
+			}
+		}
+		return FigList[index];
+	}
+	return NULL;
 }
 void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 {
@@ -390,7 +359,8 @@ void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 		}
 		Undo_Redo_List[Undo_Redo_Count - 1] = pAct;
 	}
-	Undo_RedoCount = 0;
+	Undo = Redo = false;
+	Undo_RedoLimit = 0;
 }
 void ApplicationManager::SwapFigures(CFigure* F)
 {
@@ -398,15 +368,15 @@ void ApplicationManager::SwapFigures(CFigure* F)
 	{
 		if (FigList[i]->GetID() == F->GetID())
 		{
-			if (!SelectedFig || SelectedFig != FigList[i])
+			if (FigList[i]->IsSelected())
 			{
-				F->SetSelected(false);
+				F->SetSelected(true);
+				SetSelectedFig(F);
 			}
 			else
-				SetSelectedFig(F);
+				F->SetSelected(false);
 			delete FigList[i];
 			FigList[i] = F;
-			//FigList[i]->ChngClr();
 			break;
 		}
 	}
@@ -434,7 +404,7 @@ void ApplicationManager::ClearAll()
 		}
 		RecCount = 0;
 	}
-	Undo_RedoCount = 0;
+	Undo_RedoLimit = 0;
 	Undo_Redo_Count = 0;
 	FigCount = 0;
 	SelectedFig = NULL;
@@ -480,8 +450,11 @@ void ApplicationManager::SetSelectedFig(CFigure* F)
 {
 	SelectedFig = F;
 }
-int ApplicationManager::GetClrCount()const
+int ApplicationManager::GetClrCount(int random)
 {
+	for (int i = 0; i < FigCount; i++)
+		if (FigList[random]->getColor() == FigList[i]->getColor())
+			ClrCount++;
 	return ClrCount;
 }
 void  ApplicationManager::SetClrCount(int C)
@@ -507,9 +480,6 @@ void  ApplicationManager::SetTypeClrCount(int C)
 shape ApplicationManager::GetRandomFig(int random) {
 
 	if (!FigCount) return noshape;
-	if (random == -1) {
-		random = rand() % FigCount;
-	}
 	shape Figtype = FigList[random]->GetFigType();
 	for (int i = 0; i < FigCount; i++) {
 		if (Figtype == FigList[i]->GetFigType()) {
@@ -521,17 +491,20 @@ shape ApplicationManager::GetRandomFig(int random) {
 	}
 	return Figtype;
 }
-string ApplicationManager::GetRandomClr(int& random)
+bool ApplicationManager::IsColored()
 {
-	if (FigCount == 0) return "NO COLORED FIG";
-	random = rand() % FigCount;
 	bool Check = false;
 	for (int i = 0; i < FigCount; i++)
 	{
 		if (FigList[i]->getColor() != "NO FILL CLR")
 			Check = true;
 	}
-	if (!Check) return "NO COLORED FIG";
+	if (!Check) return false;
+	return true;
+}
+string ApplicationManager::GetRandomClr(int& random)
+{
+	if (!IsColored() || FigCount == 0)  return "NO COLORED FIG";
 	while (true)
 	{
 		if (FigList[random]->getColor() == "NO FILL CLR")
@@ -539,9 +512,6 @@ string ApplicationManager::GetRandomClr(int& random)
 		else
 			break;
 	}
-	for (int i = 0; i < FigCount; i++)
-		if (FigList[random]->getColor() == FigList[i]->getColor())
-			ClrCount++;
 	return FigList[random]->getColor();
 }
 void ApplicationManager::UnBlock()
@@ -578,8 +548,6 @@ void ApplicationManager::SaveFile(ofstream& OutFile)
 		FigList[i]->Save(OutFile);
 	}
 }
-
-
 //////////////////////////////////////////////////////////////////////////////////////
 
 //==================================================================================//
@@ -614,8 +582,6 @@ Output* ApplicationManager::GetOutput() const
 //Destructor
 ApplicationManager::~ApplicationManager()
 {
-	for (int i = 0; i < FigCount; i++)
-		delete FigList[i];
 	delete pIn;
 	delete pOut;
 }

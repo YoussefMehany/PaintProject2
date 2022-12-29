@@ -23,5 +23,6 @@ public:
 	//Execute action (code depends on action type)
 	virtual bool Execute(bool ReadParams = true);
 	string TypetoString(shape);
+	void Reset();
 	virtual bool CanBeRecorded() const;
 };

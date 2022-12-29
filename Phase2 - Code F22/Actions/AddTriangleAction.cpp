@@ -63,10 +63,13 @@ void AddTriangleAction::UndoActions()
 {
 	Saved_Redo = new CTriangle(P1, P2, P3, TriangleGfxInfo);
 	Saved_Redo->SetID(id);
-	pManager->DeleteFigure(true);
+	if (pManager->GetSelectedFig() != NULL)
+		if (pManager->GetSelectedFig()->GetID() == id) { Saved_Redo->SetSelected(true); }
+	pManager->DeleteFigure();
 }
 void AddTriangleAction::RedoActions()
 {
+	if (Saved_Redo->IsSelected()) { pManager->SetSelectedFig(Saved_Redo); }
 	pManager->AddFigure(Saved_Redo);
 }
 AddTriangleAction::~AddTriangleAction()

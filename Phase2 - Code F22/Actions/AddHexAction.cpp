@@ -51,10 +51,14 @@ void AddHexAction::UndoActions()
 {
 	Saved_Redo = new CHexagon(P1, HexGfxInfo);
 	Saved_Redo->SetID(id);
-	pManager->DeleteFigure(true);
+	if (pManager->GetSelectedFig() != NULL)
+		if (pManager->GetSelectedFig()->GetID() == id) { Saved_Redo->SetSelected(true); }
+
+	pManager->DeleteFigure();
 }
 void AddHexAction::RedoActions()
 {
+	if (Saved_Redo->IsSelected()) { pManager->SetSelectedFig(Saved_Redo); }
 	pManager->AddFigure(Saved_Redo);
 }
 bool AddHexAction::CanBeRecorded() const

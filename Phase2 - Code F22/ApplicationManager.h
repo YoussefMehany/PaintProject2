@@ -16,7 +16,7 @@ class ApplicationManager
 private:
 	int FigCount; //Actual number of figures
 	int RecCount;
-	int Undo_RedoCount;
+	int Undo_RedoLimit;
 	int Undo_Redo_Count;
 	int ClrCount;
 	int RandFigCount;
@@ -67,7 +67,7 @@ public:
 	CFigure* GetSelectedFig()const;
 	void PlayRec();
 	int GetFigCount()const;
-	void DeleteFigure(bool B=false);
+	void DeleteFigure(CFigure* B=NULL);
 	void SaveFile(ofstream& OutFile);
 	void SetSound(bool sound);
 	bool IsSoundOn() const;
@@ -76,23 +76,27 @@ public:
 	void UndoLastAction();
 	void RedoLastAction();
 	void SwapFigures(CFigure*);
+	CFigure* GetLastAdd();
 	void Add_Undo_Redo_Actions(Action*);
 	bool IsUndo() const;
+	bool IsRedo() const;
 	int GetUndoRedoCount() const;
+	int GetUndoRedoLimit() const;
 	// --Play Mode
 	bool IsPlayMode()const;
 	void SetPlayMode(bool);
 	void SetKEY(bool);
 	string GetRandomClr(int&);
-	shape GetRandomFig(int = -1);
+	shape GetRandomFig(int);
 	void UnBlock();
 	void BlockFig(CFigure*);
-	int GetClrCount()const;
+	int GetClrCount(int);
 	void SetClrCount(int );
 	int GetRandFigCount()const;
 	void SetRandFigCount(int);
 	int GetTypeClrCount()const;
 	void SetTypeClrCount(int);
+	bool IsColored();
 	// -- Interface Management Functions
 	Input *GetInput() const; //Return pointer to the input
 	Output *GetOutput() const; //Return pointer to the output

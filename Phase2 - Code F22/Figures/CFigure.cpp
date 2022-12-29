@@ -23,6 +23,7 @@ bool CFigure::IsBlocked() const
 	return Blocked;
 }
 void CFigure::SetID(int id) {
+	ID_Num--;
 	ID = id;
 }
 int CFigure::GetID()const

@@ -52,10 +52,13 @@ void AddCircAction::UndoActions()
 {
 	Saved_Redo = new CCircle(P1, P2, CircGfxInfo);
 	Saved_Redo->SetID(id);
-	pManager->DeleteFigure(true);
+	if(pManager->GetSelectedFig()!=NULL)
+	if (pManager->GetSelectedFig()->GetID() == id) { Saved_Redo->SetSelected(true); }
+	pManager->DeleteFigure();
 }
 void AddCircAction::RedoActions()
 {
+	if (Saved_Redo->IsSelected()) { pManager->SetSelectedFig(Saved_Redo); }
 	pManager->AddFigure(Saved_Redo);
 }
 bool AddCircAction::CanBeRecorded() const

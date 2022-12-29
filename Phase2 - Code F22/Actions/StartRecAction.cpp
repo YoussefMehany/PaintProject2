@@ -8,12 +8,12 @@ StartRecAction::StartRecAction(ApplicationManager* pApp) :Action(pApp)
 void StartRecAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
-	if (!pManager->IsRecording()) {
-		if (pManager->IsSoundOn()) {
-			PlaySound(TEXT("Sound/Recording_Started.wav"), NULL, SND_SYNC);
-		}
-		pOut->PrintMessage("Recording Started");
+
+	if (pManager->IsSoundOn()) {
+		PlaySound(TEXT("Sound/Recording_Started.wav"), NULL, SND_SYNC);
 	}
+	pOut->PrintMessage("Recording Started");
+
 }
 
 //Execute action (code depends on action type)

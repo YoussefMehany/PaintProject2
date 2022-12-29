@@ -11,14 +11,14 @@ void UndoAction::ReadActionParameters()
 bool UndoAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
+	if (pManager->GetUndoRedoLimit() == 5 && pManager->IsUndo())
+	{
+		pOut->PrintMessage("Undo Limit Exceeded,Please make another action first");
+		return true;
+	}
 	if (pManager->GetUndoRedoCount() == 0)
 	{
 		pOut->PrintMessage("No Action to undo");
-		return true;
-	}
-	if (pManager->GetUndoRedoCount() == 5 && pManager->IsUndo())
-	{
-		pOut->PrintMessage("Undo Limit Exceeded,Please make another action first");
 		return true;
 	}
 	pManager->UndoLastAction();

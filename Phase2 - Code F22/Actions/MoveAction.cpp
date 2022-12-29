@@ -25,11 +25,16 @@ void MoveAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool MoveAction::Execute(bool ReadParams)
 {
+	Output* pOut = pManager->GetOutput();
 	if (ReadParams) {
+
+		if (pManager->GetSelectedFig() == NULL) {
+			pOut->PrintMessage("Please Select a Figure First");
+			return true;
+		}
 		ReadActionParameters();
 	}
-	Input* pIn = pManager->GetInput();
-	Output* pOut = pManager->GetOutput();
+
 	CFigure* Fig = pManager->GetSelectedFig();
 	Fig->MoveTo(P);
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();

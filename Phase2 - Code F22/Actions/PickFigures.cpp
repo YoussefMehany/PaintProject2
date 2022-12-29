@@ -4,12 +4,13 @@ PickFigures::PickFigures(ApplicationManager* pApp) :Action(pApp)
 {
 	pOut = pManager->GetOutput();
 	pIn = pManager->GetInput();
-	CCounter = 0;
-	FCounter = 0;
+	
 }
 //Reads parameters required for action to execute (code depends on action type)
 void PickFigures::ReadActionParameters()
 {
+	CCounter = 0;
+	FCounter = 0;
 	pManager->SetKEY(true);
 	pOut->CreatePlayToolBar();
 }
@@ -25,13 +26,17 @@ bool PickFigures::Execute(bool ReadParams)
 	}
 	CFigure* select = NULL;
 	int figcount = pManager->GetFigCount();
-	FigType = pManager->GetRandomFig();
+	if (figcount == 0)
+	{
+		pOut->PrintMessage("NO FIGURE");
+		return true;
+	}
+	Random = rand() % figcount;
+	FigType = pManager->GetRandomFig(Random);
 	if (FigType == noshape)
 	{
 		pOut->PrintMessage("NO FIGURES");
-		pManager->SetRandFigCount(0);
-		pManager->UnBlock();
-		pManager->SetKEY(false);
+		Reset();
 		return false;
 	}
 	pManager->UpdateInterface();
@@ -39,6 +44,16 @@ bool PickFigures::Execute(bool ReadParams)
 	for (int i = 0; i < figcount; i++)
 	{
 		pIn->GetPointClicked(P.x, P.y);
+		if (P.y >= 0 && P.y < UI.ToolBarHeight)
+		{
+			int ClickedItemOrder = (P.x / UI.MenuItemWidth);
+			if (ClickedItemOrder == PLAYTYPE)
+			{
+				Reset();
+				Execute();
+				return false;
+			}
+		}
 		select = pManager->GetFigure(P);
 		if (!select)
 		{
@@ -53,18 +68,15 @@ bool PickFigures::Execute(bool ReadParams)
 		{
 			FCounter++;
 		}
-		pOut->PrintMessage("Correct : " + to_string(CCounter) + "      Incorrect : " + to_string(FCounter));
-
 		if (CCounter == pManager->GetRandFigCount())
+		{
+			pOut->PrintMessage("Correct : " + to_string(CCounter) + "      Incorrect : " + to_string(FCounter));
 			break;
-
+		}
 		pManager->BlockFig(select);
 		pManager->UpdateInterface();
 	}
-	pManager->SetRandFigCount(0);
-	pManager->SetTypeClrCount(0);
-	pManager->UnBlock();
-	pManager->SetKEY(false);
+	Reset();
 	return true;
 }
 bool PickFigures::CanBeRecorded() const
@@ -77,4 +89,11 @@ string PickFigures::TypetoString(shape FigType) {
 	if (FigType == square) return "Squares";
 	if (FigType == rectangle) return "Rectangles";
 	if (FigType == circle) return "Circles";
+}
+void PickFigures::Reset()
+{
+	pManager->SetRandFigCount(0);
+	pManager->SetTypeClrCount(0);
+	pManager->UnBlock();
+	pManager->SetKEY(false);
 }
