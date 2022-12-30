@@ -10,8 +10,6 @@ void DeleteAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->ClearStatusBar();
-	pManager->Add_Undo_Redo_Actions(this);
-	Saved = pManager->GetSelectedFig()->GetNewFigure();
 	//Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
 	if (pManager->IsSoundOn())
 	{
@@ -32,18 +30,20 @@ bool DeleteAction::Execute(bool ReadParams)
 		}
 		ReadActionParameters();
 	}
-	Saved->SetSelected(false);
+	pManager->Add_Undo_Redo_Actions(this);
+	Saved = pManager->GetSelectedFig()->GetNewFigure();
+	//Saved->SetSelected(false);
 	//Saved_Redo->SetSelected(false);
 	pManager->DeleteFigure();
 	return false;
 }
 void DeleteAction::UndoActions()
 {
-	//if (pManager->GetSelectedFig())
-	//{
-	//	pManager->GetSelectedFig()->SetSelected(false);
-	//}
-	//pManager->SetSelectedFig(Saved);
+	if (pManager->GetSelectedFig())
+	{
+		pManager->GetSelectedFig()->SetSelected(false);
+	}
+	pManager->SetSelectedFig(Saved);
 	pManager->AddFigure(Saved);
 	Saved = Saved->GetNewFigure();
 }

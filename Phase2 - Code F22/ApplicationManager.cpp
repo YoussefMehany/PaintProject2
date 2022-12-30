@@ -199,7 +199,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pAct = NULL;
 		}
 		if (pAct) LastAction = pAct;
-		if (Recording) 
+		if (Recording)
 		{
 			RecAction->Execute(false);
 		}
@@ -214,7 +214,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 //Add a figure to the list of figures
 void ApplicationManager::AddFigure(CFigure* pFig)
 {
-	if (FigCount < MaxFigCount) 
+	if (FigCount < MaxFigCount)
 	{
 		FigList[FigCount++] = pFig;
 		pFig->SetBlock(false);
@@ -259,9 +259,9 @@ void ApplicationManager::SwapFigures(CFigure* F)
 }
 CFigure* ApplicationManager::GetFigure(Point P1) const
 {
-	for (int i = FigCount - 1; i >= 0; i--) 
+	for (int i = FigCount - 1; i >= 0; i--)
 	{
-		if (FigList[i]->IsPointInside(P1)) 
+		if (FigList[i]->IsPointInside(P1))
 		{
 			return FigList[i];
 		}
@@ -282,7 +282,7 @@ void ApplicationManager::DeleteFigure(CFigure* B)
 		}
 	if (FigCount > 0)
 	{
-		for (int i = 0; i < FigCount; i++) 
+		for (int i = 0; i < FigCount; i++)
 		{
 			if (FigList[i]->GetID() == SelectedFig->GetID())
 			{
@@ -291,13 +291,14 @@ void ApplicationManager::DeleteFigure(CFigure* B)
 				{
 					FigList[j] = FigList[j + 1];
 				}
+				SelectedFig = NULL;
+				FigList[--FigCount] = NULL;
 				break;
 			}
 		}
-		SelectedFig = NULL;
-		FigList[--FigCount] = NULL;
+
 	}
-	if (Undo || Redo)
+	if ((Undo || Redo)&&FigCount>0)
 		SelectedFig = save;
 }
 //==============================================================================//
@@ -359,7 +360,7 @@ void ApplicationManager::Add_Undo_Redo_Actions(Action* pAct)
 	}
 	else
 	{
-		if (!Undo_Redo_List[0]->IsRecorded()) 
+		if (!Undo_Redo_List[0]->IsRecorded())
 		{
 			delete Undo_Redo_List[0];
 		}
@@ -379,7 +380,7 @@ void ApplicationManager::ClearAll()
 	UI.IsFilled = false;
 	UI.DrawColor = BLUE;    //Drawing color
 	UI.FillColor = GREEN;    //Filling color
-	for (int i = 0; i < FigCount; i++) 
+	for (int i = 0; i < FigCount; i++)
 	{
 		delete FigList[i];
 		FigList[i] = NULL;
@@ -390,7 +391,7 @@ void ApplicationManager::ClearAll()
 			delete Undo_Redo_List[i];
 		Undo_Redo_List[i] = NULL;
 	}
-	if (!PlayingRec) 
+	if (!PlayingRec)
 	{
 		for (int i = 0; i < RecCount; i++)
 		{
@@ -448,7 +449,7 @@ int ApplicationManager::GetClrCount(int random)
 			ClrCount++;
 	return ClrCount;
 }
-bool ApplicationManager::IsSoundOn() const 
+bool ApplicationManager::IsSoundOn() const
 {
 	return Sound;
 }
@@ -456,7 +457,7 @@ bool ApplicationManager::IsRecording() const
 {
 	return Recording;
 }
-bool ApplicationManager::IsPlayingRec() const 
+bool ApplicationManager::IsPlayingRec() const
 {
 	return PlayingRec;
 }
@@ -501,16 +502,16 @@ void  ApplicationManager::SetTypeClrCount(int C)
 //								Play Mode Functions   						    //
 //==============================================================================//
 
-shape ApplicationManager::GetRandomFig(int random) 
+shape ApplicationManager::GetRandomFig(int random)
 {
 
 	if (!FigCount) return noshape;
 	shape Figtype = FigList[random]->GetFigType();
-	for (int i = 0; i < FigCount; i++) 
+	for (int i = 0; i < FigCount; i++)
 	{
-		if (Figtype == FigList[i]->GetFigType()) 
+		if (Figtype == FigList[i]->GetFigType())
 		{
-			if (FigList[random]->getColor() == FigList[i]->getColor()) 
+			if (FigList[random]->getColor() == FigList[i]->getColor())
 			{
 				FigTypeClr++;
 			}

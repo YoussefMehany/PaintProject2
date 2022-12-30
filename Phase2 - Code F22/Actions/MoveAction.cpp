@@ -10,7 +10,7 @@ void MoveAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-	if (pManager->IsSoundOn()) 
+	if (pManager->IsSoundOn())
 	{
 		PlaySound(TEXT("Sound/Move.wav"), NULL, SND_SYNC);
 	}
@@ -18,26 +18,25 @@ void MoveAction::ReadActionParameters()
 	pIn->GetPointClicked(P.x, P.y);
 
 	pOut->ClearStatusBar();
-	pManager->Add_Undo_Redo_Actions(this);
 
-	Saved = pManager->GetSelectedFig()->GetNewFigure();
 }
 
 //Execute action (code depends on action type)
 bool MoveAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) 
+	if (ReadParams)
 	{
 
-		if (pManager->GetSelectedFig() == NULL) 
+		if (pManager->GetSelectedFig() == NULL)
 		{
 			pOut->PrintMessage("Please Select a Figure First");
 			return true;
 		}
 		ReadActionParameters();
 	}
-
+	pManager->Add_Undo_Redo_Actions(this);
+	Saved = pManager->GetSelectedFig()->GetNewFigure();
 	CFigure* Fig = pManager->GetSelectedFig();
 	Fig->MoveTo(P);
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();

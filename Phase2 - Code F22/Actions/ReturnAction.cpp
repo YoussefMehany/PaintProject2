@@ -15,10 +15,12 @@ void ReturnAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool ReturnAction::Execute(bool ReadParams)
 {
+	Output* pOut = pManager->GetOutput();
 	if (ReadParams) 
 	{
 		ReadActionParameters();
 	}
+	pOut->CreateDrawToolBar();
 	return false;
 }
 bool ReturnAction::CanBeRecorded() const

@@ -14,7 +14,7 @@ void AddTriangleAction::ReadActionParameters()
 	//Get a Pointer to the Input / Output Interfaces
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-	pManager->Add_Undo_Redo_Actions(this);
+	
 	if (pManager->IsSoundOn()) 
 	{
 		PlaySound(TEXT("Sound/Triangle.wav"), NULL, SND_SYNC);
@@ -50,6 +50,7 @@ bool AddTriangleAction::Execute(bool ReadParams)
 	{
 		ReadActionParameters();
 	}
+	pManager->Add_Undo_Redo_Actions(this);
 	//Create a Triangle with the parameters read from the user
 	CTriangle* R = new CTriangle(P1, P2, P3, TriangleGfxInfo);
 	//Add the rectangle to the list of figures

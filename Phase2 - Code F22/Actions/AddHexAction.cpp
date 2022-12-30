@@ -14,7 +14,7 @@ void AddHexAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	pManager->Add_Undo_Redo_Actions(this);
+	
 	if (pManager->IsSoundOn()) 
 	{
 		PlaySound(TEXT("Sound/Hexagon.wav"), NULL, SND_SYNC);
@@ -42,6 +42,7 @@ bool AddHexAction::Execute(bool ReadParams)
 	{
 		ReadActionParameters();
 	}
+	pManager->Add_Undo_Redo_Actions(this);
 	//Create a rectangle with the parameters read from the user
 	CHexagon* R = new CHexagon(P1, HexGfxInfo);
 	//Add the rectangle to the list of figures

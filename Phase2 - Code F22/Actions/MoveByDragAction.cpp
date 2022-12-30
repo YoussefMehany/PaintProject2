@@ -11,7 +11,7 @@ void MoveByDragAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	pOut->PrintMessage("Drag the selected figure");
 
-	Saved = pManager->GetSelectedFig()->GetNewFigure();
+	
 }
 
 //Execute action (code depends on action type)
@@ -27,6 +27,7 @@ bool MoveByDragAction::Execute(bool ReadParams)
 		}
 		ReadActionParameters();
 	}
+	
 	Input* pIn = pManager->GetInput();
 	if (pManager->IsSoundOn()) 
 	{
@@ -53,6 +54,7 @@ bool MoveByDragAction::Execute(bool ReadParams)
 		}
 		if (Check_1)
 		{
+			Saved = pManager->GetSelectedFig()->GetNewFigure();
 			pManager->Add_Undo_Redo_Actions(this);
 			break;
 		}

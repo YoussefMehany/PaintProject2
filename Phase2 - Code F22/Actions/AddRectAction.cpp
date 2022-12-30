@@ -13,7 +13,7 @@ void AddRectAction::ReadActionParameters()
 	//Get a Pointer to the Input / Output Interfaces
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-	pManager->Add_Undo_Redo_Actions(this);
+	
 
 	if (pManager->IsSoundOn()) 
 	{
@@ -46,6 +46,7 @@ bool AddRectAction::Execute(bool ReadParams)
 	{
 		ReadActionParameters();
 	}
+	pManager->Add_Undo_Redo_Actions(this);
 	//Create a rectangle with the parameters read from the user
 	CRectangle* R = new CRectangle(P1, P2, RectGfxInfo);
 	//Add the rectangle to the list of figures

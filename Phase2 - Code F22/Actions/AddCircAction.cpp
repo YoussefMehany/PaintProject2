@@ -14,7 +14,7 @@ void AddCircAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	pManager->Add_Undo_Redo_Actions(this);
+	
 	if (pManager->IsSoundOn())
 	{
 		PlaySound(TEXT("Sound/Circle.wav"), NULL, SND_SYNC);
@@ -42,6 +42,7 @@ bool AddCircAction::Execute(bool ReadParams)
 	{
 		ReadActionParameters();
 	}
+	pManager->Add_Undo_Redo_Actions(this);
 	//Create a Circle with the parameters read from the user
 
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
