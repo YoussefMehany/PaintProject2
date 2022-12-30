@@ -1,16 +1,9 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  CTriangle.cpp
   CSquare.cpp
-  CRectangle.cpp
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CRectangle.cpp(26,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CRectangle.cpp(27,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CRectangle.cpp(28,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CRectangle.cpp(29,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   CHexagon.cpp
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(28,26): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(28,97): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(29,26): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(29,97): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  CCircle.cpp
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(60,26): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(60,97): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(61,27): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Figures\CHexagon.cpp(61,98): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   Generating Code...
-  PT-Project.vcxproj -> C:\Users\marwan\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe
+  PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

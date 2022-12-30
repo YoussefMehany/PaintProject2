@@ -4,11 +4,11 @@
 #include <cmath>
 #include <fstream>
 //Base class for all figures
-enum {Range =10};
 class CFigure
 {
-	
+
 protected:
+	enum {error = 10};
 	int ID;		//Each figure has an ID
 	static int ID_Num;
 	bool Selected;	//true if the figure is selected.
@@ -26,15 +26,16 @@ public:
 	bool IsBlocked() const;
 	void SetID(int id);
 	int GetID()const;
-	virtual void Draw(Output* pOut) const  = 0 ;		//Draw the figure
+	virtual void Draw(Output* pOut) const = 0;		//Draw the figure
 	shape GetFigType() const;
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
 	void ChngFillClr(color Fclr);  //changes the figure's filling color
-	virtual void ChngClr()=0;	
-	virtual void MoveTo(Point P)=0;
-	virtual bool IsPointInside(Point P)=0;
-	virtual CFigure* GetNewFigure()=0;
-	virtual bool Resize(Point) = 0;
+	virtual void ChngClr() = 0;
+	virtual void MoveTo(Point P) = 0;
+	virtual bool IsPointInside(Point P) = 0;
+	virtual bool IsCorner(Point P) = 0;
+	virtual CFigure* GetNewFigure() = 0;
+
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
 
@@ -42,8 +43,9 @@ public:
 	string getColor(color = BISQUE);
 	color getColorr(string);
 
-	virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file
-	virtual void Load(ifstream &Infile) = 0;	//Load the figure parameters to the file
+	virtual void Save(ofstream& OutFile) = 0;	//Save the figure parameters to the file
+	virtual void Load(ifstream& Infile) = 0;	//Load the figure parameters to the file
 
 	virtual void PrintInfo(Output* pOut) = 0;	//print all figure info on the status bar
+	virtual void Resize(Point P) = 0;
 };

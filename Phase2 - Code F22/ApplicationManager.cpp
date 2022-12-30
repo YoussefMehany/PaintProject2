@@ -21,16 +21,15 @@
 #include "Actions\ReturnAction.h"
 #include "Actions\ClearAllAction.h"
 #include "Actions\RedoAction.h"
-#include "Actions/MoveByDragAction.h"
-#include "Actions/ExitAction.h"
-#include "Actions/SwitchToDrawAction.h"
-#include "Actions/SwitchToPlayAction.h"
-#include "Actions/PickColors.h"
-#include "Actions/PickFigures.h"
-#include "Actions/PickTypeandColor.h"
-#include "Actions/ChangeSoundState.h"
-#include "Actions/ResizeAction.h"
-#include <iostream>
+#include "Actions\MoveByDragAction.h"
+#include "Actions\ExitAction.h"
+#include "Actions\SwitchToDrawAction.h"
+#include "Actions\SwitchToPlayAction.h"
+#include "Actions\PickColors.h"
+#include "Actions\PickFigures.h"
+#include "Actions\PickTypeandColor.h"
+#include "Actions\ChangeSoundState.h"
+#include "Actions\ResizeAction.h"
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -302,7 +301,7 @@ void ApplicationManager::DeleteFigure(CFigure* B)
 		}
 
 	}
-	if ((Undo || Redo)&&FigCount>0)
+	if ((Undo || Redo) && FigCount>0)
 		SelectedFig = save;
 }
 //==============================================================================//
@@ -402,6 +401,8 @@ void ApplicationManager::ClearAll()
 			delete Recorded[i];
 			Recorded[i] = NULL;
 		}
+		if (RecAction)
+			delete RecAction;
 		RecCount = 0;
 	}
 	Undo_RedoLimit = 0;

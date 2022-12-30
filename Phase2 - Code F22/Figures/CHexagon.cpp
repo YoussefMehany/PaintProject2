@@ -15,38 +15,70 @@ CHexagon::CHexagon()
 
 void CHexagon::Draw(Output* pOut) const
 {
-	//Call Output::DrawRect to draw a rectangle on the screen	
+	//Call Output::DrawRect to draw a hexagon on the screen
 	pOut->DrawHex(Corners, Side, FigGfxInfo, Selected);
 }
-void CHexagon::MoveTo(Point P) 
+void CHexagon::MoveTo(Point P)
 {
 	Center = P;
 	CalcCorners(Corners);
 }
+void CHexagon::Resize(Point P)
+{
+	if (Index == 0 || Index == 2)
+	{
+		Side = (Center.y - P.y) * 2;
+	}
+	else if (Index == 1)
+	{
+		Side = Center.y - P.y;
+	}
+	else if (Index == 4)
+	{
+		Side = P.y - Center.y;
+	}
+	else if (Index == 3 || Index == 5)
+	{
+		Side = (P.y - Center.y) * 2;
+	}
+	CalcCorners(Corners);
+}
+bool CHexagon::IsCorner(Point P)
+{
+	for (int i = 0; i < 6; i++)
+	{
+		if (abs(Corners[i].x - P.x) <= error && abs(Corners[i].y - P.y) <= error)
+		{
+			Index = i;
+			return true;
+		}
+	}
+	return false;
+}
 void CHexagon::CalcCorners(Point* Corners)
 {
 	Corners[0].x = Center.x - Side * sqrt(3) / 2, Corners[1].x = Center.x, Corners[2].x = Center.x + Side * sqrt(3) / 2,
-	Corners[3].x = Center.x + Side * sqrt(3) / 2, Corners[4].x = Center.x, Corners[5].x = Center.x - Side * sqrt(3) / 2;
+		Corners[3].x = Center.x + Side * sqrt(3) / 2, Corners[4].x = Center.x, Corners[5].x = Center.x - Side * sqrt(3) / 2;
 	Corners[0].y = Center.y - Side / 2, Corners[1].y = Center.y - Side, Corners[2].y = Center.y - Side / 2,
-	Corners[3].y = Center.y + Side / 2, Corners[4].y = Center.y + Side, Corners[5].y = Center.y + Side / 2;
+		Corners[3].y = Center.y + Side / 2, Corners[4].y = Center.y + Side, Corners[5].y = Center.y + Side / 2;
 }
 
-bool CHexagon::IsPointInside(Point P) 
+bool CHexagon::IsPointInside(Point P)
 {
 	double vectorsx[6];
 	double vectorsy[6];
 	double vectorsmag[6];
-	for (int i = 0; i < 6; i++) 
+	for (int i = 0; i < 6; i++)
 	{
 		vectorsx[i] = Corners[i].x - P.x;
 		vectorsy[i] = Corners[i].y - P.y;
 	}
-	for (int i = 0; i < 6; i++) 
+	for (int i = 0; i < 6; i++)
 	{
 		vectorsmag[i] = sqrt(pow(vectorsx[i], 2) + pow(vectorsy[i], 2));
 	}
 	double angle = 0;
-	for (int i = 0; i < 6; i++) 
+	for (int i = 0; i < 6; i++)
 	{
 		int nextpoint = (i + 1) % 6;
 		double dotproduct = vectorsx[i] * vectorsx[nextpoint] + vectorsy[i] * vectorsy[nextpoint];
@@ -58,10 +90,10 @@ bool CHexagon::IsPointInside(Point P)
 }
 void CHexagon::Save(ofstream& OutFile)
 {
-	
+
 	string DrawClr = getColor(FigGfxInfo.DrawClr);
 	string FillClr;
-	OutFile << hexagon << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t'; 
+	OutFile << hexagon << '\t' << ID << '\t' << Center.x << '\t' << Center.y << '\t';
 
 	if (FigGfxInfo.isFilled == true)
 	{
@@ -72,7 +104,7 @@ void CHexagon::Save(ofstream& OutFile)
 	}
 	OutFile << DrawClr << '\t' << FillClr << '\n';
 }
-void CHexagon::Load(ifstream& InFile) 
+void CHexagon::Load(ifstream& InFile)
 {
 	string Word;
 	InFile >> Word;
@@ -85,17 +117,18 @@ void CHexagon::Load(ifstream& InFile)
 	InFile >> Word;
 	FigGfxInfo.DrawClr = getColorr(Word);
 	InFile >> Word;
-	if (Word != "NO_FILL") 
+	if (Word != "NO_FILL")
 	{
 		FigGfxInfo.FillClr = getColorr(Word);
 		FigGfxInfo.isFilled = true;
 	}
 }
-CFigure* CHexagon::GetNewFigure() 
+CFigure* CHexagon::GetNewFigure()
 {
 	CHexagon* P = new CHexagon(Center, FigGfxInfo);
 	P->ID = ID;
 	P->SetSelected(IsSelected());
+	P->Side = Side;
 	return P;
 }
 void CHexagon::ChngClr()
@@ -105,14 +138,10 @@ void CHexagon::ChngClr()
 	UI.FillColor = FigGfxInfo.FillClr;
 
 }
-void CHexagon::PrintInfo(Output* pOut) 
+void CHexagon::PrintInfo(Output* pOut)
 {
 	string info;
 	info = "You selected a Hexagon with ID: " + to_string(ID) + ", Center Coordinates(" + to_string(Center.x) + ", " + to_string(Center.y) + ")";
 	info += ", Side Length = " + to_string(Side);
 	pOut->PrintMessage(info);
-}
-bool CHexagon::Resize(Point P)
-{
-	return true;
 }

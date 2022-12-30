@@ -32,8 +32,6 @@ bool DeleteAction::Execute(bool ReadParams)
 	}
 	pManager->Add_Undo_Redo_Actions(this);
 	Saved = pManager->GetSelectedFig()->GetNewFigure();
-	//Saved->SetSelected(false);
-	//Saved_Redo->SetSelected(false);
 	pManager->DeleteFigure();
 	return false;
 }

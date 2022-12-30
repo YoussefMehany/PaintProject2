@@ -33,39 +33,44 @@ bool ResizeAction::Execute(bool ReadParams)
 		}
 		ReadActionParameters();
 	}
-	pManager->Add_Undo_Redo_Actions(this);
 	Saved = pManager->GetSelectedFig()->GetNewFigure();
 	CFigure* Fig = pManager->GetSelectedFig();
 
 	bool Check_1 = false;
-	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP)
+	bool Check_2 = true;
+	if(!pManager->IsPlayingRec())
 	{
-		//Sleep(10);
-		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
+		while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP)
 		{
-			Sleep(20);
-			if (!Fig->Resize(P))
+			Sleep(10);
+			while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
 			{
-				pOut->PrintMessage("Please resize the Selected figure ,Try again");
+				Sleep(20);
+				if ((pManager->GetFigure(P) != Fig || !Fig->IsCorner(P)) && Check_2)
+				{
+					pOut->PrintMessage("Please drag a corner of the selected figure, Try again");
+					Check_1 = true;
+					return true;
+				}
+				Fig->Resize(P);
+				pManager->UpdateInterface();
 				Check_1 = true;
-				return true;
+				Check_2 = false;
 			}
-			pManager->UpdateInterface();
-			Check_1 = true;
+			if (Check_1)
+			{
+				break;
+			}
 		}
-		if (Check_1)
-		{
-			Saved = pManager->GetSelectedFig()->GetNewFigure();
-			pManager->Add_Undo_Redo_Actions(this);
-			break;
-		}
-	}
-	if (pManager->IsPlayingRec())
-		P = P_Rec;
-	else {
 		P_Rec = P;
 	}
-	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
+	pManager->Add_Undo_Redo_Actions(this);
+	if (pManager->IsPlayingRec())
+	{
+		P = P_Rec;
+		Fig->Resize(P);
+	}
+	Saved_Redo = Fig->GetNewFigure();
 	return false;
 }
 void ResizeAction::UndoActions()

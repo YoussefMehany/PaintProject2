@@ -37,6 +37,11 @@ bool StartRecAction::Execute(bool ReadParams)
 		{
 			pManager->AddActionRec(RecAction);
 		}
+		//else
+		//{
+		//	pManager->SetRec(false);
+		//	return true;
+		//}
 	}
 	pManager->SetRec(true);
 	return false;

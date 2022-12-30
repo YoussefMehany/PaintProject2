@@ -5,6 +5,7 @@ CRectangle::CRectangle(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(Figur
 	Corner1 = P1;
 	Corner2 = P2;
 	Calc_Length_Width();
+	CalcCenter();
 	FigType = rectangle;
 }
 CRectangle::CRectangle()
@@ -27,6 +28,33 @@ void CRectangle::MoveTo(Point P)
 	Corner1.y = P.y - .5 * Width;
 	Corner2.x = P.x + .5 * Length;
 	Corner2.y = P.y + .5 * Width;
+	CalcCenter();
+}
+void CRectangle::Resize(Point P)
+{
+	Length = abs(P.x - Center.x) * 2;
+	Width = abs(P.y - Center.y) * 2;
+	Corner1.x = Center.x - Length / 2;
+	Corner1.y = Center.y - Width / 2;
+	Corner2.x = Center.x + Length / 2;
+	Corner2.y = Center.y + Width / 2;
+}
+bool CRectangle::IsCorner(Point P)
+{
+	int minimumx = (Corner1.x <= Corner2.x ? Corner1.x : Corner2.x);
+	int maximumx = (minimumx == Corner1.x ? Corner2.x : Corner1.x);
+	int minimumy = (Corner1.y <= Corner2.y ? Corner1.y : Corner2.y);
+	int maximumy = (minimumy == Corner1.y ? Corner2.y : Corner1.y);
+	if (abs(P.x - minimumx) <= error && abs(P.y - minimumy) <= error) return true;
+	if (abs(P.x - maximumx) <= error && abs(P.y - maximumy) <= error) return true;
+	if (abs(P.x - minimumx) <= error && abs(P.y - maximumy) <= error) return true;
+	if (abs(P.x - maximumx) <= error && abs(P.y - minimumy) <= error) return true;
+	return false;
+}
+void CRectangle::CalcCenter()
+{
+	Center.x = (Corner1.x + Corner2.x) / 2;
+	Center.y = (Corner1.y + Corner2.y) / 2;
 }
 bool CRectangle::IsPointInside(Point P)
 {
@@ -97,8 +125,4 @@ void CRectangle::PrintInfo(Output* pOut)
 	info = "You selected a Rectangle with ID: " + to_string(ID) + ", First Corner(" + to_string(Corner1.x) + ", " + to_string(Corner1.y) + ")";
 	info += ", Second Corner(" + to_string(Corner2.x) + ", " + to_string(Corner2.y) + ")" + ", Length = " + to_string(Length) + ", Width = " + to_string(Width);
 	pOut->PrintMessage(info);
-}
-bool CRectangle::Resize(Point P)
-{
-	return true;
 }

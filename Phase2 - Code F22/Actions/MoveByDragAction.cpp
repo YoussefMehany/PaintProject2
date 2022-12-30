@@ -31,37 +31,41 @@ bool MoveByDragAction::Execute(bool ReadParams)
 	}
 
 	Input* pIn = pManager->GetInput();
-
+	CFigure* Fig = pManager->GetSelectedFig();
 	bool Check_1 = false;
 	bool Check_2 = true;
-	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP)
+	Saved = Fig->GetNewFigure();
+	if(!pManager->IsPlayingRec())
 	{
-		Sleep(10);
-		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
+		while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP)
 		{
-			Sleep(20);
-			if (pManager->GetFigure(P) != pManager->GetSelectedFig() && Check_2)
+			Sleep(10);
+			while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)
 			{
-				pOut->PrintMessage("Please drag the Selected figure ,Try again");
+				Sleep(20);
+				if (pManager->GetFigure(P) != Fig && Check_2)
+				{
+					pOut->PrintMessage("Please drag the Selected figure ,Try again");
+					Check_1 = true;
+					return true;
+				}
+				Fig->MoveTo(P);
+				pManager->UpdateInterface();
 				Check_1 = true;
+				Check_2 = false;
+			}
+			if (Check_1)
+			{
 				break;
 			}
-			pManager->GetSelectedFig()->MoveTo(P);
-			pManager->UpdateInterface();
-			Check_1 = true;
-			Check_2 = false;
 		}
-		if (Check_1)
-		{
-			Saved = pManager->GetSelectedFig()->GetNewFigure();
-			pManager->Add_Undo_Redo_Actions(this);
-			break;
-		}
-	}
-	if (pManager->IsPlayingRec())
-		P = P_Rec;
-	else {
 		P_Rec = P;
+	}
+	pManager->Add_Undo_Redo_Actions(this);
+	if (pManager->IsPlayingRec())
+	{
+		P = P_Rec;
+		Fig->MoveTo(P);
 	}
 	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
 	return false;
