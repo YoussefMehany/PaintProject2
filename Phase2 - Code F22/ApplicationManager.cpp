@@ -29,6 +29,7 @@
 #include "Actions/PickFigures.h"
 #include "Actions/PickTypeandColor.h"
 #include "Actions/ChangeSoundState.h"
+#include <iostream>
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -244,6 +245,7 @@ void ApplicationManager::SwapFigures(CFigure* F)
 		{
 			if (FigList[i]->IsSelected())
 			{
+				FigList[i]->SetSelected(false);
 				F->SetSelected(true);
 				SetSelectedFig(F);
 			}
@@ -282,7 +284,7 @@ void ApplicationManager::DeleteFigure(CFigure* B)
 	{
 		for (int i = 0; i < FigCount; i++) 
 		{
-			if (FigList[i] == SelectedFig) 
+			if (FigList[i]->GetID() == SelectedFig->GetID())
 			{
 				delete FigList[i];
 				for (int j = i; j < FigCount - 1; j++) //Shifts each pointer to point at the figure of its next element

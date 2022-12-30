@@ -15,7 +15,7 @@ void AddCircAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 	pManager->Add_Undo_Redo_Actions(this);
-	if (pManager->IsSoundOn()) 
+	if (pManager->IsSoundOn())
 	{
 		PlaySound(TEXT("Sound/Circle.wav"), NULL, SND_SYNC);
 	}
@@ -38,14 +38,16 @@ void AddCircAction::ReadActionParameters()
 //Execute the action
 bool AddCircAction::Execute(bool ReadParams)
 {
-	if (ReadParams) 
+	if (ReadParams)
 	{
 		ReadActionParameters();
 	}
 	//Create a Circle with the parameters read from the user
+
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
 
 	//Add the Circle to the list of figures
+
 	pManager->AddFigure(R);
 	id = R->GetID();
 	return false;
@@ -54,18 +56,21 @@ void AddCircAction::UndoActions()
 {
 	Saved_Redo = new CCircle(P1, P2, CircGfxInfo);
 	Saved_Redo->SetID(id);
-	if(pManager->GetSelectedFig()!=NULL)
-	if (pManager->GetSelectedFig()->GetID() == id) 
-	{
-		Saved_Redo->SetSelected(true); 
-	}
+	if (pManager->GetSelectedFig())
+		if (pManager->GetSelectedFig()->GetID() == id)
+		{
+			Saved_Redo->SetSelected(true);
+		}
+
 	pManager->DeleteFigure();
 }
 void AddCircAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected()) 
+	if (Saved_Redo->IsSelected())
 	{
-		pManager->SetSelectedFig(Saved_Redo); 
+		if (pManager->GetSelectedFig())
+			pManager->GetSelectedFig()->SetSelected(false);
+		pManager->SetSelectedFig(Saved_Redo);
 	}
 	pManager->AddFigure(Saved_Redo);
 }

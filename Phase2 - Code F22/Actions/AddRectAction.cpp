@@ -57,7 +57,7 @@ void AddRectAction::UndoActions()
 {
 	Saved_Redo = new CRectangle(P1, P2, RectGfxInfo);
 	Saved_Redo->SetID(id);
-	if (pManager->GetSelectedFig() != NULL)
+	if (pManager->GetSelectedFig())
 		if (pManager->GetSelectedFig()->GetID() == id) 
 		{
 			Saved_Redo->SetSelected(true);
@@ -68,8 +68,10 @@ void AddRectAction::UndoActions()
 }
 void AddRectAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected()) 
+	if (Saved_Redo->IsSelected())
 	{
+		if (pManager->GetSelectedFig())
+			pManager->GetSelectedFig()->SetSelected(false);
 		pManager->SetSelectedFig(Saved_Redo);
 	}
 	pManager->AddFigure(Saved_Redo);

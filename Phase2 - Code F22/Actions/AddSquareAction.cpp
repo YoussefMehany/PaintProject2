@@ -62,8 +62,10 @@ void AddSquareAction::UndoActions()
 }
 void AddSquareAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected()) 
+	if (Saved_Redo->IsSelected())
 	{
+		if (pManager->GetSelectedFig())
+			pManager->GetSelectedFig()->SetSelected(false);
 		pManager->SetSelectedFig(Saved_Redo);
 	}
 	pManager->AddFigure(Saved_Redo);

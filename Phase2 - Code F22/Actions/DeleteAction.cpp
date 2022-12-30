@@ -1,5 +1,5 @@
 #include "DeleteAction.h"
-
+#include <iostream>
 DeleteAction::DeleteAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved = NULL;
@@ -12,8 +12,8 @@ void DeleteAction::ReadActionParameters()
 	pOut->ClearStatusBar();
 	pManager->Add_Undo_Redo_Actions(this);
 	Saved = pManager->GetSelectedFig()->GetNewFigure();
-	Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
-	if (pManager->IsSoundOn()) 
+	//Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
+	if (pManager->IsSoundOn())
 	{
 		PlaySound(TEXT("Sound/Deleted.wav"), NULL, SND_SYNC);
 	}
@@ -23,9 +23,9 @@ void DeleteAction::ReadActionParameters()
 bool DeleteAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) 
+	if (ReadParams)
 	{
-		if (pManager->GetSelectedFig() == NULL) 
+		if (pManager->GetSelectedFig()==NULL)
 		{
 			pOut->PrintMessage("Please Select a Figure First");
 			return true;
@@ -33,23 +33,23 @@ bool DeleteAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	Saved->SetSelected(false);
-	Saved_Redo->SetSelected(false);
+	//Saved_Redo->SetSelected(false);
 	pManager->DeleteFigure();
 	return false;
 }
 void DeleteAction::UndoActions()
 {
-	if (Saved->IsSelected()) 
-	{
-		pManager->GetSelectedFig()->SetSelected(false);
-		pManager->SetSelectedFig(Saved);
-	}
+	//if (pManager->GetSelectedFig())
+	//{
+	//	pManager->GetSelectedFig()->SetSelected(false);
+	//}
+	//pManager->SetSelectedFig(Saved);
 	pManager->AddFigure(Saved);
 	Saved = Saved->GetNewFigure();
 }
 void DeleteAction::RedoActions()
 {
-	pManager->DeleteFigure(Saved_Redo);
+	pManager->DeleteFigure(Saved);
 }
 bool DeleteAction::CanBeRecorded() const
 {
