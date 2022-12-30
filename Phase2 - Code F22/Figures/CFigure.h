@@ -4,8 +4,10 @@
 #include <cmath>
 #include <fstream>
 //Base class for all figures
+enum {Range =10};
 class CFigure
 {
+	
 protected:
 	int ID;		//Each figure has an ID
 	static int ID_Num;
@@ -32,7 +34,7 @@ public:
 	virtual void MoveTo(Point P)=0;
 	virtual bool IsPointInside(Point P)=0;
 	virtual CFigure* GetNewFigure()=0;
-	
+	virtual bool Resize(Point) = 0;
 	///The following functions should be supported by the figure class
 	///It should be overridden by each inherited figure
 

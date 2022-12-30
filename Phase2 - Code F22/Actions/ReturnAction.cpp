@@ -20,6 +20,7 @@ bool ReturnAction::Execute(bool ReadParams)
 	{
 		ReadActionParameters();
 	}
+
 	pOut->CreateDrawToolBar();
 	return false;
 }

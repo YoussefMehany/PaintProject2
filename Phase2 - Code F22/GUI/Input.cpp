@@ -56,6 +56,7 @@ ActionType Input::GetUserAction() const
 			case BORDER:  return BORDER_COLOR;
 			case MOVE: return MOVE_FIGURE;
 			case MOVE_BY_DRAG:return DRAG_FIGURE;
+			case RESIZE:return RESIZE_FIGURE;
 			case UNDO: return UNDO_ACTION;
 			case REDO: return REDO_ACTION;
 			case DELETe: return DELETE_FIGURE;

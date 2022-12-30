@@ -113,3 +113,7 @@ void CTriangle::PrintInfo(Output* pOut)
 	info += ", Third Corner(" + to_string(Corners[2].x) + ", " + to_string(Corners[2].y) + ")";
 	pOut->PrintMessage(info);
 }
+bool CTriangle::Resize(Point P)
+{
+	return true;
+}

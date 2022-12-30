@@ -112,3 +112,7 @@ void CHexagon::PrintInfo(Output* pOut)
 	info += ", Side Length = " + to_string(Side);
 	pOut->PrintMessage(info);
 }
+bool CHexagon::Resize(Point P)
+{
+	return true;
+}

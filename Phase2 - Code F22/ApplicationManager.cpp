@@ -29,6 +29,7 @@
 #include "Actions/PickFigures.h"
 #include "Actions/PickTypeandColor.h"
 #include "Actions/ChangeSoundState.h"
+#include "Actions/ResizeAction.h"
 #include <iostream>
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -121,6 +122,9 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		break;
 	case DRAG_FIGURE:
 		pAct = new MoveByDragAction(this);
+		break;
+	case RESIZE_FIGURE:
+		pAct = new ResizeAction(this);
 		break;
 	case SELECT_FIGURE:
 		pAct = new SelectAction(this);

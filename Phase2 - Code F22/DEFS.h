@@ -45,7 +45,7 @@ enum ActionType //The actions supported (you can add more if needed)
 	PICK_TYPE,
 	PICK_CLR,
 	PICK_TYPECLR,
-			
+	RESIZE_FIGURE,
 	EXIT,
 	///TODO: Add the other action types of the two modes
 };

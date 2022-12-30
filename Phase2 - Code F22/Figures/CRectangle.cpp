@@ -1,6 +1,6 @@
 #include "CRectangle.h"
 
-CRectangle::CRectangle(Point P1, Point P2, GfxInfo FigureGfxInfo):CFigure(FigureGfxInfo)
+CRectangle::CRectangle(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	Corner1 = P1;
 	Corner2 = P2;
@@ -28,13 +28,13 @@ void CRectangle::MoveTo(Point P)
 	Corner2.x = P.x + .5 * Length;
 	Corner2.y = P.y + .5 * Width;
 }
-bool CRectangle::IsPointInside(Point P) 
+bool CRectangle::IsPointInside(Point P)
 {
 	int minimumx = (Corner1.x <= Corner2.x ? Corner1.x : Corner2.x);
 	int maximumx = (minimumx == Corner1.x ? Corner2.x : Corner1.x);
 	int minimumy = (Corner1.y <= Corner2.y ? Corner1.y : Corner2.y);
 	int maximumy = (minimumy == Corner1.y ? Corner2.y : Corner1.y);
-	if (P.x >= minimumx && P.x <= maximumx && P.y >= minimumy && P.y <= maximumy) 
+	if (P.x >= minimumx && P.x <= maximumx && P.y >= minimumy && P.y <= maximumy)
 	{
 		return true;
 	}
@@ -54,7 +54,7 @@ void CRectangle::Save(ofstream& OutFile)
 	}
 	OutFile << rectangle << '\t' << ID << '\t' << Corner1.x << '\t' << Corner1.y << '\t' << Corner2.x << '\t' << Corner2.y << '\t' << DrawClr << '\t' << FillClr << '\n';
 }
-void CRectangle::Load(ifstream& InFile) 
+void CRectangle::Load(ifstream& InFile)
 {
 	string Word;
 	InFile >> Word;
@@ -71,7 +71,7 @@ void CRectangle::Load(ifstream& InFile)
 	InFile >> Word;
 	FigGfxInfo.DrawClr = getColorr(Word);
 	InFile >> Word;
-	if (Word != "NO_FILL") 
+	if (Word != "NO_FILL")
 	{
 		FigGfxInfo.FillClr = getColorr(Word);
 		FigGfxInfo.isFilled = true;
@@ -91,10 +91,14 @@ void CRectangle::ChngClr()
 	UI.FillColor = FigGfxInfo.FillClr;
 
 }
-void CRectangle::PrintInfo(Output* pOut) 
+void CRectangle::PrintInfo(Output* pOut)
 {
 	string info;
 	info = "You selected a Rectangle with ID: " + to_string(ID) + ", First Corner(" + to_string(Corner1.x) + ", " + to_string(Corner1.y) + ")";
 	info += ", Second Corner(" + to_string(Corner2.x) + ", " + to_string(Corner2.y) + ")" + ", Length = " + to_string(Length) + ", Width = " + to_string(Width);
 	pOut->PrintMessage(info);
+}
+bool CRectangle::Resize(Point P)
+{
+	return true;
 }

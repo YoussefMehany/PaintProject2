@@ -9,33 +9,32 @@ MoveByDragAction::MoveByDragAction(ApplicationManager* pApp) :Action(pApp)
 void MoveByDragAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
+	if (pManager->IsSoundOn())
+	{
+		PlaySound(TEXT("Sound/Move_by_drag.wav"), NULL, SND_SYNC);
+	}
 	pOut->PrintMessage("Drag the selected figure");
-
-	
 }
 
 //Execute action (code depends on action type)
 bool MoveByDragAction::Execute(bool ReadParams)
 {
 	Output* pOut = pManager->GetOutput();
-	if (ReadParams) 
+	if (ReadParams)
 	{
-		if (pManager->GetSelectedFig() == NULL) 
+		if (pManager->GetSelectedFig() == NULL)
 		{
 			pOut->PrintMessage("Please Select a Figure First");
 			return true;
 		}
 		ReadActionParameters();
 	}
-	
+
 	Input* pIn = pManager->GetInput();
-	if (pManager->IsSoundOn()) 
-	{
-		PlaySound(TEXT("Sound/Move_by_drag.wav"), NULL, SND_SYNC);
-	}
+
 	bool Check_1 = false;
 	bool Check_2 = true;
-	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP) 
+	while (pIn->GetMouseState(P.x, P.y) == BUTTON_UP)
 	{
 		Sleep(10);
 		while (pIn->GetMouseState(P.x, P.y) == BUTTON_DOWN)

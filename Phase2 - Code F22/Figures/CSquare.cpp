@@ -1,5 +1,5 @@
 #include "CSquare.h"
-
+#include <cmath>
 CSquare::CSquare(Point P1, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	Center = P1;
@@ -83,4 +83,8 @@ void CSquare::PrintInfo(Output* pOut)
 	string info;
 	info = "You selected a Square with ID: " + to_string(ID) + ", Center Coordinates(" + to_string(Center.x) + ", " + to_string(Center.y) + ")" + ", Side Length = " + to_string(Side);
 	pOut->PrintMessage(info);
+}
+bool CSquare::Resize(Point P)
+{
+	return true;
 }

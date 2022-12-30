@@ -13,7 +13,8 @@ CCircle::CCircle()
 }
 void CCircle::Draw(Output* pOut) const
 {
-	//Call Output::DrawCircle to draw a Circle on the screen	
+	//Call Output::DrawCircle to draw a Circle on the screen
+
 	pOut->DrawCir(Center, Radius, FigGfxInfo, Selected);
 }
 void CCircle::MoveTo(Point P)
@@ -84,4 +85,8 @@ void CCircle::PrintInfo(Output* pOut)
 	info += ", Point on Radius Coordinates(" + to_string(Radius.x) + ", " + to_string(Radius.y) + ")";
 	info += ", Radius Length = " + to_string(radius);
 	pOut->PrintMessage(info);
+}
+bool CCircle::Resize(Point P)
+{
+	return true;
 }
