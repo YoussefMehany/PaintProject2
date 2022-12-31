@@ -94,6 +94,10 @@ bool LoadAction::CanBeRecorded() const
 {
 	return false;
 }
+bool LoadAction::CanBeDeleted() const
+{
+	return true;
+}
 color LoadAction::getColorr(string clr)
 {
 	if (clr == "BLUE")

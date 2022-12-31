@@ -3,14 +3,12 @@
 DeleteAction::DeleteAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved = NULL;
-	Saved_Redo = NULL;
 }
 //Reads parameters required for action to execute (code depends on action type)
 void DeleteAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->ClearStatusBar();
-	//Saved_Redo = pManager->GetSelectedFig()->GetNewFigure();
 	if (pManager->IsSoundOn())
 	{
 		PlaySound(TEXT("Sound/Deleted.wav"), NULL, SND_SYNC);
@@ -23,25 +21,25 @@ bool DeleteAction::Execute(bool ReadParams)
 	Output* pOut = pManager->GetOutput();
 	if (ReadParams)
 	{
-		if (pManager->GetSelectedFig()==NULL)
+		if (pManager->GetSelectedFig() == NULL)
 		{
 			pOut->PrintMessage("Please Select a Figure First");
 			return true;
 		}
 		ReadActionParameters();
 	}
+
 	pManager->Add_Undo_Redo_Actions(this);
+
 	Saved = pManager->GetSelectedFig()->GetNewFigure();
+
+	Saved->SetSelected(false);
+
 	pManager->DeleteFigure();
 	return false;
 }
 void DeleteAction::UndoActions()
 {
-	if (pManager->GetSelectedFig())
-	{
-		pManager->GetSelectedFig()->SetSelected(false);
-	}
-	pManager->SetSelectedFig(Saved);
 	pManager->AddFigure(Saved);
 	Saved = Saved->GetNewFigure();
 }
@@ -53,8 +51,17 @@ bool DeleteAction::CanBeRecorded() const
 {
 	return true;
 }
-DeleteAction::~DeleteAction()
+bool DeleteAction::CanBeDeleted() const
+{
+	return false;
+}
+void DeleteAction::ClearSaved()
 {
 	if (Saved)
 		delete Saved;
+	Saved = NULL;
+}
+DeleteAction::~DeleteAction()
+{
+	ClearSaved();
 }

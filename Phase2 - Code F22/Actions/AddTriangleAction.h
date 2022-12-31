@@ -17,8 +17,10 @@ public:
 
 	//Add Triangle to the ApplicationManager
 	virtual bool Execute(bool ReadParams = true);
+	virtual bool CanBeRecorded() const;
+	virtual bool CanBeDeleted()  const;
 	virtual void UndoActions();
 	virtual void RedoActions();
-	virtual bool CanBeRecorded() const;
+	void ClearSaved();
 	~AddTriangleAction();
 };

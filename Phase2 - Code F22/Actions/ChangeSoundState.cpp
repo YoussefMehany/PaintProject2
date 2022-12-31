@@ -32,3 +32,7 @@ bool ChangeSoundState::CanBeRecorded() const
 {
     return true;
 }
+bool ChangeSoundState::CanBeDeleted() const
+{
+    return true;
+}

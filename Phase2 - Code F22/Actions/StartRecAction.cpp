@@ -9,7 +9,7 @@ void StartRecAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 
-	if (pManager->IsSoundOn()) 
+	if (pManager->IsSoundOn())
 	{
 		PlaySound(TEXT("Sound/Recording_Started.wav"), NULL, SND_SYNC);
 	}
@@ -20,7 +20,7 @@ void StartRecAction::ReadActionParameters()
 //Execute action (code depends on action type)
 bool StartRecAction::Execute(bool ReadParams)
 {
-	if (ReadParams) 
+	if (ReadParams)
 	{
 		Output* pOut = pManager->GetOutput();
 		if (pManager->GetFigCount() != 0 || pManager->GetUndoRedoCount() != 0)
@@ -30,18 +30,18 @@ bool StartRecAction::Execute(bool ReadParams)
 		}
 		ReadActionParameters();
 	}
-	if (pManager->IsRecording()) 
+	if (pManager->IsRecording())
 	{
 		Action* RecAction = pManager->GetLastAction();
-		if (RecAction->CanBeRecorded()) 
+		if (RecAction->CanBeRecorded())
 		{
 			pManager->AddActionRec(RecAction);
 		}
-		//else
-		//{
-		//	pManager->SetRec(false);
-		//	return true;
-		//}
+		else if (RecAction != this)
+		{
+			pManager->SetRec(false);
+			return true;
+		}
 	}
 	pManager->SetRec(true);
 	return false;
@@ -49,4 +49,8 @@ bool StartRecAction::Execute(bool ReadParams)
 bool StartRecAction::CanBeRecorded() const
 {
 	return false;
+}
+bool StartRecAction::CanBeDeleted() const
+{
+	return true;
 }

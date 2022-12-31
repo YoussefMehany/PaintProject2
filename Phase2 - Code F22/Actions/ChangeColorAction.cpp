@@ -42,6 +42,10 @@ bool ChangeColorAction::CanBeRecorded() const
 {
 	return true;
 }
+bool ChangeColorAction::CanBeDeleted() const
+{
+	return false;
+}
 void ChangeColorAction::UndoActions()
 {
 	pManager->SwapFigures(Saved);
@@ -54,10 +58,17 @@ void ChangeColorAction::RedoActions()
 	Saved_Redo->ChngClr();
 	Saved_Redo = Saved_Redo->GetNewFigure();
 }
-ChangeColorAction::~ChangeColorAction()
+void ChangeColorAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
 	if (Saved)
 		delete Saved;
+	Saved_Redo = NULL;
+	Saved = NULL;
+}
+
+ChangeColorAction::~ChangeColorAction()
+{
+	ClearSaved();
 }

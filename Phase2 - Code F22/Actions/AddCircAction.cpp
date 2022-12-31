@@ -1,11 +1,9 @@
 #include "AddCircAction.h"
 #include "..\GUI\input.h"
 #include "..\GUI\Output.h"
-
 AddCircAction::AddCircAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
-	id = 0;
 }
 
 void AddCircAction::ReadActionParameters()
@@ -14,7 +12,7 @@ void AddCircAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	
+
 	if (pManager->IsSoundOn())
 	{
 		PlaySound(TEXT("Sound/Circle.wav"), NULL, SND_SYNC);
@@ -43,44 +41,43 @@ bool AddCircAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	pManager->Add_Undo_Redo_Actions(this);
+
 	//Create a Circle with the parameters read from the user
 
 	CCircle* R = new CCircle(P1, P2, CircGfxInfo);
 
 	//Add the Circle to the list of figures
 
+	Saved_Redo = R->GetNewFigure();
+
 	pManager->AddFigure(R);
-	id = R->GetID();
 	return false;
 }
 void AddCircAction::UndoActions()
 {
-	Saved_Redo = new CCircle(P1, P2, CircGfxInfo);
-	Saved_Redo->SetID(id);
-	if (pManager->GetSelectedFig())
-		if (pManager->GetSelectedFig()->GetID() == id)
-		{
-			Saved_Redo->SetSelected(true);
-		}
-
 	pManager->DeleteFigure();
 }
 void AddCircAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected())
-	{
-		if (pManager->GetSelectedFig())
-			pManager->GetSelectedFig()->SetSelected(false);
-		pManager->SetSelectedFig(Saved_Redo);
-	}
 	pManager->AddFigure(Saved_Redo);
+	Saved_Redo = Saved_Redo->GetNewFigure();
 }
 bool AddCircAction::CanBeRecorded() const
 {
-	return true;
+	return false;
 }
-AddCircAction::~AddCircAction()
+bool AddCircAction::CanBeDeleted() const
+{
+	return false;
+}
+void AddCircAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
+
+	Saved_Redo = NULL;
+}
+AddCircAction::~AddCircAction()
+{
+	ClearSaved();
 }

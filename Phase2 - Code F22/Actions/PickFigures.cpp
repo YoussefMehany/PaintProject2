@@ -85,6 +85,10 @@ bool PickFigures::CanBeRecorded() const
 {
 	return false;
 }
+bool PickFigures::CanBeDeleted() const
+{
+	return true;
+}
 string PickFigures::TypetoString(shape FigType) 
 {
 	if (FigType == hexagon) return "Hexagons";

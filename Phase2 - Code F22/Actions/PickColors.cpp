@@ -86,6 +86,10 @@ bool PickColors::CanBeRecorded() const
 {
 	return false;
 }
+bool PickColors::CanBeDeleted() const
+{
+	return true;
+}
 void PickColors::Reset()
 {
 	pManager->SetClrCount(0);

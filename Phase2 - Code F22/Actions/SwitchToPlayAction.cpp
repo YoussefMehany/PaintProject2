@@ -37,3 +37,7 @@ bool SwitchToPlayAction::CanBeRecorded() const
 {
 	return false;
 }
+bool SwitchToPlayAction::CanBeDeleted() const
+{
+	return true;
+}

@@ -29,3 +29,7 @@ bool RedoAction::CanBeRecorded() const
 {
 	return true;
 }
+bool RedoAction::CanBeDeleted() const
+{
+	return true;
+}

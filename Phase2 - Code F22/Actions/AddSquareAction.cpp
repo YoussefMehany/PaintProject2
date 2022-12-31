@@ -5,7 +5,6 @@
 AddSquareAction::AddSquareAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
-	id = 0;
 }
 
 void AddSquareAction::ReadActionParameters()
@@ -39,40 +38,43 @@ bool AddSquareAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	pManager->Add_Undo_Redo_Actions(this);
-	//Create a rectangle with the parameters read from the user
+
+	//Create a square with the parameters read from the user
+
 	CSquare* R = new CSquare(P1, SquareGfxInfo);
-	//Add the rectangle to the list of figures
+
+	//Add the square to the list of figures
+
+	Saved_Redo = R->GetNewFigure();
+
 	pManager->AddFigure(R);
-	id = R->GetID();
+
 	return false;
 }
 bool AddSquareAction::CanBeRecorded() const
 {
 	return true;
 }
-void AddSquareAction::UndoActions()
+bool AddSquareAction::CanBeDeleted() const
 {
-	Saved_Redo = new CSquare(P1, SquareGfxInfo);
-	Saved_Redo->SetID(id);
-	if (pManager->GetSelectedFig() != NULL)
-		if (pManager->GetSelectedFig()->GetID() == id) 
-		{
-			Saved_Redo->SetSelected(true); 
-		}
+	return false;
+}
+void AddSquareAction::UndoActions()
+{	
 	pManager->DeleteFigure();
 }
 void AddSquareAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected())
-	{
-		if (pManager->GetSelectedFig())
-			pManager->GetSelectedFig()->SetSelected(false);
-		pManager->SetSelectedFig(Saved_Redo);
-	}
 	pManager->AddFigure(Saved_Redo);
+	Saved_Redo = Saved_Redo->GetNewFigure();
 }
-AddSquareAction::~AddSquareAction()
+void AddSquareAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
+	Saved_Redo = NULL;
+}
+AddSquareAction::~AddSquareAction()
+{
+	ClearSaved();
 }

@@ -29,3 +29,7 @@ bool ColorMenuAction::CanBeRecorded() const
 {
 	return true;
 }
+bool ColorMenuAction::CanBeDeleted() const
+{
+	return true;
+}

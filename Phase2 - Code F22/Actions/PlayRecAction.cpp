@@ -36,3 +36,7 @@ bool PlayRecAction::CanBeRecorded() const
 {
 	return false;
 }
+bool PlayRecAction::CanBeDeleted() const
+{
+	return true;
+}

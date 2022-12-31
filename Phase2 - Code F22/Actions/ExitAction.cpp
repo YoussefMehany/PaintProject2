@@ -26,3 +26,7 @@ bool ExitAction::CanBeRecorded() const
 {
 	return false;
 }
+bool ExitAction::CanBeDeleted() const
+{
+	return true;
+}

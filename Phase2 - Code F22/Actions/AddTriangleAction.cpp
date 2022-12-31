@@ -6,7 +6,6 @@
 AddTriangleAction::AddTriangleAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
-	id = 0;
 }
 
 void AddTriangleAction::ReadActionParameters()
@@ -51,40 +50,43 @@ bool AddTriangleAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	pManager->Add_Undo_Redo_Actions(this);
+
 	//Create a Triangle with the parameters read from the user
+
 	CTriangle* R = new CTriangle(P1, P2, P3, TriangleGfxInfo);
-	//Add the rectangle to the list of figures
+
+	//Add the Triangle to the list of figures
+
+	Saved_Redo = R->GetNewFigure();
+
 	pManager->AddFigure(R);
-	id = R->GetID();
+
 	return false;
 }
 bool AddTriangleAction::CanBeRecorded() const
 {
 	return true;
 }
-void AddTriangleAction::UndoActions()
+bool AddTriangleAction::CanBeDeleted() const
 {
-	Saved_Redo = new CTriangle(P1, P2, P3, TriangleGfxInfo);
-	Saved_Redo->SetID(id);
-	if (pManager->GetSelectedFig() != NULL)
-		if (pManager->GetSelectedFig()->GetID() == id) 
-		{
-			Saved_Redo->SetSelected(true); 
-		}
+	return false;
+}
+void AddTriangleAction::UndoActions()
+{	
 	pManager->DeleteFigure();
 }
 void AddTriangleAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected())
-	{
-		if (pManager->GetSelectedFig())
-			pManager->GetSelectedFig()->SetSelected(false);
-		pManager->SetSelectedFig(Saved_Redo);
-	}
 	pManager->AddFigure(Saved_Redo);
+	Saved_Redo = Saved_Redo->GetNewFigure();
 }
-AddTriangleAction::~AddTriangleAction()
+void AddTriangleAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
+	Saved_Redo = NULL;
+}
+AddTriangleAction::~AddTriangleAction()
+{
+	ClearSaved();
 }

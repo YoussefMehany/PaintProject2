@@ -56,10 +56,21 @@ bool MoveAction::CanBeRecorded() const
 {
 	return true;
 }
-MoveAction::~MoveAction()
+bool MoveAction::CanBeDeleted() const
+{
+	return false;
+}
+void MoveAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
 	if (Saved)
 		delete Saved;
+	Saved_Redo = NULL;
+	Saved = NULL;
+}
+
+MoveAction::~MoveAction()
+{
+	ClearSaved();
 }

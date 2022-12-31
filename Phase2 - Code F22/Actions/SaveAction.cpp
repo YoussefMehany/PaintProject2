@@ -42,6 +42,10 @@ bool SaveAction::CanBeRecorded() const
 {
 	return false;
 }
+bool SaveAction::CanBeDeleted() const
+{
+	return true;
+}
 string SaveAction::getColor(color clr)
 {
 	if (clr == BLUE)

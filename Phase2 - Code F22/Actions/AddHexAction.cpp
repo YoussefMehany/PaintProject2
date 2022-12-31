@@ -5,7 +5,6 @@
 AddHexAction::AddHexAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
-	id = 0;
 }
 
 void AddHexAction::ReadActionParameters()
@@ -43,41 +42,42 @@ bool AddHexAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	pManager->Add_Undo_Redo_Actions(this);
-	//Create a rectangle with the parameters read from the user
+
+	//Create a hexagon with the parameters read from the user
+
 	CHexagon* R = new CHexagon(P1, HexGfxInfo);
-	//Add the rectangle to the list of figures
+
+	//Add the hexagon to the list of figure
+
+	Saved_Redo = R->GetNewFigure();
 	pManager->AddFigure(R);
-	id = R->GetID();
+	
 	return false;
 }
 void AddHexAction::UndoActions()
 {
-	Saved_Redo = new CHexagon(P1, HexGfxInfo);
-	Saved_Redo->SetID(id);
-	if (pManager->GetSelectedFig() != NULL)
-		if (pManager->GetSelectedFig()->GetID() == id) 
-		{
-			Saved_Redo->SetSelected(true);
-		}
-
 	pManager->DeleteFigure();
 }
 void AddHexAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected())
-	{
-		if (pManager->GetSelectedFig())
-			pManager->GetSelectedFig()->SetSelected(false);
-		pManager->SetSelectedFig(Saved_Redo);
-	}
 	pManager->AddFigure(Saved_Redo);
+	Saved_Redo = Saved_Redo->GetNewFigure();
 }
 bool AddHexAction::CanBeRecorded() const
 {
 	return true;
 }
-AddHexAction::~AddHexAction()
+bool AddHexAction::CanBeDeleted() const
+{
+	return false;
+}
+void AddHexAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
+	Saved_Redo = NULL;
+}
+AddHexAction::~AddHexAction()
+{
+	ClearSaved();
 }

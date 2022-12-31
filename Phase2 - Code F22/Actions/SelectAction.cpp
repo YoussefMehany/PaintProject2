@@ -54,3 +54,7 @@ bool SelectAction::CanBeRecorded() const
 {
     return true;
 }
+bool SelectAction::CanBeDeleted() const
+{
+    return true;
+}

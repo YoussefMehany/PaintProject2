@@ -1,5 +1,4 @@
 #include "CSquare.h"
-
 CSquare::CSquare(Point P1, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
 	Center = P1;
@@ -22,7 +21,7 @@ void CSquare::MoveTo(Point P)
 }
 void CSquare::Resize(Point P)
 {
-	Side = 2 * (P.x - Center.x);
+	Side = 2 * abs(P.x - Center.x);
 }
 bool CSquare::IsPointInside(Point P)
 {
@@ -31,9 +30,7 @@ bool CSquare::IsPointInside(Point P)
 	int up = Center.y + Side / 2;
 	int down = Center.y - Side / 2;
 	if (P.x <= right && P.x >= left && P.y <= up && P.y >= down)
-	{
 		return true;
-	}
 	return false;
 }
 bool CSquare::IsCorner(Point P)

@@ -8,7 +8,6 @@ class Action
 {
 protected:
 	ApplicationManager* pManager;	//Actions needs AppMngr to do their job
-	int id;
 	bool Recorded;
 public:
 
@@ -25,7 +24,8 @@ public:
 	virtual bool Execute(bool = true) = 0;
 	virtual void UndoActions() {};
 	virtual void RedoActions() {};
-	void SetRecorded(bool B) 
+	virtual void ClearSaved() {};
+	void SetRecorded(bool B)
 	{
 		Recorded = B;
 	}
@@ -34,6 +34,7 @@ public:
 		return Recorded;
 	}
 	virtual bool CanBeRecorded() const = 0;
+	virtual bool CanBeDeleted()  const = 0;
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
 
 	//Execute action (code depends on action type)
 	virtual bool Execute(bool ReadParams = true);
-
+	virtual bool CanBeDeleted()  const;
 	virtual bool CanBeRecorded() const;
 };
 

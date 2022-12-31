@@ -22,11 +22,6 @@ bool StopRecAction::Execute(bool ReadParams)
 	Output* pOut = pManager->GetOutput();
 	if (ReadParams) 
 	{
-		if (!pManager->IsRecording()) 
-		{
-			pOut->PrintMessage("Record some actions first");
-			return true;
-		}
 		ReadActionParameters();
 	}
 	pManager->SetRec(false);
@@ -35,4 +30,8 @@ bool StopRecAction::Execute(bool ReadParams)
 bool StopRecAction::CanBeRecorded() const
 {
 	return false;
+}
+bool StopRecAction::CanBeDeleted() const
+{
+	return true;
 }

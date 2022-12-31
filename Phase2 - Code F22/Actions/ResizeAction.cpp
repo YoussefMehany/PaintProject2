@@ -87,10 +87,20 @@ bool ResizeAction::CanBeRecorded() const
 {
 	return true;
 }
-ResizeAction::~ResizeAction()
+bool ResizeAction::CanBeDeleted() const
+{
+	return false;
+}
+void ResizeAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
 	if (Saved)
 		delete Saved;
+	Saved_Redo = NULL;
+	Saved = NULL;
+}
+ResizeAction::~ResizeAction()
+{
+	ClearSaved();
 }

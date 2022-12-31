@@ -26,3 +26,7 @@ bool SwitchToDrawAction::CanBeRecorded() const
 {
 	return false;
 }
+bool SwitchToDrawAction::CanBeDeleted() const
+{
+	return true;
+}

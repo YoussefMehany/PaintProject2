@@ -28,3 +28,7 @@ bool UndoAction::CanBeRecorded() const
 {
 	return true;
 }
+bool UndoAction::CanBeDeleted() const
+{
+	return true;
+}

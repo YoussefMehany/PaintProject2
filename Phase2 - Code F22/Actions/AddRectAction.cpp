@@ -5,7 +5,6 @@
 AddRectAction::AddRectAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
-	id = 0;
 }
 
 void AddRectAction::ReadActionParameters()
@@ -47,42 +46,43 @@ bool AddRectAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	pManager->Add_Undo_Redo_Actions(this);
+
 	//Create a rectangle with the parameters read from the user
+
 	CRectangle* R = new CRectangle(P1, P2, RectGfxInfo);
+
 	//Add the rectangle to the list of figures
+
+	Saved_Redo = R->GetNewFigure();
+
 	pManager->AddFigure(R);
-	id = R->GetID();
+
 	return false;
 }
 void AddRectAction::UndoActions()
-{
-	Saved_Redo = new CRectangle(P1, P2, RectGfxInfo);
-	Saved_Redo->SetID(id);
-	if (pManager->GetSelectedFig())
-		if (pManager->GetSelectedFig()->GetID() == id) 
-		{
-			Saved_Redo->SetSelected(true);
-		}
-
+{	
 	pManager->DeleteFigure();
-
 }
 void AddRectAction::RedoActions()
 {
-	if (Saved_Redo->IsSelected())
-	{
-		if (pManager->GetSelectedFig())
-			pManager->GetSelectedFig()->SetSelected(false);
-		pManager->SetSelectedFig(Saved_Redo);
-	}
 	pManager->AddFigure(Saved_Redo);
+	Saved_Redo = Saved_Redo->GetNewFigure();
 }
 bool AddRectAction::CanBeRecorded() const
 {
 	return true;
 }
-AddRectAction::~AddRectAction()
+bool AddRectAction::CanBeDeleted() const
+{
+	return false;
+}
+void AddRectAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
+	Saved_Redo = NULL;
+}
+AddRectAction::~AddRectAction()
+{
+	ClearSaved();
 }

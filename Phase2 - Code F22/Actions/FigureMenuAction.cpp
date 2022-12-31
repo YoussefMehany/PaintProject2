@@ -28,3 +28,7 @@ bool FigureMenuAction::CanBeRecorded() const
 {
 	return true;
 }
+bool FigureMenuAction::CanBeDeleted() const
+{
+	return true;
+}

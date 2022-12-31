@@ -40,6 +40,7 @@ ApplicationManager::ApplicationManager()
 	//Initialize the data members
 
 	SelectedFig = NULL;
+	RecAction = NULL;
 
 	Recording = false;
 	PlayingRec = false;
@@ -196,15 +197,15 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 	if (pAct != NULL)
 	{
 		bool Delete = pAct->Execute(); //Execute
-		if (Delete)
-		{
-			delete pAct;
-			pAct = NULL;
-		}
-		if (pAct) LastAction = pAct;
+		LastAction = pAct;
 		if (Recording)
 		{
 			RecAction->Execute(false);
+		}
+		if (Delete||(!Recording&&pAct->CanBeDeleted()))
+		{
+			delete pAct;
+			pAct = NULL;
 		}
 		pAct = NULL;
 	}
@@ -299,10 +300,13 @@ void ApplicationManager::DeleteFigure(CFigure* B)
 				break;
 			}
 		}
-
+		if (Undo || Redo)
+			SelectedFig = save;
 	}
-	if ((Undo || Redo) && FigCount>0)
-		SelectedFig = save;
+	if (FigCount == 0)
+	{
+		SelectedFig = NULL;
+	}
 }
 //==============================================================================//
 //								Recording functions								//
@@ -390,6 +394,7 @@ void ApplicationManager::ClearAll()
 	}
 	for (int i = 0; i < Undo_Redo_Count; i++)
 	{
+		Undo_Redo_List[i]->ClearSaved();
 		if (!Undo_Redo_List[i]->IsRecorded())
 			delete Undo_Redo_List[i];
 		Undo_Redo_List[i] = NULL;
@@ -403,6 +408,7 @@ void ApplicationManager::ClearAll()
 		}
 		if (RecAction)
 			delete RecAction;
+		RecAction = NULL;
 		RecCount = 0;
 	}
 	Undo_RedoLimit = 0;
@@ -525,17 +531,6 @@ shape ApplicationManager::GetRandomFig(int random)
 	}
 	return Figtype;
 }
-bool ApplicationManager::IsColored()
-{
-	bool Check = false;
-	for (int i = 0; i < FigCount; i++)
-	{
-		if (FigList[i]->getColor() != "NO FILL CLR")
-			Check = true;
-	}
-	if (!Check) return false;
-	return true;
-}
 string ApplicationManager::GetRandomClr(int& random)
 {
 	if (!IsColored() || FigCount == 0)  return "NO COLORED FIG";
@@ -547,6 +542,17 @@ string ApplicationManager::GetRandomClr(int& random)
 			break;
 	}
 	return FigList[random]->getColor();
+}
+bool ApplicationManager::IsColored()
+{
+	bool Check = false;
+	for (int i = 0; i < FigCount; i++)
+	{
+		if (FigList[i]->getColor() != "NO FILL CLR")
+			Check = true;
+	}
+	if (!Check) return false;
+	return true;
 }
 void ApplicationManager::UnBlock()
 {

@@ -79,15 +79,25 @@ bool MoveByDragAction::CanBeRecorded() const
 {
 	return true;
 }
+bool MoveByDragAction::CanBeDeleted() const
+{
+	return false;
+}
 void MoveByDragAction::RedoActions()
 {
 	pManager->SwapFigures(Saved_Redo);
 	Saved_Redo = Saved_Redo->GetNewFigure();
 }
-MoveByDragAction::~MoveByDragAction()
+void MoveByDragAction::ClearSaved()
 {
 	if (Saved_Redo)
 		delete Saved_Redo;
 	if (Saved)
 		delete Saved;
+	Saved_Redo = NULL;
+	Saved = NULL;
+}
+MoveByDragAction::~MoveByDragAction()
+{
+	ClearSaved();
 }

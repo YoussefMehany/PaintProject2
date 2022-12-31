@@ -26,3 +26,7 @@ bool ReturnAction::CanBeRecorded() const
 {
 	return true;
 }
+bool ReturnAction::CanBeDeleted() const
+{
+	return true;
+}

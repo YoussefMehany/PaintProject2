@@ -29,3 +29,7 @@ bool ClearAllAction::CanBeRecorded() const
 {
 	return true;
 }
+bool ClearAllAction::CanBeDeleted() const
+{
+	return true;
+}
