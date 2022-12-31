@@ -20,13 +20,13 @@ bool ReturnAction::Execute(bool ReadParams)
 	}
 
 	pOut->CreateDrawToolBar();
-	return false;
-}
-bool ReturnAction::CanBeRecorded() const
-{
+	if (pManager->IsRecording())
+	{
+		return false;
+	}
 	return true;
 }
-bool ReturnAction::CanBeDeleted() const
+bool ReturnAction::CanBeRecorded() const
 {
 	return true;
 }

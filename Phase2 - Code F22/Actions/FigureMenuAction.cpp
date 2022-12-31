@@ -22,13 +22,13 @@ bool FigureMenuAction::Execute(bool ReadParams)
 	}
 	Output* pOut = pManager->GetOutput();
 	pOut->Figure_menu();
-	return false;
-}
-bool FigureMenuAction::CanBeRecorded() const
-{
+	if (pManager->IsRecording())
+	{
+		return false;
+	}
 	return true;
 }
-bool FigureMenuAction::CanBeDeleted() const
+bool FigureMenuAction::CanBeRecorded() const
 {
 	return true;
 }

@@ -40,7 +40,7 @@ bool PickColors::Execute(bool ReadParams)
 	{
 		pOut->PrintMessage("NO COLORED FIGURE");
 		Reset();
-		return false;
+		return true;
 	}
 	pManager->UpdateInterface();
 	pOut->PrintMessage("Pick All " + color + " Figures");
@@ -54,7 +54,7 @@ bool PickColors::Execute(bool ReadParams)
 			{
 				Reset();
 				Execute();
-				return false;
+				return true;
 			}
 		}
 		select = pManager->GetFigure(P);
@@ -63,13 +63,14 @@ bool PickColors::Execute(bool ReadParams)
 			i--;
 			continue;
 		}
-		if (select->getColor() == color)
+		if (select->getColor() == color && !select->IsBlocked())
 		{
 			CCounter++;
 		}
 		else
 		{
-			FCounter++;
+			if (select->IsBlocked()) i--;
+			else FCounter++;
 		}
 		if (CCounter == ColorCount)
 		{
@@ -85,10 +86,6 @@ bool PickColors::Execute(bool ReadParams)
 bool PickColors::CanBeRecorded() const
 {
 	return false;
-}
-bool PickColors::CanBeDeleted() const
-{
-	return true;
 }
 void PickColors::Reset()
 {

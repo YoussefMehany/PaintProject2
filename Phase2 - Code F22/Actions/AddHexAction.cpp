@@ -1,6 +1,4 @@
 #include "AddHexAction.h"
-#include "..\GUI\input.h"
-#include "..\GUI\Output.h"
 
 AddHexAction::AddHexAction(ApplicationManager* pApp) :Action(pApp)
 {
@@ -56,7 +54,7 @@ bool AddHexAction::Execute(bool ReadParams)
 }
 void AddHexAction::UndoActions()
 {
-	pManager->DeleteFigure();
+	pManager->DeleteFigure(pManager->GetLastAdd());
 }
 void AddHexAction::RedoActions()
 {
@@ -66,10 +64,6 @@ void AddHexAction::RedoActions()
 bool AddHexAction::CanBeRecorded() const
 {
 	return true;
-}
-bool AddHexAction::CanBeDeleted() const
-{
-	return false;
 }
 void AddHexAction::ClearSaved()
 {

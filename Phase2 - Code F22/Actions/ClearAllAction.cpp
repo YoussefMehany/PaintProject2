@@ -23,13 +23,13 @@ bool ClearAllAction::Execute(bool ReadParams)
 	{
 		PlaySound(TEXT("Sound/Cleared.wav"), NULL, SND_SYNC);
 	}
-	return false;
-}
-bool ClearAllAction::CanBeRecorded() const
-{
+	if (pManager->IsRecording())
+	{
+		return false;
+	}
 	return true;
 }
-bool ClearAllAction::CanBeDeleted() const
+bool ClearAllAction::CanBeRecorded() const
 {
 	return true;
 }

@@ -23,13 +23,13 @@ bool ColorMenuAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	pOut->Color_menu();
-	return false;
-}
-bool ColorMenuAction::CanBeRecorded() const
-{
+	if (pManager->IsRecording())
+	{
+		return false;
+	}
 	return true;
 }
-bool ColorMenuAction::CanBeDeleted() const
+bool ColorMenuAction::CanBeRecorded() const
 {
 	return true;
 }

@@ -41,7 +41,7 @@ bool PickTypeandColor::Execute(bool ReadParams)
 	{
 		pOut->PrintMessage("NO COLORED FIGURE");
 		Reset();
-		return false;
+		return true;
 	}
 	pManager->UpdateInterface();
 	FigType = pManager->GetRandomFig(Random);
@@ -56,7 +56,7 @@ bool PickTypeandColor::Execute(bool ReadParams)
 			{
 				Reset();
 				Execute();
-				return false;
+				return true;
 			}
 		}
 		select = pManager->GetFigure(P);
@@ -65,13 +65,14 @@ bool PickTypeandColor::Execute(bool ReadParams)
 			i--;
 			continue;
 		}
-		if (select->GetFigType() == FigType && select->getColor() == color)
+		if (select->GetFigType() == FigType && select->getColor() == color && !select->IsBlocked())
 		{
 			CCounter++;
 		}
 		else
 		{
-			FCounter++;
+			if (select->IsBlocked()) i--;
+			else FCounter++;
 		}
 		if (CCounter == pManager->GetTypeClrCount())
 		{
@@ -88,10 +89,6 @@ bool PickTypeandColor::Execute(bool ReadParams)
 bool PickTypeandColor::CanBeRecorded() const
 {
 	return false;
-}
-bool PickTypeandColor::CanBeDeleted() const
-{
-	return true;
 }
 string PickTypeandColor::TypetoString(shape FigType) 
 {

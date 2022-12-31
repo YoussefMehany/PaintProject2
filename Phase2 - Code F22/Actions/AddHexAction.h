@@ -19,7 +19,6 @@ public:
 	//Add rectangle to the ApplicationManager
 	virtual bool Execute(bool ReadParams = true);
 	virtual bool CanBeRecorded() const;
-	virtual bool CanBeDeleted()  const;
 	virtual void UndoActions();
 	virtual void RedoActions();
 	void ClearSaved();

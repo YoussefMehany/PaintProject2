@@ -34,7 +34,6 @@ public:
 		return Recorded;
 	}
 	virtual bool CanBeRecorded() const = 0;
-	virtual bool CanBeDeleted()  const = 0;
 };
 
 #endif

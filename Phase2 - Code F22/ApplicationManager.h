@@ -74,8 +74,9 @@ public:
 	// -- Recording
 
 	void AddActionRec(Action*); //Adds an action to the recording list
-	void SetRec(bool IsRec); //Set Recording state
+	void SetRec(bool); //Set Recording state
 	void PlayRec(); //Plays the recordings
+	void SetPlayingRec(bool);
 	bool IsRecording() const; //Returns the recording state
 	bool IsPlayingRec() const; //Returns the playing state
 	int GetRecCount() const; //Returns the record count

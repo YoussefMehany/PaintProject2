@@ -202,12 +202,11 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 		{
 			RecAction->Execute(false);
 		}
-		if (Delete||(!Recording&&pAct->CanBeDeleted()))
+		if (Delete)
 		{
 			delete pAct;
 			pAct = NULL;
 		}
-		pAct = NULL;
 	}
 }
 
@@ -276,14 +275,7 @@ void ApplicationManager::DeleteFigure(CFigure* B)
 {
 	CFigure* save = SelectedFig;
 	if (Undo || Redo)
-		if (!B)
-		{
-			SelectedFig = GetLastAdd();
-		}
-		else
-		{
-			SelectedFig = B;
-		}
+		SelectedFig = B;
 	if (FigCount > 0)
 	{
 		for (int i = 0; i < FigCount; i++)
@@ -303,10 +295,6 @@ void ApplicationManager::DeleteFigure(CFigure* B)
 		if (Undo || Redo)
 			SelectedFig = save;
 	}
-	if (FigCount == 0)
-	{
-		SelectedFig = NULL;
-	}
 }
 //==============================================================================//
 //								Recording functions								//
@@ -322,17 +310,12 @@ void ApplicationManager::AddActionRec(Action* Act)
 }
 void ApplicationManager::PlayRec()
 {
-	PlayingRec = true;
-	ClearAll();
 	for (int i = 0; i < RecCount; i++)
 	{
 		Sleep(1000);
-
 		Recorded[i]->Execute(false);
-
 		UpdateInterface();
 	}
-	PlayingRec = false;
 }
 
 //==============================================================================//
@@ -487,6 +470,10 @@ void ApplicationManager::SetKEY(bool B)
 void ApplicationManager::SetRec(bool IsRec)
 {
 	Recording = IsRec;
+}
+void ApplicationManager::SetPlayingRec(bool B)
+{
+	PlayingRec = B;
 }
 void ApplicationManager::SetSound(bool sound)
 {

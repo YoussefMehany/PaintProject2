@@ -19,5 +19,4 @@ public:
 	void CreateFigure(string Word);
 	color getColorr(string clr);
 	virtual bool CanBeRecorded() const;
-	virtual bool CanBeDeleted()  const;
 };

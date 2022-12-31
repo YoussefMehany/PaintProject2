@@ -46,7 +46,6 @@ bool MoveByDragAction::Execute(bool ReadParams)
 				if (pManager->GetFigure(P) != Fig && Check_2)
 				{
 					pOut->PrintMessage("Please drag the Selected figure ,Try again");
-					Check_1 = true;
 					return true;
 				}
 				Fig->MoveTo(P);
@@ -78,10 +77,6 @@ void MoveByDragAction::UndoActions()
 bool MoveByDragAction::CanBeRecorded() const
 {
 	return true;
-}
-bool MoveByDragAction::CanBeDeleted() const
-{
-	return false;
 }
 void MoveByDragAction::RedoActions()
 {

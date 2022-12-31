@@ -1,6 +1,4 @@
 #include "AddRectAction.h"
-#include "..\GUI\input.h"
-#include "..\GUI\Output.h"
 
 AddRectAction::AddRectAction(ApplicationManager* pApp) :Action(pApp)
 {
@@ -61,7 +59,7 @@ bool AddRectAction::Execute(bool ReadParams)
 }
 void AddRectAction::UndoActions()
 {	
-	pManager->DeleteFigure();
+	pManager->DeleteFigure(pManager->GetLastAdd());
 }
 void AddRectAction::RedoActions()
 {
@@ -71,10 +69,6 @@ void AddRectAction::RedoActions()
 bool AddRectAction::CanBeRecorded() const
 {
 	return true;
-}
-bool AddRectAction::CanBeDeleted() const
-{
-	return false;
 }
 void AddRectAction::ClearSaved()
 {

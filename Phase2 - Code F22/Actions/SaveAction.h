@@ -14,5 +14,4 @@ public:
 	virtual bool Execute(bool ReadParams = true);
 	string getColor(color);
 	virtual bool CanBeRecorded() const;
-	virtual bool CanBeDeleted()  const;
 };

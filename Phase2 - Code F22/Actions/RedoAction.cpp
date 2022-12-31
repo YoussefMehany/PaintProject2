@@ -23,13 +23,13 @@ bool RedoAction::Execute(bool ReadParams)
 		return true;
 	}
 	pManager->RedoLastAction();
-	return false;
-}
-bool RedoAction::CanBeRecorded() const
-{
+	if (pManager->IsRecording())
+	{
+		return false;
+	}
 	return true;
 }
-bool RedoAction::CanBeDeleted() const
+bool RedoAction::CanBeRecorded() const
 {
 	return true;
 }

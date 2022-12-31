@@ -1,8 +1,6 @@
+#pragma once
 #include "AddTriangleAction.h"
-#include "..\Figures\CTriangle.h"
-#include "..\GUI\input.h"
-#include "..\GUI\Output.h"
-
+#include "../Figures/CTriangle.h"
 AddTriangleAction::AddTriangleAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
@@ -67,13 +65,9 @@ bool AddTriangleAction::CanBeRecorded() const
 {
 	return true;
 }
-bool AddTriangleAction::CanBeDeleted() const
-{
-	return false;
-}
 void AddTriangleAction::UndoActions()
 {	
-	pManager->DeleteFigure();
+	pManager->DeleteFigure(pManager->GetLastAdd());
 }
 void AddTriangleAction::RedoActions()
 {

@@ -31,7 +31,3 @@ bool StopRecAction::CanBeRecorded() const
 {
 	return false;
 }
-bool StopRecAction::CanBeDeleted() const
-{
-	return true;
-}

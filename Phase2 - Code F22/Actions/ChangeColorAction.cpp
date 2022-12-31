@@ -42,10 +42,6 @@ bool ChangeColorAction::CanBeRecorded() const
 {
 	return true;
 }
-bool ChangeColorAction::CanBeDeleted() const
-{
-	return false;
-}
 void ChangeColorAction::UndoActions()
 {
 	pManager->SwapFigures(Saved);

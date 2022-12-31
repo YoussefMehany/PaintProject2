@@ -39,7 +39,7 @@ bool PickFigures::Execute(bool ReadParams)
 	{
 		pOut->PrintMessage("NO FIGURES");
 		Reset();
-		return false;
+		return true;
 	}
 	pManager->UpdateInterface();
 	pOut->PrintMessage("Pick All " + TypetoString(FigType));
@@ -53,7 +53,7 @@ bool PickFigures::Execute(bool ReadParams)
 			{
 				Reset();
 				Execute();
-				return false;
+				return true;
 			}
 		}
 		select = pManager->GetFigure(P);
@@ -62,13 +62,14 @@ bool PickFigures::Execute(bool ReadParams)
 			i--;
 			continue;
 		}
-		if (select->GetFigType() == FigType)
+		if (select->GetFigType() == FigType && !select->IsBlocked())
 		{
 			CCounter++;
 		}
 		else
 		{
-			FCounter++;
+			if (select->IsBlocked()) i--;
+			else FCounter++;
 		}
 		if (CCounter == pManager->GetRandFigCount())
 		{
@@ -84,10 +85,6 @@ bool PickFigures::Execute(bool ReadParams)
 bool PickFigures::CanBeRecorded() const
 {
 	return false;
-}
-bool PickFigures::CanBeDeleted() const
-{
-	return true;
 }
 string PickFigures::TypetoString(shape FigType) 
 {

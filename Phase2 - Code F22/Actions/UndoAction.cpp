@@ -22,13 +22,13 @@ bool UndoAction::Execute(bool ReadParams)
 		return true;
 	}
 	pManager->UndoLastAction();
-	return false;
-}
-bool UndoAction::CanBeRecorded() const
-{
+	if (pManager->IsRecording())
+	{
+		return false;
+	}
 	return true;
 }
-bool UndoAction::CanBeDeleted() const
+bool UndoAction::CanBeRecorded() const
 {
 	return true;
 }

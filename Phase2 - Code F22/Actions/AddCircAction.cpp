@@ -1,6 +1,4 @@
 #include "AddCircAction.h"
-#include "..\GUI\input.h"
-#include "..\GUI\Output.h"
 AddCircAction::AddCircAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved_Redo = NULL;
@@ -55,7 +53,7 @@ bool AddCircAction::Execute(bool ReadParams)
 }
 void AddCircAction::UndoActions()
 {
-	pManager->DeleteFigure();
+	pManager->DeleteFigure(pManager->GetLastAdd());
 }
 void AddCircAction::RedoActions()
 {
@@ -63,10 +61,6 @@ void AddCircAction::RedoActions()
 	Saved_Redo = Saved_Redo->GetNewFigure();
 }
 bool AddCircAction::CanBeRecorded() const
-{
-	return false;
-}
-bool AddCircAction::CanBeDeleted() const
 {
 	return false;
 }

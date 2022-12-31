@@ -49,7 +49,6 @@ bool ResizeAction::Execute(bool ReadParams)
 				if ((pManager->GetFigure(P) != Fig || !Fig->IsCorner(P)) && Check_2)
 				{
 					pOut->PrintMessage("Please drag a corner of the selected figure, Try again");
-					Check_1 = true;
 					return true;
 				}
 				Fig->Resize(P);
@@ -86,10 +85,6 @@ void ResizeAction::RedoActions()
 bool ResizeAction::CanBeRecorded() const
 {
 	return true;
-}
-bool ResizeAction::CanBeDeleted() const
-{
-	return false;
 }
 void ResizeAction::ClearSaved()
 {

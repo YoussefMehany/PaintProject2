@@ -27,5 +27,4 @@ public:
 	string TypetoString(shape);
 	void Reset();
 	virtual bool CanBeRecorded() const;
-	virtual bool CanBeDeleted()  const;
 };

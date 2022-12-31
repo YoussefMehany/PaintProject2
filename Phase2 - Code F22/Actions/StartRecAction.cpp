@@ -44,13 +44,13 @@ bool StartRecAction::Execute(bool ReadParams)
 		}
 	}
 	pManager->SetRec(true);
-	return false;
+	if (pManager->IsRecording())
+	{
+		return false;
+	}
+	return true;
 }
 bool StartRecAction::CanBeRecorded() const
 {
 	return false;
-}
-bool StartRecAction::CanBeDeleted() const
-{
-	return true;
 }

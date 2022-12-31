@@ -48,13 +48,13 @@ bool SelectAction::Execute(bool ReadParams)
     {
         pOut->PrintMessage("A click on an empty area");
     }
-    return false;
-}
-bool SelectAction::CanBeRecorded() const
-{
+    if (pManager->IsRecording())
+    {
+        return false;
+    }
     return true;
 }
-bool SelectAction::CanBeDeleted() const
+bool SelectAction::CanBeRecorded() const
 {
     return true;
 }

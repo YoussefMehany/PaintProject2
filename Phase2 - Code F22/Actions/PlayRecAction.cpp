@@ -29,14 +29,13 @@ bool PlayRecAction::Execute(bool ReadParams)
 		PlaySound(TEXT("Sound/Play_recording.wav"), NULL, SND_SYNC);
 	}
 	pOut->PrintMessage("Playing Recording");
+	pManager->SetPlayingRec(true);
+	pManager->ClearAll();
 	pManager->PlayRec();
+	pManager->SetPlayingRec(false);
 	return true;
 }
 bool PlayRecAction::CanBeRecorded() const
 {
 	return false;
-}
-bool PlayRecAction::CanBeDeleted() const
-{
-	return true;
 }

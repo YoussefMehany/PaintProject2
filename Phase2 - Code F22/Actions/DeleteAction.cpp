@@ -1,5 +1,4 @@
 #include "DeleteAction.h"
-#include <iostream>
 DeleteAction::DeleteAction(ApplicationManager* pApp) :Action(pApp)
 {
 	Saved = NULL;
@@ -50,10 +49,6 @@ void DeleteAction::RedoActions()
 bool DeleteAction::CanBeRecorded() const
 {
 	return true;
-}
-bool DeleteAction::CanBeDeleted() const
-{
-	return false;
 }
 void DeleteAction::ClearSaved()
 {

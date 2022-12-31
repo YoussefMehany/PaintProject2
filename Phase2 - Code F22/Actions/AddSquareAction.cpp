@@ -1,6 +1,4 @@
 #include "AddSquareAction.h"
-#include "..\GUI\input.h"
-#include "..\GUI\Output.h"
 
 AddSquareAction::AddSquareAction(ApplicationManager* pApp) :Action(pApp)
 {
@@ -55,13 +53,9 @@ bool AddSquareAction::CanBeRecorded() const
 {
 	return true;
 }
-bool AddSquareAction::CanBeDeleted() const
-{
-	return false;
-}
 void AddSquareAction::UndoActions()
 {	
-	pManager->DeleteFigure();
+	pManager->DeleteFigure(pManager->GetLastAdd());
 }
 void AddSquareAction::RedoActions()
 {

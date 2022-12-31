@@ -26,13 +26,9 @@ bool ChangeSoundState::Execute(bool ReadParams)
         ReadActionParameters();
     }
     pManager->SetSound(!pManager->IsSoundOn());
-    return false;
-}
-bool ChangeSoundState::CanBeRecorded() const
-{
     return true;
 }
-bool ChangeSoundState::CanBeDeleted() const
+bool ChangeSoundState::CanBeRecorded() const
 {
     return true;
 }
