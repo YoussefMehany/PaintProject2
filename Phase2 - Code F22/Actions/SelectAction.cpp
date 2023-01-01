@@ -9,7 +9,7 @@ void SelectAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-    if (pManager->IsSoundOn()) 
+    if (UI.Sound)
     {
         PlaySound(TEXT("Sound/Select.wav"), NULL, SND_SYNC);
     }

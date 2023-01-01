@@ -12,7 +12,7 @@ void AddHexAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 	
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound) 
 	{
 		PlaySound(TEXT("Sound/Hexagon.wav"), NULL, SND_SYNC);
 	}

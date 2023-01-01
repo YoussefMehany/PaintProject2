@@ -9,7 +9,7 @@ void StartRecAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 
-	if (pManager->IsSoundOn())
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Recording_Started.wav"), NULL, SND_SYNC);
 	}
@@ -23,7 +23,7 @@ bool StartRecAction::Execute(bool ReadParams)
 	if (ReadParams)
 	{
 		Output* pOut = pManager->GetOutput();
-		if (pManager->GetFigCount() != 0 || pManager->GetUndoRedoCount() != 0)
+		if (pManager->GetFigCount() != 0 || pManager->GetUndoRedoCount() != 0 || pManager->GetRecCount() != 0)
 		{
 			pOut->PrintMessage("You can only record after the program start or after clear all");
 			return true;

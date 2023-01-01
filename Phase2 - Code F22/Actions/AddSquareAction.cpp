@@ -11,7 +11,7 @@ void AddSquareAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Square.wav"), NULL, SND_SYNC);
 	}

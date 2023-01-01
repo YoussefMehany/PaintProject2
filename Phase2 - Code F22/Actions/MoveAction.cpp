@@ -10,7 +10,7 @@ void MoveAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
-	if (pManager->IsSoundOn())
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Move.wav"), NULL, SND_SYNC);
 	}

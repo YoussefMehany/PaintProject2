@@ -1,5 +1,4 @@
 #include "ChangeSoundState.h"
-
 ChangeSoundState::ChangeSoundState(ApplicationManager* pApp) :Action(pApp)
 {
 
@@ -8,13 +7,15 @@ ChangeSoundState::ChangeSoundState(ApplicationManager* pApp) :Action(pApp)
 void ChangeSoundState::ReadActionParameters()
 {
     Output* pOut = pManager->GetOutput();
-    if (pManager->IsSoundOn()) 
+    UI.Sound = !UI.Sound;
+    pOut->CreateDrawToolBar();
+    if (UI.Sound) 
     {
-        pOut->PrintMessage("Sound disabled");
+        pOut->PrintMessage("Sound enabled");
     }
     else 
     {
-        pOut->PrintMessage("Sound enabled");
+        pOut->PrintMessage("Sound disabled");
     }
 }
 
@@ -25,7 +26,6 @@ bool ChangeSoundState::Execute(bool ReadParams)
     {
         ReadActionParameters();
     }
-    pManager->SetSound(!pManager->IsSoundOn());
     return true;
 }
 bool ChangeSoundState::CanBeRecorded() const

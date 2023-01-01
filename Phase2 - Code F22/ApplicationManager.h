@@ -65,11 +65,6 @@ public:
 	void ClearAll(); //Clears all the lists and resets the class
 	void DeleteFigure(CFigure* B = NULL); //Deletes a Figure
 	int GetFigCount()const; //Returns the figures count
-	bool IsSoundOn() const; //Returns sound state
-
-	// -- Sound
-	
-	void SetSound(bool sound); //Sets sound state
 
 	// -- Recording
 

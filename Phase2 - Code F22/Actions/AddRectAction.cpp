@@ -12,7 +12,7 @@ void AddRectAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 	
 
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Rectangle.wav"), NULL, SND_SYNC);
 	}

@@ -16,7 +16,7 @@ void SwitchToPlayAction::ReadActionParameters()
 		SelectedFig->SetSelected(false);
 	}
 	pOut->CreatePlayToolBar();
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Lets_Play.wav"), NULL, SND_SYNC);
 	}

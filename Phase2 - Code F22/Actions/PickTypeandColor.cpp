@@ -24,7 +24,7 @@ bool PickTypeandColor::Execute(bool ReadParams)
 	{
 		ReadActionParameters();
 	}
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Pick_a_figure_with_a_color.wav"), NULL, SND_SYNC);
 	}
@@ -60,19 +60,18 @@ bool PickTypeandColor::Execute(bool ReadParams)
 			}
 		}
 		select = pManager->GetFigure(P);
-		if (!select)
+		if (!select || select->IsBlocked())
 		{
 			i--;
 			continue;
 		}
-		if (select->GetFigType() == FigType && select->getColor() == color && !select->IsBlocked())
+		if (select->GetFigType() == FigType && select->getColor() == color)
 		{
 			CCounter++;
 		}
 		else
 		{
-			if (select->IsBlocked()) i--;
-			else FCounter++;
+			FCounter++;
 		}
 		if (CCounter == pManager->GetTypeClrCount())
 		{

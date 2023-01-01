@@ -10,7 +10,7 @@ void ResizeAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	
-	if (pManager->IsSoundOn())
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Move.wav"), NULL, SND_SYNC);
 	}

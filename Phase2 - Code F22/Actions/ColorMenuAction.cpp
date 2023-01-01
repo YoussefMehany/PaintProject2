@@ -8,7 +8,7 @@ ColorMenuAction::ColorMenuAction(ApplicationManager* pApp, DrawMenuItem choose) 
 void ColorMenuAction::ReadActionParameters()
 {
 	UI.Choose = ChooseMenuItem;
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Choose_a_color.wav"), NULL, SND_SYNC);
 	}

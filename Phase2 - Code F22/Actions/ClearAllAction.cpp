@@ -19,7 +19,7 @@ bool ClearAllAction::Execute(bool ReadParams)
 		ReadActionParameters();
 	}
 	pManager->ClearAll();
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Cleared.wav"), NULL, SND_SYNC);
 	}

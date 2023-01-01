@@ -7,7 +7,7 @@ FigureMenuAction::FigureMenuAction(ApplicationManager* pApp) :Action(pApp)
 //Reads parameters required for action to execute (code depends on action type)
 void FigureMenuAction::ReadActionParameters()
 {
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Draw_a_figure.wav"), NULL, SND_SYNC);
 	}

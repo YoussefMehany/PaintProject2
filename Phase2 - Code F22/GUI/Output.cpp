@@ -16,6 +16,7 @@ Output::Output()
 	UI.ToolBarHeight = 50;
 	UI.MenuItemWidth = 50;
 	UI.IsFilled = false;
+	UI.Sound = false;
 	UI.DrawColor = BLUE;	//Drawing color
 	UI.FillColor = GREEN;	//Filling color
 	UI.MsgColor = WHITE;		//Messages color
@@ -93,7 +94,10 @@ void Output::CreateDrawToolBar() const
 	MenuItemImages[SAVE] = "images\\MenuItems\\SAVE.jpg";
 	MenuItemImages[CLEAR] = "images\\MenuItems\\CLEAR.jpg";
 	MenuItemImages[SWITCH_PLAY] = "images\\MenuItems\\SWITCH.jpg";
-	MenuItemImages[SOUND] = "images\\MenuItems\\SOUND.jpg";
+	if(UI.Sound)
+		MenuItemImages[SOUND] = "images\\MenuItems\\SOUND.jpg";
+	else 
+		MenuItemImages[SOUND] = "images\\MenuItems\\MUTE.jpg";
 	MenuItemImages[ITM_EXIT] = "images\\MenuItems\\EXIT.jpg";
 
 

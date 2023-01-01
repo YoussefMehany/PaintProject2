@@ -9,7 +9,7 @@ MoveByDragAction::MoveByDragAction(ApplicationManager* pApp) :Action(pApp)
 void MoveByDragAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
-	if (pManager->IsSoundOn())
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Move_by_drag.wav"), NULL, SND_SYNC);
 	}

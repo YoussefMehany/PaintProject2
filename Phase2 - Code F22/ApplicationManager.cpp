@@ -379,10 +379,12 @@ void ApplicationManager::ClearAll()
 	{
 		Undo_Redo_List[i]->ClearSaved();
 		if (!Undo_Redo_List[i]->IsRecorded())
+		{
 			delete Undo_Redo_List[i];
+		}
 		Undo_Redo_List[i] = NULL;
 	}
-	if (!PlayingRec)
+	if (!PlayingRec && !Recording)
 	{
 		for (int i = 0; i < RecCount; i++)
 		{
@@ -443,10 +445,6 @@ int ApplicationManager::GetClrCount(int random)
 			ClrCount++;
 	return ClrCount;
 }
-bool ApplicationManager::IsSoundOn() const
-{
-	return Sound;
-}
 bool ApplicationManager::IsRecording() const
 {
 	return Recording;
@@ -474,10 +472,6 @@ void ApplicationManager::SetRec(bool IsRec)
 void ApplicationManager::SetPlayingRec(bool B)
 {
 	PlayingRec = B;
-}
-void ApplicationManager::SetSound(bool sound)
-{
-	Sound = sound;
 }
 void  ApplicationManager::SetRandFigCount(int C)
 {
@@ -520,7 +514,7 @@ shape ApplicationManager::GetRandomFig(int random)
 }
 string ApplicationManager::GetRandomClr(int& random)
 {
-	if (!IsColored() || FigCount == 0)  return "NO COLORED FIG";
+	if (!IsColored())  return "NO COLORED FIG";
 	while (true)
 	{
 		if (FigList[random]->getColor() == "NO FILL CLR")

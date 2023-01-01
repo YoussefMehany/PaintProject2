@@ -22,7 +22,7 @@ bool PickFigures::Execute(bool ReadParams)
 	{
 		ReadActionParameters();
 	}
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Pick_a_figure.wav"), NULL, SND_SYNC);
 	}
@@ -57,19 +57,18 @@ bool PickFigures::Execute(bool ReadParams)
 			}
 		}
 		select = pManager->GetFigure(P);
-		if (!select)
+		if (!select || select->IsBlocked())
 		{
 			i--;
 			continue;
 		}
-		if (select->GetFigType() == FigType && !select->IsBlocked())
+		if (select->GetFigType() == FigType)
 		{
 			CCounter++;
 		}
 		else
 		{
-			if (select->IsBlocked()) i--;
-			else FCounter++;
+			FCounter++;
 		}
 		if (CCounter == pManager->GetRandFigCount())
 		{

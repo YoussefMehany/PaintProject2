@@ -117,11 +117,11 @@ struct UI_Info	//User Interface Info.
 	GUI_MODE InterfaceMode;
 	
 	int	width, height,	    //Window width and height
-		wx , wy,			//Window starting coordinates
+		wx, wy,			//Window starting coordinates
 		StatusBarHeight,	//Status Bar Height
 		ToolBarHeight,		//Tool Bar Height (distance from top of window to bottom line of toolbar)
-		MenuItemWidth,//Width of each item in toolbar menu
-		Choose, IsFilled;		
+		MenuItemWidth, PenWidth, Choose;
+	bool IsFilled, Sound;
 	
 
 	color DrawColor;		//Drawing color
@@ -130,7 +130,6 @@ struct UI_Info	//User Interface Info.
 	color MsgColor;			//Messages color
 	color BkGrndColor;		//Background color
 	color StatusBarColor;	//Status bar color
-	int PenWidth;			//width of the pen that draws shapes
 
 	/// Add more members if needed
 	

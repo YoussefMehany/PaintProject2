@@ -1,7 +1,3 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  PickTypeandColor.cpp
-  PickFigures.cpp
-  Generating Code...
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Actions\PickFigures.cpp(96): warning C4715: 'PickFigures::TypetoString': not all control paths return a value
-C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Actions\PickTypeandColor.cpp(100): warning C4715: 'PickTypeandColor::TypetoString': not all control paths return a value
+  ChangeSoundState.cpp
   PT-Project.vcxproj -> C:\Users\Youssef2\OneDrive\Desktop\PaintProject2\Phase2 - Code F22\Debug\PT Project.exe

@@ -24,7 +24,7 @@ bool PlayRecAction::Execute(bool ReadParams)
 		pOut->PrintMessage("Record some actions first");
 		return true;
 	}
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Play_recording.wav"), NULL, SND_SYNC);
 	}

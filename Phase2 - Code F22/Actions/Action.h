@@ -34,6 +34,7 @@ public:
 		return Recorded;
 	}
 	virtual bool CanBeRecorded() const = 0;
+	virtual ~Action() {};
 };
 
 #endif

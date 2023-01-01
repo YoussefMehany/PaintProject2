@@ -48,4 +48,5 @@ public:
 
 	virtual void PrintInfo(Output* pOut) = 0;	//print all figure info on the status bar
 	virtual void Resize(Point P) = 0;
+	virtual ~CFigure() {};
 };

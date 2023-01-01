@@ -8,7 +8,7 @@ void DeleteAction::ReadActionParameters()
 {
 	Output* pOut = pManager->GetOutput();
 	pOut->ClearStatusBar();
-	if (pManager->IsSoundOn())
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Deleted.wav"), NULL, SND_SYNC);
 	}

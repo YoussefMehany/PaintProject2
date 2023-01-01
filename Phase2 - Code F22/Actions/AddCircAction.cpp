@@ -11,7 +11,7 @@ void AddCircAction::ReadActionParameters()
 	Input* pIn = pManager->GetInput();
 
 
-	if (pManager->IsSoundOn())
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Circle.wav"), NULL, SND_SYNC);
 	}
@@ -62,7 +62,7 @@ void AddCircAction::RedoActions()
 }
 bool AddCircAction::CanBeRecorded() const
 {
-	return false;
+	return true;
 }
 void AddCircAction::ClearSaved()
 {

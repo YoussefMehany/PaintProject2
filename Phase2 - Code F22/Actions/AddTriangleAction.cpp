@@ -12,7 +12,7 @@ void AddTriangleAction::ReadActionParameters()
 	Output* pOut = pManager->GetOutput();
 	Input* pIn = pManager->GetInput();
 	
-	if (pManager->IsSoundOn()) 
+	if (UI.Sound)
 	{
 		PlaySound(TEXT("Sound/Triangle.wav"), NULL, SND_SYNC);
 	}
